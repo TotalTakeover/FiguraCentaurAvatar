@@ -23,6 +23,25 @@ local holdJump  = 0
 local swishTailTimer = math.random(20, 400)
 local flickEarTimer  = math.random(20, 400)
 
+-- Parrot pivots
+local parrots = {
+	
+	centaurParts.LeftParrotPivot,
+	centaurParts.RightParrotPivot
+	
+}
+
+-- Calculate parent's rotations
+local function calculateParentRot(m)
+	
+	local parent = m:getParent()
+	if not parent then
+		return m:getTrueRot()
+	end
+	return calculateParentRot(parent) + m:getTrueRot()
+	
+end
+
 function events.TICK()
 	
 	-- Variables
@@ -129,6 +148,11 @@ function events.RENDER(delta, context)
 		
 	end
 	
+	-- Parrot rot offset
+	for _, parrot in pairs(parrots) do
+		parrot:rot(-calculateParentRot(parrot:getParent()))
+	end
+	
 end
 
 -- GS Blending Setup
@@ -140,6 +164,16 @@ local blendAnims = {
 	
 for _, blend in ipairs(blendAnims) do
 	blend.anim:blendTime(table.unpack(blend.ticks)):onBlend("easeOutQuad")
+end
+
+-- Fixing spyglass jank
+function events.RENDER(delta, context)
+	
+	local rot = vanilla_model.HEAD:getOriginRot()
+	rot.x = math.clamp(rot.x, -90, 30)
+	centaurParts.Spyglass:rot(rot)
+		:pos(pose.crouch and vec(0, -4, 0) or nil)
+	
 end
 
 -- Play rear up anim
