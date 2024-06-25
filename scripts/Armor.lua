@@ -8,13 +8,32 @@ local color        = require("scripts.ColorProperties")
 kattArmor.Armor.Leggings:setLayer(1)
 
 -- Armor parts
+kattArmor.Armor.Helmet
+	:addParts(centaurParts.headArmorHelmet.Helmet)
+	:addTrimParts(centaurParts.headArmorHelmet.Trim)
 kattArmor.Armor.Chestplate
 	:addParts(
-		centaurParts.ManeArmorChestplate.Chestplate
+		centaurParts.bodyArmorChestplate.Chestplate,
+		centaurParts.leftArmArmorChestplate.Chestplate,
+		centaurParts.rightArmArmorChestplate.Chestplate,
+		centaurParts.leftArmArmorChestplateFP.Chestplate,
+		centaurParts.rightArmArmorChestplateFP.Chestplate
+	)
+	:addTrimParts(
+		centaurParts.bodyArmorChestplate.Trim,
+		centaurParts.leftArmArmorChestplate.Trim,
+		centaurParts.rightArmArmorChestplate.Trim,
+		centaurParts.leftArmArmorChestplateFP.Trim,
+		centaurParts.rightArmArmorChestplateFP.Trim
 	)
 kattArmor.Armor.Leggings
 	:addParts(
+		centaurParts.bodyArmorLeggings.Leggings,
 		centaurParts.MainArmorLeggings.Leggings
+	)
+	:addTrimParts(
+		centaurParts.bodyArmorLeggings.Trim,
+		centaurParts.MainArmorLeggings.Trim
 	)
 kattArmor.Armor.Boots
 	:addParts(
@@ -23,30 +42,125 @@ kattArmor.Armor.Boots
 		centaurParts.BackLeftLegArmorBoot.Boot,
 		centaurParts.BackRightLegArmorBoot.Boot
 	)
+	:addTrimParts(
+		centaurParts.FrontLeftLegArmorBoot.Trim,
+		centaurParts.FrontRightLegArmorBoot.Trim,
+		centaurParts.BackLeftLegArmorBoot.Trim,
+		centaurParts.BackRightLegArmorBoot.Trim
+	)
 
 -- Leather armor
 kattArmor.Materials.leather
-	:setTexture("textures/entity/horse/armor/horse_armor_leather.png")
+	:setTexture(textures["models.Centaur.leatherArmor"])
+	:addParts(kattArmor.Armor.Helmet,
+		centaurParts.headArmorHelmet.Leather
+	)
+	:addParts(kattArmor.Armor.Chestplate,
+		centaurParts.bodyArmorChestplate.Leather,
+		centaurParts.leftArmArmorChestplate.Leather,
+		centaurParts.rightArmArmorChestplate.Leather,
+		centaurParts.leftArmArmorChestplateFP.Leather,
+		centaurParts.rightArmArmorChestplateFP.Leather
+	)
+	:addParts(kattArmor.Armor.Leggings,
+		centaurParts.bodyArmorLeggings.Leather,
+		centaurParts.MainArmorLeggings.Leather
+	)
+	:addParts(kattArmor.Armor.Boots,
+		centaurParts.FrontLeftLegArmorBoot.Leather,
+		centaurParts.FrontRightLegArmorBoot.Leather,
+		centaurParts.BackLeftLegArmorBoot.Leather,
+		centaurParts.BackRightLegArmorBoot.Leather
+	)
 
 -- Chainmail armor
 kattArmor.Materials.chainmail
-	:setTexture()
+	:setTexture(textures["models.Centaur.chainmailArmor"])
 
 -- Iron armor
 kattArmor.Materials.iron
-	:setTexture("textures/entity/horse/armor/horse_armor_iron.png")
+	:setTexture(textures["models.Centaur.ironArmor"])
 
 -- Golden armor
 kattArmor.Materials.golden
-	:setTexture("textures/entity/horse/armor/horse_armor_gold.png")
+	:setTexture(textures["models.Centaur.goldenArmor"])
 
 -- Diamond armor
 kattArmor.Materials.diamond
-	:setTexture("textures/entity/horse/armor/horse_armor_diamond.png")
+	:setTexture(textures["models.Centaur.diamondArmor"])
 
 -- Netherite armor
 kattArmor.Materials.netherite
-	:setTexture()
+	:setTexture(textures["models.Centaur.netheriteArmor"])
+
+-- Turtle helmet
+kattArmor.Materials.turtle
+	:setTexture(textures["models.Centaur.turtleHelmet"])
+
+-- Trims
+-- Coast
+kattArmor.TrimPatterns.coast
+	:setTexture(textures["models.Centaur.coastTrim"])
+
+-- Dune
+kattArmor.TrimPatterns.dune
+	:setTexture(textures["models.Centaur.duneTrim"])
+
+-- Eye
+kattArmor.TrimPatterns.eye
+	:setTexture(textures["models.Centaur.eyeTrim"])
+
+-- Host
+kattArmor.TrimPatterns.host
+	:setTexture(textures["models.Centaur.hostTrim"])
+
+-- Raiser
+kattArmor.TrimPatterns.raiser
+	:setTexture(textures["models.Centaur.raiserTrim"])
+
+-- Rib
+kattArmor.TrimPatterns.rib
+	:setTexture(textures["models.Centaur.ribTrim"])
+
+-- Sentry
+kattArmor.TrimPatterns.sentry
+	:setTexture(textures["models.Centaur.sentryTrim"])
+
+-- Shaper
+kattArmor.TrimPatterns.shaper
+	:setTexture(textures["models.Centaur.shaperTrim"])
+
+-- Silence
+kattArmor.TrimPatterns.silence
+	:setTexture(textures["models.Centaur.silenceTrim"])
+
+-- Snout
+kattArmor.TrimPatterns.snout
+	:setTexture(textures["models.Centaur.snoutTrim"])
+
+-- Spire
+kattArmor.TrimPatterns.spire
+	:setTexture(textures["models.Centaur.spireTrim"])
+
+-- Tide
+kattArmor.TrimPatterns.tide
+	:setTexture(textures["models.Centaur.tideTrim"])
+
+-- Vex
+kattArmor.TrimPatterns.vex
+	:setTexture(textures["models.Centaur.vexTrim"])
+
+-- Ward
+kattArmor.TrimPatterns.ward
+	:setTexture(textures["models.Centaur.wardTrim"])
+
+-- Wayfinder
+kattArmor.TrimPatterns.wayfinder
+	:setTexture(textures["models.Centaur.wayfinderTrim"])
+
+-- Wild
+kattArmor.TrimPatterns.wild
+	:setTexture(textures["models.Centaur.wildTrim"])
 
 -- Config setup
 config:name("Centaur")
@@ -62,21 +176,26 @@ if boots      == nil then boots      = true end
 -- All helmet parts
 local helmetGroups = {
 	
-	vanilla_model.HELMET
+	centaurParts.headArmorHelmet,
+	centaurParts.HelmetItemPivot
 	
 }
 
 -- All chestplate parts
 local chestplateGroups = {
 	
-	vanilla_model.CHESTPLATE,
-	centaurParts.ManeArmorChestplate
+	centaurParts.bodyArmorChestplate,
+	centaurParts.leftArmArmorChestplate,
+	centaurParts.rightArmArmorChestplate,
+	centaurParts.leftArmArmorChestplateFP,
+	centaurParts.rightArmArmorChestplateFP
 	
 }
 
 -- All leggings parts
 local leggingsGroups = {
 	
+	centaurParts.bodyArmorLeggings,
 	centaurParts.MainArmorLeggings
 	
 }

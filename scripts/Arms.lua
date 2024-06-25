@@ -86,8 +86,15 @@ function events.RENDER(delta, context)
 	local firstPerson = context == "FIRST_PERSON"
 	
 	-- Apply
-	centaurParts.LeftArm:rot( firstPerson and 0 or (-((vanilla_model.LEFT_ARM:getOriginRot()  + 180) % 360 - 180) + -idleRot + bodyOffset) * leftArm.currentPos)
-	centaurParts.RightArm:rot(firstPerson and 0 or (-((vanilla_model.RIGHT_ARM:getOriginRot() + 180) % 360 - 180) + idleRot + bodyOffset) * rightArm.currentPos)
+	centaurParts.LeftArm:rot((-((vanilla_model.LEFT_ARM:getOriginRot() + 180) % 360 - 180) + -idleRot + bodyOffset) * leftArm.currentPos)
+		:visible(not firstPerson)
+	
+	centaurParts.LeftArmFP:visible(firstPerson)
+	
+	centaurParts.RightArm:rot((-((vanilla_model.RIGHT_ARM:getOriginRot() + 180) % 360 - 180) + idleRot + bodyOffset) * rightArm.currentPos)
+		:visible(not firstPerson)
+	
+	centaurParts.RightArmFP:visible(firstPerson)
 	
 end
 

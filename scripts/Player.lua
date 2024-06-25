@@ -24,9 +24,13 @@ local skin = {
 	
 	centaurParts.leftArmDefault,
 	centaurParts.leftArmSlim,
+	centaurParts.leftArmDefaultFP,
+	centaurParts.leftArmSlimFP,
 	
 	centaurParts.rightArmDefault,
 	centaurParts.rightArmSlim,
+	centaurParts.rightArmDefaultFP,
+	centaurParts.rightArmSlimFP,
 	
 	centaurParts.Portrait.Head,
 	centaurParts.Portrait.Layer,
@@ -52,11 +56,15 @@ local layer = {
 	},
 	LEFT_SLEEVE = {
 		centaurParts.leftArmDefault.Layer,
-		centaurParts.leftArmSlim.Layer
+		centaurParts.leftArmSlim.Layer,
+		centaurParts.leftArmDefaultFP.Layer,
+		centaurParts.leftArmSlimFP.Layer
 	},
 	RIGHT_SLEEVE = {
 		centaurParts.rightArmDefault.Layer,
-		centaurParts.rightArmSlim.Layer
+		centaurParts.rightArmSlim.Layer,
+		centaurParts.rightArmDefaultFP.Layer,
+		centaurParts.rightArmSlimFP.Layer
 	},
 	LEFT_PANTS_LEG = {
 		centaurParts.FrontLeftLeg.Layer,
@@ -95,9 +103,13 @@ function events.TICK()
 	
 	centaurParts.leftArmDefault:visible(not slimShape)
 	centaurParts.rightArmDefault:visible(not slimShape)
+	centaurParts.leftArmDefaultFP:visible(not slimShape)
+	centaurParts.rightArmDefaultFP:visible(not slimShape)
 	
 	centaurParts.leftArmSlim:visible(slimShape)
 	centaurParts.rightArmSlim:visible(slimShape)
+	centaurParts.leftArmSlimFP:visible(slimShape)
+	centaurParts.rightArmSlimFP:visible(slimShape)
 	
 	-- Skin textures
 	local skinType = vanillaSkin and "SKIN" or "PRIMARY"
