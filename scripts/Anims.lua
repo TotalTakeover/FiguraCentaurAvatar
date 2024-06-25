@@ -58,7 +58,7 @@ function events.TICK()
 	
 	-- Control rearing up animation
 	holdJump = math.max(holdJump - 1, 0)
-	if wasGround and not onGround and sprint and vel.y > 0 and not inWater then
+	if wasGround and not onGround and vel.y > 0 and not inWater then
 		
 		holdJump = 20
 		
