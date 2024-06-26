@@ -102,8 +102,6 @@ function events.TICK()
 				{text = "Toggle Saddle\n\n", bold = true, color = color.primary},
 				{text = "Toggles visibility of the saddle.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 		
 		t.bagsPage
 			:title(toJson
@@ -111,8 +109,11 @@ function events.TICK()
 				{text = "Toggle Bags\n\n", bold = true, color = color.primary},
 				{text = "Toggles visibility of the bags.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
+		
+		for _, page in pairs(t) do
+			page:hoverColor(color.hover):toggleColor(color.active)
+		end
+		
 	end
 	
 end

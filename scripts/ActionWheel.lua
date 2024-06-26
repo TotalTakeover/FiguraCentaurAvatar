@@ -90,49 +90,46 @@ function events.TICK()
 			:title(toJson
 				{text = "Avatar Settings", bold = true, color = color.primary}
 			)
-			:hoverColor(color.hover)
 		
 		pageActions.centaur
 			:title(toJson
 				{text = "Centaur Settings", bold = true, color = color.primary}
 			)
-			:hoverColor(color.hover)
 		
 		pageActions.texture
 			:title(toJson
 				{text = "Texture Settings", bold = true, color = color.primary}
 			)
-			:hoverColor(color.hover)
 		
 		pageActions.primaryTexture
 			:title(toJson
 				{text = "Primary Textures", bold = true, color = color.primary}
 			)
-			:hoverColor(color.hover)
 		
 		pageActions.secondaryTexture
 			:title(toJson
 				{text = "Secondary Textures", bold = true, color = color.primary}
 			)
-			:hoverColor(color.hover)
 		
 		pageActions.anims
 			:title(toJson
 				{text = "Animations", bold = true, color = color.primary}
 			)
-			:hoverColor(color.hover)
 		
 		pageActions.armor
 			:title(toJson
 				{text = "Armor Settings", bold = true, color = color.primary}
 			)
-			:hoverColor(color.hover)
 		
 		pageActions.camera
 			:title(toJson
 				{text = "Camera Settings", bold = true, color = color.primary}
 			)
-			:hoverColor(color.hover)
+		
+		for _, page in pairs(pageActions) do
+			page:hoverColor(color.hover)
+		end
+		
 	end
 	
 end

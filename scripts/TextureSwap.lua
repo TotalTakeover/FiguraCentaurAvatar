@@ -278,8 +278,6 @@ function events.TICK()
 				{text = "Set Primary Horse White\n\n", bold = true, color = color.primary},
 				{text = "Sets the lower body to use the \"Horse White\" vanilla texture.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 			:toggled(primaryTypes[1].active)
 		
 		t.horseGrayPage
@@ -288,8 +286,6 @@ function events.TICK()
 				{text = "Set Primary Horse Gray\n\n", bold = true, color = color.primary},
 				{text = "Sets the lower body to use the \"Horse Gray\" vanilla texture.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 			:toggled(primaryTypes[2].active)
 		
 		t.horseBlackPage
@@ -298,8 +294,6 @@ function events.TICK()
 				{text = "Set Primary Horse Black\n\n", bold = true, color = color.primary},
 				{text = "Sets the lower body to use the \"Horse Black\" vanilla texture.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 			:toggled(primaryTypes[3].active)
 		
 		t.horseCreamyPage
@@ -308,8 +302,6 @@ function events.TICK()
 				{text = "Set Primary Horse Creamy\n\n", bold = true, color = color.primary},
 				{text = "Sets the lower body to use the \"Horse Creamy\" vanilla texture.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 			:toggled(primaryTypes[4].active)
 		
 		t.horseChestnutPage
@@ -318,8 +310,6 @@ function events.TICK()
 				{text = "Set Primary Horse Chestnut\n\n", bold = true, color = color.primary},
 				{text = "Sets the lower body to use the \"Horse Chestnut\" vanilla texture.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 			:toggled(primaryTypes[5].active)
 		
 		t.horseBrownPage
@@ -328,8 +318,6 @@ function events.TICK()
 				{text = "Set Primary Horse Brown\n\n", bold = true, color = color.primary},
 				{text = "Sets the lower body to use the \"Horse Brown\" vanilla texture.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 			:toggled(primaryTypes[6].active)
 		
 		t.horseDarkBrownPage
@@ -338,8 +326,6 @@ function events.TICK()
 				{text = "Set Primary Horse Dark Brown\n\n", bold = true, color = color.primary},
 				{text = "Sets the lower body to use the \"Horse Dark Brown\" vanilla texture.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 			:toggled(primaryTypes[7].active)
 		
 		t.horseZombiePage
@@ -348,8 +334,6 @@ function events.TICK()
 				{text = "Set Primary Horse Zombie\n\n", bold = true, color = color.primary},
 				{text = "Sets the lower body to use the \"Horse Zombie\" vanilla texture.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 			:toggled(primaryTypes[8].active)
 		
 		t.horseSkeletonPage
@@ -358,8 +342,6 @@ function events.TICK()
 				{text = "Set Primary Horse Skeleton\n\n", bold = true, color = color.primary},
 				{text = "Sets the lower body to use the \"Horse Skeleton\" vanilla texture.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 			:toggled(primaryTypes[9].active)
 		
 		t.donkeyPage
@@ -368,8 +350,6 @@ function events.TICK()
 				{text = "Set Primary Donkey\n\n", bold = true, color = color.primary},
 				{text = "Sets the lower body to use the \"Donkey\" vanilla texture.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 			:toggled(primaryTypes[10].active)
 		
 		t.mulePage
@@ -378,8 +358,6 @@ function events.TICK()
 				{text = "Set Primary Mule\n\n", bold = true, color = color.primary},
 				{text = "Sets the lower body to use the \"Mule\" vanilla texture.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 			:toggled(primaryTypes[11].active)
 		
 		t.horseDefaultPage
@@ -388,8 +366,6 @@ function events.TICK()
 				{text = "Set Primary Horse Default\n\n", bold = true, color = color.primary},
 				{text = "Sets the lower body to use the default blockbench texture.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 			:toggled(primaryTypes[12].active)
 		
 		t.horseMarkingsBlankPage
@@ -398,8 +374,6 @@ function events.TICK()
 				{text = "Disable Secondary\n\n", bold = true, color = color.primary},
 				{text = "Sets the lower body to not use a secondary texture.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 			:toggled(secondaryTypes[1].active)
 		
 		t.horseMarkingsWhitePage
@@ -408,8 +382,6 @@ function events.TICK()
 				{text = "Set Secondary White\n\n", bold = true, color = color.primary},
 				{text = "Sets the lower body to use the \"White\" vanilla texture.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 			:toggled(secondaryTypes[2].active)
 		
 		t.horseMarkingsWhiteFieldPage
@@ -418,8 +390,6 @@ function events.TICK()
 				{text = "Set Secondary White Field\n\n", bold = true, color = color.primary},
 				{text = "Sets the lower body to use the \"White Field\" vanilla texture.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 			:toggled(secondaryTypes[3].active)
 		
 		t.horseMarkingsWhiteDotsPage
@@ -428,8 +398,6 @@ function events.TICK()
 				{text = "Set Secondary White Dots\n\n", bold = true, color = color.primary},
 				{text = "Sets the lower body to use the \"White Dots\" vanilla texture.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 			:toggled(secondaryTypes[4].active)
 		
 		t.horseMarkingsBlackDotsPage
@@ -438,8 +406,6 @@ function events.TICK()
 				{text = "Set Secondary Black Dots\n\n", bold = true, color = color.primary},
 				{text = "Sets the lower body to use the \"Black Dots\" vanilla texture.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 			:toggled(secondaryTypes[5].active)
 		
 		t.horseMarkingsDefaultPage
@@ -448,9 +414,12 @@ function events.TICK()
 				{text = "Set Secondary Default\n\n", bold = true, color = color.primary},
 				{text = "Sets the lower body to use the default blockbench texture.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 			:toggled(secondaryTypes[6].active)
+		
+		for _, page in pairs(t) do
+			page:hoverColor(color.hover):toggleColor(color.active)
+		end
+		
 	end
 	
 end

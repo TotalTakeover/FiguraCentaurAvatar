@@ -301,7 +301,6 @@ function events.TICK()
 			:title(toJson
 				{text = "Play Rear Up animation", bold = true, color = color.primary}
 			)
-			:hoverColor(color.hover)
 		
 		t.tailSwishPage
 			:title(toJson
@@ -309,8 +308,6 @@ function events.TICK()
 				{text = "Toggle Tail Swish\n\n", bold = true, color = color.primary},
 				{text = "Allow the tail to idly swish at random intervals.\nRight click to manually swish the tail.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 		
 		t.earFlickPage
 			:title(toJson
@@ -318,8 +315,11 @@ function events.TICK()
 				{text = "Toggle Ear Flick\n\n", bold = true, color = color.primary},
 				{text = "Allow the ears to idly flick at random intervals.\nRight click to manually flick an ear.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
+		
+		for _, page in pairs(t) do
+			page:hoverColor(color.hover):toggleColor(color.active)
+		end
+		
 	end
 	
 end

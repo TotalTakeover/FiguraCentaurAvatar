@@ -145,8 +145,11 @@ function events.TICK()
 				{text = "Arm Movement Toggle\n\n", bold = true, color = color.primary},
 				{text = "Toggles the movement swing movement of the arms.\nActions are not effected.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
+		
+		for _, page in pairs(t) do
+			page:hoverColor(color.hover):toggleColor(color.active)
+		end
+		
 	end
 	
 end

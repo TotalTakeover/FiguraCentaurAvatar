@@ -355,8 +355,6 @@ function events.TICK()
 				{text = "Toggle All Armor\n\n", bold = true, color = color.primary},
 				{text = "Toggles visibility of all armor parts.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 			:toggled(helmet and chestplate and leggings and boots)
 		
 		t.helmetPage
@@ -365,8 +363,6 @@ function events.TICK()
 				{text = "Toggle Helmet\n\n", bold = true, color = color.primary},
 				{text = "Toggles visibility of helmet parts.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 			:toggled(helmet)
 		
 		t.chestplatePage
@@ -375,8 +371,6 @@ function events.TICK()
 				{text = "Toggle Chestplate\n\n", bold = true, color = color.primary},
 				{text = "Toggles visibility of chestplate parts.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 			:toggled(chestplate)
 		
 		t.leggingsPage
@@ -385,8 +379,6 @@ function events.TICK()
 				{text = "Toggle Leggings\n\n", bold = true, color = color.primary},
 				{text = "Toggles visibility of leggings parts.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 			:toggled(leggings)
 		
 		t.bootsPage
@@ -395,9 +387,12 @@ function events.TICK()
 				{text = "Toggle Boots\n\n", bold = true, color = color.primary},
 				{text = "Toggles visibility of boots.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 			:toggled(boots)
+		
+		for _, page in pairs(t) do
+			page:hoverColor(color.hover):toggleColor(color.active)
+		end
+		
 	end
 	
 end

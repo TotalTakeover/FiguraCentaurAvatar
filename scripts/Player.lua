@@ -196,8 +196,6 @@ function events.TICK()
 				{text = "Toggle Vanilla Texture\n\n", bold = true, color = color.primary},
 				{text = "Toggles the usage of your vanilla skin.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 		
 		t.modelPage
 			:title(toJson
@@ -205,8 +203,11 @@ function events.TICK()
 				{text = "Toggle Model Shape\n\n", bold = true, color = color.primary},
 				{text = "Adjust the model shape to use Default or Slim Proportions.\nWill be overridden by the vanilla skin toggle.", color = color.secondary}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
+		
+		for _, page in pairs(t) do
+			page:hoverColor(color.hover):toggleColor(color.active)
+		end
+		
 	end
 	
 end

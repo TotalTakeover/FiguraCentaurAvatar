@@ -212,8 +212,6 @@ function events.TICK()
 				{text = "Sets the camera position to where your avatar's head is.\n\n", color = color.secondary},
 				{text = "To prevent x-ray, the camera will reset to its default position if inside a block.", color = "red"}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
 		
 		t.eyePage
 			:title(toJson
@@ -223,8 +221,11 @@ function events.TICK()
 				{text = "WARNING: ", bold = true, color = "dark_red"},
 				{text = "This feature is dangerous!\nIt can and will be flagged on servers with anticheat!\nFurthermore, \"In Wall\" damage is possible. (The x-ray prevention will try to avoid this)\nThis setting will only be saved on a \"Per-Server\" basis.\n\nPlease use with extreme caution!", color = "red"}}
 			)
-			:hoverColor(color.hover)
-			:toggleColor(color.active)
+		
+		for _, page in pairs(t) do
+			page:hoverColor(color.hover):toggleColor(color.active)
+		end
+		
 	end
 	
 end
