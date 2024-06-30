@@ -187,6 +187,5 @@ function events.TICK()
 	
 end
 
--- Returns animation variables/action wheel pages
 -- Returns action wheel pages
 return t
