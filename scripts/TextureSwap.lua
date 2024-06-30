@@ -1,7 +1,5 @@
--- Required scripts
+-- Required script
 local centaurParts = require("lib.GroupIndex")(models.models.Centaur)
-local itemCheck    = require("lib.ItemCheck")
-local color        = require("scripts.ColorProperties")
 
 local blankTexture = textures:newTexture("Blank", 64, 64)
 blankTexture:fill(0, 0, 64, 64, 0, 0, 0, 0)
@@ -182,6 +180,10 @@ end
 
 -- Host only instructions
 if not host:isHost() then return end
+
+-- Required scripts
+local itemCheck = require("lib.ItemCheck")
+local color     = require("scripts.ColorProperties")
 
 -- Sync on tick
 function events.TICK()

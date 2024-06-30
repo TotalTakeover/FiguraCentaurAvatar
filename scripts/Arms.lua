@@ -1,8 +1,6 @@
 -- Required scripts
 local centaurParts = require("lib.GroupIndex")(models.models.Centaur)
-local itemCheck    = require("lib.ItemCheck")
 local pose         = require("scripts.Posing")
-local color        = require("scripts.ColorProperties")
 
 -- Config setup
 config:name("Centaur")
@@ -115,6 +113,10 @@ end
 
 -- Host only instructions
 if not host:isHost() then return end
+
+-- Required scripts
+local itemCheck = require("lib.ItemCheck")
+local color     = require("scripts.ColorProperties")
 
 -- Sync on tick
 function events.TICK()

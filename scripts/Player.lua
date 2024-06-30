@@ -1,7 +1,5 @@
--- Required scripts
+-- Required script
 local centaurParts = require("lib.GroupIndex")(models.models.Centaur)
-local itemCheck    = require("lib.ItemCheck")
-local color        = require("scripts.ColorProperties")
 
 -- Config setup
 config:name("Centaur")
@@ -173,6 +171,10 @@ end
 
 -- Table setup
 local t = {}
+
+-- Required scripts
+local itemCheck = require("lib.ItemCheck")
+local color     = require("scripts.ColorProperties")
 
 -- Action wheel pages
 t.vanillaSkinPage = action_wheel:newAction()

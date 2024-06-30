@@ -2,9 +2,7 @@
 require("lib.GSAnimBlend")
 local centaurParts = require("lib.GroupIndex")(models.models.Centaur)
 local ground       = require("lib.GroundCheck")
-local itemCheck    = require("lib.ItemCheck")
 local pose         = require("scripts.Posing")
-local color        = require("scripts.ColorProperties")
 
 -- Config setup
 config:name("Centaur")
@@ -237,6 +235,10 @@ end
 
 -- Host only instructions
 if not host:isHost() then return end
+
+-- Required scripts
+local itemCheck = require("lib.ItemCheck")
+local color     = require("scripts.ColorProperties")
 
 -- Rear Up keybind
 local rearUpBind   = config:load("AnimRearUpKeybind") or "key.keyboard.keypad.1"
