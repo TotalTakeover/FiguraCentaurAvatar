@@ -43,7 +43,7 @@ squapi.tails(
 	1,      -- Seg Offset Multiplier (1)
 	0.0025, -- Stiffness (0.0025)
 	0.05,   -- Bounce (0.05)
-	0,      -- Fly Offset (0)
+	-45,    -- Fly Offset (-45)
 	10,     -- Down Limit (10)
 	40      -- Up Limit (40)
 )
