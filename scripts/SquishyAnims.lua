@@ -17,6 +17,37 @@ local function calculateParentRot(m)
 	
 end
 
+-- Squishy ears
+squapi.ear(
+	centaurParts.LeftEar,
+	centaurParts.RightEar,
+	true,  -- Do Flick (True)
+	800,   -- Flick Chance (800)
+	0.5,   -- Range Multiplier (0.5)
+	false, -- Horizontal Ears (False)
+	0.2,   -- Bend Strength (0.2)
+	0.025, -- Stiffness (0.025)
+	0.05   -- Bounce (0.05)
+)
+
+-- Squishy tail
+squapi.tails(
+	{centaurParts.Tail},
+	2,      -- Intensity (2)
+	0,      -- Intensity Y (0)
+	0,      -- Intensity X (0)
+	0,      -- Speed Y (0)
+	0,      -- Speed X (0)
+	1,      -- Tail Vel Bend (1)
+	0,      -- Initial Tail Offset (0)
+	1,      -- Seg Offset Multiplier (1)
+	0.0025, -- Stiffness (0.0025)
+	0.05,   -- Bounce (0.05)
+	0,      -- Fly Offset (0)
+	10,     -- Down Limit (10)
+	40      -- Up Limit (40)
+)
+
 -- Squishy smooth torso
 squapi.smoothTorso(centaurParts.UpperBody, 0.3)
 

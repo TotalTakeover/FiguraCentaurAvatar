@@ -218,7 +218,5 @@ pages.secondaryTexture
 -- Animation actions
 pages.anims
 	:action( -1, anims.rearUpPage)
-	:action( -1, anims.tailSwishPage)
-	:action( -1, anims.earFlickPage)
 	:action( -1, arms.movePage)
 	:action( -1, backAction)

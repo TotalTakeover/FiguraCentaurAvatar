@@ -123,10 +123,16 @@ function events.TICK()
 	-- Apply size, ears, and mane
 	local horse = primaryType ~= 10 and primaryType ~= 11
 	
-	centaurParts.HorseEars:visible(horse)
-	centaurParts.MuleEars:visible(not horse)
-	centaurParts.HorseEarsSkull:visible(horse)
-	centaurParts.MuleEarsSkull:visible(not horse)
+	centaurParts.HorseLeftEar:visible(horse)
+	centaurParts.HorseRightEar:visible(horse)
+	centaurParts.MuleLeftEar:visible(not horse)
+	centaurParts.MuleRightEar:visible(not horse)
+	
+	centaurParts.HorseLeftEarSkull:visible(horse)
+	centaurParts.HorseRightEarSkull:visible(horse)
+	centaurParts.MuleLeftEarSkull:visible(not horse)
+	centaurParts.MuleRightEarSkull:visible(not horse)
+	
 	centaurParts.Mane:visible(horse)
 	
 	centaurParts.Player:scale(horse and 1.15 or 1)
