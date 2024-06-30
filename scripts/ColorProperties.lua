@@ -38,9 +38,10 @@ function events.TICK()
 		
 	end
 	
-	-- Get Averages
+	-- Get Average
 	average = findAverage(sum, count)
 	
+	-- Store previous textures
 	prevType, prevPrimary = centaurParts.Main.Body:getPrimaryTexture()
 	
 	-- Glowing outline
