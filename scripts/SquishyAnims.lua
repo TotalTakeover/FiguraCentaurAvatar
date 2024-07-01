@@ -49,7 +49,11 @@ squapi.tails(
 )
 
 -- Squishy smooth torso
-squapi.smoothTorso(centaurParts.UpperBody, 0.3)
+squapi.smoothTorso(
+	centaurParts.UpperBody,
+	0.3, -- Strength Multiplier (0.3)
+	0.4  -- Tilt (0.4)
+)
 
 -- Squishy crouch
 squapi.crouch(anims.crouch)
