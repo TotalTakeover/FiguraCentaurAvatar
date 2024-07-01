@@ -160,6 +160,10 @@ end
 -- Host only instructions
 if not host:isHost() then return end
 
+-- Required scripts
+local itemCheck = require("lib.ItemCheck")
+local color     = require("scripts.ColorProperties")
+
 -- Sync on tick
 function events.TICK()
 	
@@ -171,10 +175,6 @@ end
 
 -- Table setup
 local t = {}
-
--- Required scripts
-local itemCheck = require("lib.ItemCheck")
-local color     = require("scripts.ColorProperties")
 
 -- Actions
 t.vanillaSkinPage = action_wheel:newAction()
