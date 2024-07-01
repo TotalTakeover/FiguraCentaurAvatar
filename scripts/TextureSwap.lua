@@ -1,6 +1,7 @@
 -- Required script
 local centaurParts = require("lib.GroupIndex")(models.models.Centaur)
 
+-- Blank texure
 local blankTexture = textures:newTexture("Blank", 64, 64)
 blankTexture:fill(0, 0, 64, 64, 0, 0, 0, 0)
 
@@ -43,7 +44,7 @@ local secondaryTypes = {
 primaryTypes[primaryType].active     = true
 secondaryTypes[secondaryType].active = true
 
--- Parts that will change textures
+-- Texture parts
 local textureParts = {
 	
 	-- Upper Body
@@ -72,7 +73,7 @@ local textureParts = {
 
 }
 
--- Initial render type setup
+-- Set render type start on init
 for _, part in ipairs(textureParts) do
 	
 	part:secondaryRenderType("TRANSLUCENT")
@@ -200,10 +201,10 @@ function events.TICK()
 	
 end
 
--- Setup table
+-- Table setup
 local t = {}
 
--- Action wheel pages
+-- Actions
 t.horseWhitePage = action_wheel:newAction()
 	:item(itemCheck("white_dye"))
 	:onLeftClick(function() pings.setTexturesPrimary(1) end)
@@ -276,7 +277,7 @@ t.horseMarkingsDefaultPage = action_wheel:newAction()
 	:item(itemCheck("player_head{'SkullOwner':'"..avatar:getEntityName().."'}"))
 	:onLeftClick(function() pings.setTexturesSecondary(6) end)
 
--- Update action page info
+-- Update actions
 function events.TICK()
 	
 	if action_wheel:isEnabled() then
@@ -432,5 +433,5 @@ function events.TICK()
 	
 end
 
--- Return action wheel pages
+-- Return actions
 return t

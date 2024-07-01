@@ -11,7 +11,7 @@ if vanillaSkin == nil then vanillaSkin = true end
 centaurParts.Skull   :visible(true)
 centaurParts.Portrait:visible(true)
 
--- All vanilla skin parts
+-- Vanilla skin parts
 local skin = {
 	
 	centaurParts.Head.Head,
@@ -38,7 +38,7 @@ local skin = {
 	
 }
 
--- All layer parts
+-- Layer parts
 local layer = {
 
 	HAT = {
@@ -176,7 +176,7 @@ local t = {}
 local itemCheck = require("lib.ItemCheck")
 local color     = require("scripts.ColorProperties")
 
--- Action wheel pages
+-- Actions
 t.vanillaSkinPage = action_wheel:newAction()
 	:item(itemCheck("player_head{'SkullOwner':'"..avatar:getEntityName().."'}"))
 	:onToggle(pings.setAvatarVanillaSkin)
@@ -188,7 +188,7 @@ t.modelPage = action_wheel:newAction()
 	:onToggle(pings.setAvatarModelType)
 	:toggled(slim)
 
--- Update action page info
+-- Update actions
 function events.TICK()
 	
 	if action_wheel:isEnabled() then
@@ -214,5 +214,5 @@ function events.TICK()
 	
 end
 
--- Return action wheel pages
+-- Return actions
 return t

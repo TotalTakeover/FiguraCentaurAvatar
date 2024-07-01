@@ -1,4 +1,4 @@
--- Setup table
+-- Table setup
 local t = {
 	cF = false
 }
@@ -23,5 +23,5 @@ if host:isHost() then
 	end
 end
 
--- Returns table
+-- Returns variables
 return t

@@ -116,7 +116,8 @@ local blendAnims = {
 	{ anim = anims.stretch, ticks = {7,7} },
 	{ anim = anims.rearUp,  ticks = {5,5} }
 }
-	
+
+-- Apply GS Blending
 for _, blend in ipairs(blendAnims) do
 	blend.anim:blendTime(table.unpack(blend.ticks)):onBlend("easeOutQuad")
 end
@@ -162,15 +163,15 @@ function events.TICK()
 	
 end
 
--- Setup table
+-- Table setup
 local t = {}
 
--- Action wheel pages
+-- Action
 t.rearUpPage = action_wheel:newAction()
 	:item(itemCheck("golden_axe"))
 	:onLeftClick(pings.animPlayRearUp)
 
--- Update action page info
+-- Update action
 function events.TICK()
 	
 	if action_wheel:isEnabled() then
@@ -187,5 +188,5 @@ function events.TICK()
 	
 end
 
--- Returns action wheel pages
+-- Returns action
 return t

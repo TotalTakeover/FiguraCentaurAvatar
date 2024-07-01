@@ -171,7 +171,7 @@ if chestplate == nil then chestplate = true end
 if leggings   == nil then leggings   = true end
 if boots      == nil then boots      = true end
 
--- All helmet parts
+-- Helmet parts
 local helmetGroups = {
 	
 	centaurParts.headArmorHelmet,
@@ -179,7 +179,7 @@ local helmetGroups = {
 	
 }
 
--- All chestplate parts
+-- Chestplate parts
 local chestplateGroups = {
 	
 	centaurParts.bodyArmorChestplate,
@@ -190,7 +190,7 @@ local chestplateGroups = {
 	
 }
 
--- All leggings parts
+-- Leggings parts
 local leggingsGroups = {
 	
 	centaurParts.bodyArmorLeggings,
@@ -198,7 +198,7 @@ local leggingsGroups = {
 	
 }
 
--- All boots parts
+-- Boots parts
 local bootsGroups = {
 	
 	centaurParts.FrontLeftLegArmorBoot,
@@ -210,6 +210,7 @@ local bootsGroups = {
 
 function events.TICK()
 	
+	-- Apply
 	for _, part in ipairs(helmetGroups) do
 		part:visible(helmet)
 	end
@@ -231,7 +232,7 @@ function events.TICK()
 	
 end
 
--- Armor all toggle
+-- All toggle
 function pings.setArmorAll(boolean)
 	
 	helmet     = boolean
@@ -248,7 +249,7 @@ function pings.setArmorAll(boolean)
 	
 end
 
--- Armor helmet toggle
+-- Helmet toggle
 function pings.setArmorHelmet(boolean)
 	
 	helmet = boolean
@@ -259,7 +260,7 @@ function pings.setArmorHelmet(boolean)
 	
 end
 
--- Armor chestplate toggle
+-- Chestplate toggle
 function pings.setArmorChestplate(boolean)
 	
 	chestplate = boolean
@@ -270,7 +271,7 @@ function pings.setArmorChestplate(boolean)
 	
 end
 
--- Armor leggings toggle
+-- Leggings toggle
 function pings.setArmorLeggings(boolean)
 	
 	leggings = boolean
@@ -281,7 +282,7 @@ function pings.setArmorLeggings(boolean)
 	
 end
 
--- Armor boots toggle
+-- Boots toggle
 function pings.setArmorBoots(boolean)
 	
 	boots = boolean
@@ -318,10 +319,10 @@ function events.TICK()
 	
 end
 
--- Setup table
+-- Table setup
 local t = {}
 
--- Action wheel pages
+-- Actions
 t.allPage = action_wheel:newAction()
 	:item(itemCheck("armor_stand"))
 	:toggleItem(itemCheck("netherite_chestplate"))
@@ -347,7 +348,7 @@ t.bootsPage = action_wheel:newAction()
 	:toggleItem(itemCheck("diamond_boots"))
 	:onToggle(pings.setArmorBoots)
 
--- Update action page info
+-- Update actions
 function events.TICK()
 	
 	if action_wheel:isEnabled() then
@@ -399,5 +400,5 @@ function events.TICK()
 	
 end
 
--- Return action wheel pages
+-- Return actions
 return t

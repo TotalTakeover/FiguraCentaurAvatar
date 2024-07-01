@@ -27,5 +27,5 @@ function events.TICK()
 	
 end
 
--- Return table
+-- Return variables
 return t

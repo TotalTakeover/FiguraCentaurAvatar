@@ -24,7 +24,7 @@ function events.TICK()
 	-- Variables
 	local type, primary = centaurParts.Main.Body:getPrimaryTexture()
 	
-	
+	-- If texture changed
 	if type ~= prevType or primary ~= prevPrimary then
 		
 		-- Get/Create texture
@@ -38,7 +38,7 @@ function events.TICK()
 		
 	end
 	
-	-- Get Average
+	-- Get average
 	average = findAverage(sum, count)
 	
 	-- Store previous textures
@@ -58,6 +58,7 @@ if not host:isHost() then return end
 -- Table setup
 local t = {}
 
+-- Action variables
 t.hover     = vectors.vec3()
 t.active    = vectors.vec3()
 t.primary   = "#"..vectors.rgbToHex(vectors.vec3())
@@ -73,5 +74,5 @@ function events.TICK()
 	
 end
 
--- Return table
+-- Return variables
 return t

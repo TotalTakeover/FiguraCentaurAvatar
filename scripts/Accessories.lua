@@ -6,14 +6,14 @@ config:name("Centaur")
 local saddle = config:load("AccessoriesSaddle") or false
 local bags   = config:load("AccessoriesBags")   or false
 
--- All saddle parts
+-- Saddle parts
 local saddleParts = {
 	
 	centaurParts.Saddle
 	
 }
 
--- All bag parts
+-- Bag parts
 local bagParts = {
 	
 	centaurParts.LeftBag,
@@ -23,6 +23,7 @@ local bagParts = {
 
 function events.TICK()
 	
+	-- Apply
 	for _, part in ipairs(saddleParts) do
 		part:visible(saddle)
 	end
@@ -78,10 +79,10 @@ function events.TICK()
 	
 end
 
--- Setup table
+-- Table setup
 local t = {}
 
--- Action wheel pages
+-- Actions
 t.saddlePage = action_wheel:newAction()
 	:item(itemCheck("leather"))
 	:toggleItem(itemCheck("saddle"))
@@ -94,7 +95,7 @@ t.bagsPage = action_wheel:newAction()
 	:onToggle(pings.setAccessoriesBags)
 	:toggled(bags)
 
--- Update action page info
+-- Update actions
 function events.TICK()
 	
 	if action_wheel:isEnabled() then
@@ -120,5 +121,5 @@ function events.TICK()
 	
 end
 
--- Return action wheel pages
+-- Return actions
 return t
