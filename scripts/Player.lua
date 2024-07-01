@@ -40,7 +40,7 @@ local skin = {
 
 -- Layer parts
 local layer = {
-
+	
 	HAT = {
 		centaurParts.Head.Layer,
 		centaurParts.HorseLeftEar.Layer,
