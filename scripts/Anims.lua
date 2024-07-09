@@ -43,15 +43,10 @@ function events.TICK()
 	local sprint  = sprinting and not pose.crouch and not pose.swim
 	local stretch = pose.swim or pose.elytra or pose.spin or pose.crawl
 	local sleep   = pose.sleep
-	canRear = not pose.swim and not pose.elytra and not pose.sleep
+	canRear = onGround and not pose.swim and not pose.elytra and not pose.sleep
 	
 	-- Control rearing up animation
 	holdJump = math.max(holdJump - 1, 0)
-	if wasGround and not onGround and vel.y > 0 and not inWater then
-		
-		holdJump = 20
-		
-	end
 	
 	-- Animations
 	anims.sprint:playing(sprint)
