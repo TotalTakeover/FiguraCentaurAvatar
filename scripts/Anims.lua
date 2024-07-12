@@ -40,17 +40,17 @@ function events.TICK()
 	local inWater   = player:isInWater()
 	
 	-- Animation states
-	local sprint  = sprinting and not pose.crouch and not pose.swim
-	local stretch = pose.swim or pose.elytra or pose.spin or pose.crawl
-	local sleep   = pose.sleep
-	canRear = onGround and not pose.swim and not pose.elytra and not pose.sleep
+	local sprint = sprinting and not pose.crouch and not pose.swim
+	local extend = pose.swim or pose.elytra or pose.spin or pose.crawl
+	local sleep  = pose.sleep
+	canRear = vel:length() == 0 and (pose.stand or pose.crouch)
 	
 	-- Control rearing up animation
-	holdJump = math.max(holdJump - 1, 0)
+	holdJump = not canRear and 0 or math.max(holdJump - 1, 0)
 	
 	-- Animations
 	anims.sprint:playing(sprint)
-	anims.stretch:playing(stretch)
+	anims.extend:playing(extend)
 	anims.sleep:playing(sleep)
 	anims.rearUp:playing(canRear and holdJump ~= 0)
 	
@@ -68,12 +68,6 @@ local dirRot = {
 }
 
 function events.RENDER(delta, context)
-	
-	-- Leg movement
-	centaurParts.FrontLeftLeg:rot(vanilla_model.LEFT_LEG:getOriginRot()/2)
-	centaurParts.FrontRightLeg:rot(vanilla_model.RIGHT_LEG:getOriginRot()/2)
-	centaurParts.BackLeftLeg:rot(vanilla_model.RIGHT_LEG:getOriginRot()/2)
-	centaurParts.BackRightLeg:rot(vanilla_model.LEFT_LEG:getOriginRot()/2)
 	
 	-- Sleep rotations
 	if pose.sleep then
@@ -107,9 +101,9 @@ end
 
 -- GS Blending Setup
 local blendAnims = {
-	{ anim = anims.sprint,  ticks = {7,7} },
-	{ anim = anims.stretch, ticks = {7,7} },
-	{ anim = anims.rearUp,  ticks = {5,5} }
+	{ anim = anims.sprint, ticks = {7,7} },
+	{ anim = anims.extend, ticks = {7,7} },
+	{ anim = anims.rearUp, ticks = {5,5} }
 }
 
 -- Apply GS Blending

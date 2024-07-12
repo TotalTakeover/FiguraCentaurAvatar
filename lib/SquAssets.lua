@@ -284,15 +284,7 @@ function squassets.vanillaElement:new(element, strength, keepPosition)
 	self.element:setParentType("NONE")
     self.strength = strength or 1
 	self.rot = vec(0,0,0)
-	self.applyrot = self.rot
 	self.pos = vec(0,0,0)
-	self.applypos = self.pos
-	self.lerp = {
-		current    = 1,
-		nextTick   = 1,
-		target     = 1,
-		currentPos = 1
-	}
 
     -- CONTROL -------------------------------------------------------------------------
 
@@ -321,25 +313,14 @@ function squassets.vanillaElement:new(element, strength, keepPosition)
 
     -- UPDATES -------------------------------------------------------------------------
 
-    function self:tick()
-		log("test")
+    function self:render(dt, context)
         if self.enabled then
             local rot, pos = self:getVanilla()
-			self.lerp.current  = self.lerp.nextTick
-			self.lerp.nextTick = math.lerp(self.lerp.nextTick, self.lerp.target, 0.5)
-            self.applyrot = rot
+            self.element:setOffsetRot(rot*self.strength)
 			if self.keepPosition then
-				self.applypos = pos
-			else
-				self.applypos = vec(0, 0, 0)
+				self.element:setPos(pos)
 			end
         end
-    end
-
-    function self:render(dt, context)
-		self.lerp.currentPos = math.lerp(self.lerp.current, self.lerp.nextTick, dt)
-        self.element:setOffsetRot(self.applyrot * self.lerp.currentPos)
-		self.element:setPos(self.applypos * self.lerp.currentPos)
     end
 
 	return self
