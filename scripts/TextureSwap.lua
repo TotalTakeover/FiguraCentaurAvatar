@@ -110,7 +110,7 @@ function events.TICK()
 			
 		elseif secondaryType == 6 then
 			
-			part:secondaryTexture("SECONDARY")
+			part:secondaryTexture("Secondary")
 			
 		else
 			
