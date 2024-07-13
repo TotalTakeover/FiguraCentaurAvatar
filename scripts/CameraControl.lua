@@ -85,8 +85,8 @@ function events.RENDER(delta, context)
 		else
 			
 			-- else, slightly lower camera offset
-			posOffset  = posOffset - vec(0, (pose.sleep or pose.elytra) and 4 or 14, pose.sleep and -26 or 0) / 16
-			nameOffset = posOffset - vec(0, (pose.sleep and -16 or 0) * modelEyeHeight, pose.sleep and -2 or -16) / 16
+			posOffset  = posOffset - vec(0, (pose.sleep or pose.elytra) and 0 or 16, pose.sleep and -38 or 0) / 16
+			nameOffset = posOffset - vec(0, (pose.sleep and -10 or -2) * modelEyeHeight, pose.sleep and 0 or -20) / 16
 			
 			-- else, rotate camera offset on x axis
 			posOffset  = vectors.rotateAroundAxis(-player:getRot().x - (pose.sleep and 0 or 90), posOffset,  vec(1, 0, 0))

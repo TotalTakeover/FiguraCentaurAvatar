@@ -9,7 +9,7 @@ local camera    = require("scripts.CameraControl")
 local accessory = require("scripts.Accessories")
 local texture   = require("scripts.TextureSwap")
 local anims     = require("scripts.Anims")
-local arms      = require("scripts.Arms")
+local squapi    = require("scripts.SquishyAnims")
 local color     = require("scripts.ColorProperties")
 
 -- Logs pages for navigation
@@ -218,5 +218,5 @@ pages.secondaryTexture
 -- Animation actions
 pages.anims
 	:action( -1, anims.rearUpPage)
-	:action( -1, arms.movePage)
+	:action( -1, squapi.armsPage)
 	:action( -1, backAction)
