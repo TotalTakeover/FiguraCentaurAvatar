@@ -1,5 +1,5 @@
 # [Centaur](https://github.com/TotalTakeover/FiguraCentaurAvatar)
-### Version: v1.0.2
+### Version: v1.1.0
 This Figura avatar is a template designed around turning the user into a Centaur.
 
 ### Authors:
