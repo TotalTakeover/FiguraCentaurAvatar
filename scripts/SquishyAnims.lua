@@ -103,9 +103,15 @@ local tail = squapi.tail:new(
 	25    -- Up Limit (25)
 )
 
+local headParts = {
+	
+	centaurParts.UpperBody
+	
+}
+
 -- Squishy smooth torso
 local head = squapi.smoothHead:new(
-	centaurParts.UpperBody,
+	headParts,
 	0.3,  -- Strength (0.3)
 	0.4,  -- Tilt (0.4)
 	1,    -- Speed (1)
