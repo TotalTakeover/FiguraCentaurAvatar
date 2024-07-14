@@ -134,15 +134,8 @@ local rightArm = squapi.arm:new(
 )
 
 -- Arm strength variables
-local leftArmStrength = {
-	object   = leftArm,
-	strength = leftArm.strength
-}
-
-local rightArmStrength = {
-	object   = rightArm,
-	strength = rightArm.strength
-}
+local leftArmStrength  = leftArm.strength
+local rightArmStrength = rightArm.strength
 
 -- Squishy vanilla legs
 local frontLeftLeg = squapi.leg:new(
@@ -245,13 +238,13 @@ function events.RENDER(delta, context)
 	legLerp.currentPos      = math.lerp(legLerp.current,      legLerp.nextTick,      delta)
 	
 	-- Adjust arm strengths
-	leftArmStrength.object.strength  = leftArmStrength.strength  * leftArmLerp.currentPos
-	rightArmStrength.object.strength = rightArmStrength.strength * rightArmLerp.currentPos
-	
 	-- Adjust leg strength
 	for _, index in ipairs(legStrength) do
 		index.object.strength = index.strength * legLerp.currentPos
 	end
+	leftArm.strength  = leftArmStrength  * leftArmLerp.currentPos
+	rightArm.strength = rightArmStrength * rightArmLerp.currentPos
+	
 	
 	-- Adjust arm characteristics after applied by squapi
 	centaurParts.LeftArm
