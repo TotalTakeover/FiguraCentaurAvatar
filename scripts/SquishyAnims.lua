@@ -167,12 +167,10 @@ local backRightLeg = squapi.leg:new(
 )
 
 -- Leg strength variables
-local legStrength = {
-	{ object = frontLeftLeg,  strength = frontLeftLeg.strength  },
-	{ object = frontRightLeg, strength = frontRightLeg.strength },
-	{ object = backLeftLeg,   strength = backLeftLeg.strength   },
-	{ object = backRightLeg,  strength = backRightLeg.strength  }
-}
+local frontLeftLegStrength  = frontLeftLeg.strength
+local frontRightLegStrength = frontRightLeg.strength
+local backLeftLegStrength   = backLeftLeg.strength
+local backRightLegStrength  = backRightLeg.strength
 
 -- Squishy taur
 local taur = squapi.taur:new(
@@ -238,13 +236,14 @@ function events.RENDER(delta, context)
 	legLerp.currentPos      = math.lerp(legLerp.current,      legLerp.nextTick,      delta)
 	
 	-- Adjust arm strengths
-	-- Adjust leg strength
-	for _, index in ipairs(legStrength) do
-		index.object.strength = index.strength * legLerp.currentPos
-	end
 	leftArm.strength  = leftArmStrength  * leftArmLerp.currentPos
 	rightArm.strength = rightArmStrength * rightArmLerp.currentPos
 	
+	-- Adjust leg strengths
+	frontLeftLeg.strength  = frontLeftLegStrength  * legLerp.currentPos
+	frontRightLeg.strength = frontRightLegStrength * legLerp.currentPos
+	backLeftLeg.strength   = backLeftLegStrength   * legLerp.currentPos
+	backRightLeg.strength  = backRightLegStrength  * legLerp.currentPos
 	
 	-- Adjust arm characteristics after applied by squapi
 	centaurParts.LeftArm
