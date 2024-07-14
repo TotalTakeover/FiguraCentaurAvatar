@@ -103,6 +103,7 @@ local tail = squapi.tail:new(
 	25    -- Up Limit (25)
 )
 
+-- Head table
 local headParts = {
 	
 	centaurParts.UpperBody
