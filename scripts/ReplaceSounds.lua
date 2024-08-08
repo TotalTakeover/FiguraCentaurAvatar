@@ -1,8 +1,8 @@
 -- Required scripts
-local centaurParts = require("lib.GroupIndex")(models.models.Centaur)
-local ground       = require("lib.GroundCheck")
-local pose         = require("scripts.Posing")
-local effects      = require("scripts.SyncedVariables")
+local parts   = require("lib.PartsAPI")
+local ground  = require("lib.GroundCheck")
+local pose    = require("scripts.Posing")
+local effects = require("scripts.SyncedVariables")
 
 -- Variables
 local wasGround = false
@@ -12,10 +12,10 @@ local sprintTimer = 0
 -- Leg ground pivots
 local legGrounds = {
 	
-	{ part = centaurParts.FrontLeftGround,  wasGround = true },
-	{ part = centaurParts.FrontRightGround, wasGround = true },
-	{ part = centaurParts.BackLeftGround,   wasGround = true },
-	{ part = centaurParts.BackRightGround,  wasGround = true }
+	{ part = parts.group.FrontLeftGround,  wasGround = true },
+	{ part = parts.group.FrontRightGround, wasGround = true },
+	{ part = parts.group.BackLeftGround,   wasGround = true },
+	{ part = parts.group.BackRightGround,  wasGround = true }
 	
 }
 

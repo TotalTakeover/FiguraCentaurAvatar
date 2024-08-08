@@ -1,75 +1,31 @@
 -- Required scripts
-local centaurParts = require("lib.GroupIndex")(models.models.Centaur)
-local kattArmor    = require("lib.KattArmor")()
+local parts     = require("lib.PartsAPI")
+local kattArmor = require("lib.KattArmor")()
 
 -- Setting the leggings to layer 1
 kattArmor.Armor.Leggings:setLayer(1)
 
 -- Armor parts
 kattArmor.Armor.Helmet
-	:addParts(centaurParts.headArmorHelmet.Helmet)
-	:addTrimParts(centaurParts.headArmorHelmet.Trim)
+	:addParts(table.unpack(parts:createTable(function(part) return part:getName() == "Helmet" end)))
+	:addTrimParts(table.unpack(parts:createTable(function(part) return part:getName() == "HelmetTrim" end)))
 kattArmor.Armor.Chestplate
-	:addParts(
-		centaurParts.bodyArmorChestplate.Chestplate,
-		centaurParts.leftArmArmorChestplate.Chestplate,
-		centaurParts.rightArmArmorChestplate.Chestplate,
-		centaurParts.leftArmArmorChestplateFP.Chestplate,
-		centaurParts.rightArmArmorChestplateFP.Chestplate
-	)
-	:addTrimParts(
-		centaurParts.bodyArmorChestplate.Trim,
-		centaurParts.leftArmArmorChestplate.Trim,
-		centaurParts.rightArmArmorChestplate.Trim,
-		centaurParts.leftArmArmorChestplateFP.Trim,
-		centaurParts.rightArmArmorChestplateFP.Trim
-	)
+	:addParts(table.unpack(parts:createTable(function(part) return part:getName() == "Chestplate" end)))
+	:addTrimParts(table.unpack(parts:createTable(function(part) return part:getName() == "ChestplateTrim" end)))
 kattArmor.Armor.Leggings
-	:addParts(
-		centaurParts.bodyArmorLeggings.Leggings,
-		centaurParts.MainArmorLeggings.Leggings
-	)
-	:addTrimParts(
-		centaurParts.bodyArmorLeggings.Trim,
-		centaurParts.MainArmorLeggings.Trim
-	)
+	:addParts(table.unpack(parts:createTable(function(part) return part:getName() == "Leggings" end)))
+	:addTrimParts(table.unpack(parts:createTable(function(part) return part:getName() == "LeggingsTrim" end)))
 kattArmor.Armor.Boots
-	:addParts(
-		centaurParts.FrontLeftLegArmorBoot.Boot,
-		centaurParts.FrontRightLegArmorBoot.Boot,
-		centaurParts.BackLeftLegArmorBoot.Boot,
-		centaurParts.BackRightLegArmorBoot.Boot
-	)
-	:addTrimParts(
-		centaurParts.FrontLeftLegArmorBoot.Trim,
-		centaurParts.FrontRightLegArmorBoot.Trim,
-		centaurParts.BackLeftLegArmorBoot.Trim,
-		centaurParts.BackRightLegArmorBoot.Trim
-	)
+	:addParts(table.unpack(parts:createTable(function(part) return part:getName() == "Boots" end)))
+	:addTrimParts(table.unpack(parts:createTable(function(part) return part:getName() == "BootsTrim" end)))
 
 -- Leather armor
 kattArmor.Materials.leather
 	:setTexture(textures["models.Centaur.leatherArmor"])
-	:addParts(kattArmor.Armor.Helmet,
-		centaurParts.headArmorHelmet.Leather
-	)
-	:addParts(kattArmor.Armor.Chestplate,
-		centaurParts.bodyArmorChestplate.Leather,
-		centaurParts.leftArmArmorChestplate.Leather,
-		centaurParts.rightArmArmorChestplate.Leather,
-		centaurParts.leftArmArmorChestplateFP.Leather,
-		centaurParts.rightArmArmorChestplateFP.Leather
-	)
-	:addParts(kattArmor.Armor.Leggings,
-		centaurParts.bodyArmorLeggings.Leather,
-		centaurParts.MainArmorLeggings.Leather
-	)
-	:addParts(kattArmor.Armor.Boots,
-		centaurParts.FrontLeftLegArmorBoot.Leather,
-		centaurParts.FrontRightLegArmorBoot.Leather,
-		centaurParts.BackLeftLegArmorBoot.Leather,
-		centaurParts.BackRightLegArmorBoot.Leather
-	)
+	:addParts(kattArmor.Armor.Helmet,     table.unpack(parts:createTable(function(part) return part:getName() == "HelmetLeather" end)))
+	:addParts(kattArmor.Armor.Chestplate, table.unpack(parts:createTable(function(part) return part:getName() == "ChestplateLeather" end)))
+	:addParts(kattArmor.Armor.Leggings,   table.unpack(parts:createTable(function(part) return part:getName() == "LeggingsLeather" end)))
+	:addParts(kattArmor.Armor.Boots,      table.unpack(parts:createTable(function(part) return part:getName() == "BootsLeather" end)))
 
 -- Chainmail armor
 kattArmor.Materials.chainmail
@@ -172,41 +128,16 @@ if leggings   == nil then leggings   = true end
 if boots      == nil then boots      = true end
 
 -- Helmet parts
-local helmetGroups = {
-	
-	centaurParts.headArmorHelmet,
-	centaurParts.HelmetItemPivot
-	
-}
+local helmetGroups = parts:createTable(function(part) return part:getName():find("ArmorHelmet") end)
 
 -- Chestplate parts
-local chestplateGroups = {
-	
-	centaurParts.bodyArmorChestplate,
-	centaurParts.leftArmArmorChestplate,
-	centaurParts.rightArmArmorChestplate,
-	centaurParts.leftArmArmorChestplateFP,
-	centaurParts.rightArmArmorChestplateFP
-	
-}
+local chestplateGroups = parts:createTable(function(part) return part:getName():find("ArmorChestplate") end)
 
 -- Leggings parts
-local leggingsGroups = {
-	
-	centaurParts.bodyArmorLeggings,
-	centaurParts.MainArmorLeggings
-	
-}
+local leggingsGroups = parts:createTable(function(part) return part:getName():find("ArmorLeggings") end)
 
 -- Boots parts
-local bootsGroups = {
-	
-	centaurParts.FrontLeftLegArmorBoot,
-	centaurParts.FrontRightLegArmorBoot,
-	centaurParts.BackLeftLegArmorBoot,
-	centaurParts.BackRightLegArmorBoot
-	
-}
+local bootsGroups = parts:createTable(function(part) return part:getName():find("ArmorBoots") end)
 
 function events.RENDER(delta, context)
 	
@@ -228,7 +159,7 @@ function events.RENDER(delta, context)
 	end
 	
 	-- Increase saddle scale to fit armor
-	centaurParts.Saddle:scale(centaurParts.MainArmorLeggings.Leggings:getVisible() and 1 or 0.95)
+	parts.group.Saddle:scale(parts.group.MainArmorLeggings.Leggings:getVisible() and 1 or 0.95)
 	
 end
 

@@ -1,8 +1,8 @@
 -- Required scripts
 require("lib.GSAnimBlend")
-local centaurParts = require("lib.GroupIndex")(models.models.Centaur)
-local ground       = require("lib.GroundCheck")
-local pose         = require("scripts.Posing")
+local parts  = require("lib.PartsAPI")
+local ground = require("lib.GroundCheck")
+local pose   = require("scripts.Posing")
 
 -- Animations setup
 local anims = animations["models.Centaur"]
@@ -15,8 +15,8 @@ local holdJump  = 0
 -- Parrot pivots
 local parrots = {
 	
-	centaurParts.LeftParrotPivot,
-	centaurParts.RightParrotPivot
+	parts.group.LeftParrotPivot,
+	parts.group.RightParrotPivot
 	
 }
 
@@ -116,7 +116,7 @@ function events.RENDER(delta, context)
 	
 	local rot = vanilla_model.HEAD:getOriginRot()
 	rot.x = math.clamp(rot.x, -90, 30)
-	centaurParts.Spyglass:rot(rot)
+	parts.group.Spyglass:rot(rot)
 		:pos(pose.crouch and vec(0, -4, 0) or nil)
 	
 end

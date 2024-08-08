@@ -1,5 +1,5 @@
 -- Required script
-local centaurParts = require("lib.GroupIndex")(models.models.Centaur)
+local parts = require("lib.PartsAPI")
 
 -- Blank texure
 local blankTexture = textures:newTexture("Blank", 64, 64)
@@ -48,28 +48,28 @@ secondaryTypes[secondaryType].active = true
 local textureParts = {
 	
 	-- Upper Body
-	centaurParts.HorseLeftEar.Ear,
-	centaurParts.HorseRightEar.Ear,
-	centaurParts.MuleLeftEar.Ear,
-	centaurParts.MuleRightEar.Ear,
-	centaurParts.Mane.Mane,
+	parts.group.HorseLeftEar.Ear,
+	parts.group.HorseRightEar.Ear,
+	parts.group.MuleLeftEar.Ear,
+	parts.group.MuleRightEar.Ear,
+	parts.group.Mane.Mane,
 	
 	-- Skull
-	centaurParts.HorseLeftEarSkull.Ear,
-	centaurParts.HorseRightEarSkull.Ear,
-	centaurParts.MuleLeftEarSkull.Ear,
-	centaurParts.MuleRightEarSkull.Ear,
+	parts.group.HorseLeftEarSkull.Ear,
+	parts.group.HorseRightEarSkull.Ear,
+	parts.group.MuleLeftEarSkull.Ear,
+	parts.group.MuleRightEarSkull.Ear,
 	
 	-- Lower Body
-	centaurParts.Main.Body,
-	centaurParts.Saddle.Saddle,
-	centaurParts.LeftBag.Bag,
-	centaurParts.RightBag.Bag,
-	centaurParts.FrontLeftLeg.Leg,
-	centaurParts.FrontRightLeg.Leg,
-	centaurParts.BackLeftLeg.Leg,
-	centaurParts.BackRightLeg.Leg,
-	centaurParts.Tail.Tail
+	parts.group.Main.Body,
+	parts.group.Saddle.Saddle,
+	parts.group.LeftBag.Bag,
+	parts.group.RightBag.Bag,
+	parts.group.FrontLeftLeg.Leg,
+	parts.group.FrontRightLeg.Leg,
+	parts.group.BackLeftLeg.Leg,
+	parts.group.BackRightLeg.Leg,
+	parts.group.Tail.Tail
 
 }
 
@@ -81,10 +81,10 @@ for _, part in ipairs(textureParts) do
 end
 
 -- Set size for ears
-centaurParts.HorseLeftEar:scale(1.15)
-centaurParts.HorseRightEar:scale(1.15)
-centaurParts.HorseLeftEarSkull:scale(1.15)
-centaurParts.HorseRightEarSkull:scale(1.15)
+parts.group.HorseLeftEar:scale(1.15)
+parts.group.HorseRightEar:scale(1.15)
+parts.group.HorseLeftEarSkull:scale(1.15)
+parts.group.HorseRightEarSkull:scale(1.15)
 
 function events.TICK()
 	
@@ -124,20 +124,20 @@ function events.TICK()
 	-- Apply size, ears, and mane
 	local horse = primaryType ~= 10 and primaryType ~= 11
 	
-	centaurParts.HorseLeftEar:visible(horse)
-	centaurParts.HorseRightEar:visible(horse)
-	centaurParts.MuleLeftEar:visible(not horse)
-	centaurParts.MuleRightEar:visible(not horse)
+	parts.group.HorseLeftEar:visible(horse)
+	parts.group.HorseRightEar:visible(horse)
+	parts.group.MuleLeftEar:visible(not horse)
+	parts.group.MuleRightEar:visible(not horse)
 	
-	centaurParts.HorseLeftEarSkull:visible(horse)
-	centaurParts.HorseRightEarSkull:visible(horse)
-	centaurParts.MuleLeftEarSkull:visible(not horse)
-	centaurParts.MuleRightEarSkull:visible(not horse)
+	parts.group.HorseLeftEarSkull:visible(horse)
+	parts.group.HorseRightEarSkull:visible(horse)
+	parts.group.MuleLeftEarSkull:visible(not horse)
+	parts.group.MuleRightEarSkull:visible(not horse)
 	
-	centaurParts.Mane:visible(horse)
+	parts.group.Mane:visible(horse)
 	
-	centaurParts.Player:scale(horse and 1.15 or 1)
-	centaurParts.UpperBody:scale(horse and 0.85 or 1)
+	parts.group.Player:scale(horse and 1.15 or 1)
+	parts.group.UpperBody:scale(horse and 0.85 or 1)
 	
 	renderer:shadowRadius(horse and 0.8 or 0.75)
 	

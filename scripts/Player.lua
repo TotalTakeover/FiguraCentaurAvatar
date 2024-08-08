@@ -1,5 +1,5 @@
 -- Required script
-local centaurParts = require("lib.GroupIndex")(models.models.Centaur)
+local parts = require("lib.PartsAPI")
 
 -- Config setup
 config:name("Centaur")
@@ -7,83 +7,23 @@ local vanillaSkin = config:load("AvatarVanillaSkin")
 local slim        = config:load("AvatarSlim") or false
 if vanillaSkin == nil then vanillaSkin = true end
 
--- Set skull and portrait groups to visible (incase disabled in blockbench)
-centaurParts.Skull   :visible(true)
-centaurParts.Portrait:visible(true)
+-- Reenabled parts
+parts.group.Skull   :visible(true)
+parts.group.Portrait:visible(true)
+
+-- Arm parts
+local defaultParts = parts:createTable(function(part) return part:getName():find("ArmDefault") end)
+local slimParts    = parts:createTable(function(part) return part:getName():find("ArmSlim")    end)
 
 -- Vanilla skin parts
-local skin = {
-	
-	centaurParts.Head.Head,
-	centaurParts.Head.Layer,
-	
-	centaurParts.Body.Body,
-	centaurParts.Body.Layer,
-	
-	centaurParts.leftArmDefault,
-	centaurParts.leftArmSlim,
-	centaurParts.leftArmDefaultFP,
-	centaurParts.leftArmSlimFP,
-	
-	centaurParts.rightArmDefault,
-	centaurParts.rightArmSlim,
-	centaurParts.rightArmDefaultFP,
-	centaurParts.rightArmSlimFP,
-	
-	centaurParts.Portrait.Head,
-	centaurParts.Portrait.Layer,
-	
-	centaurParts.Skull.Head,
-	centaurParts.Skull.Layer
-	
-}
+local skinParts = parts:createTable(function(part) return part:getName():find("_Skin") end)
 
 -- Layer parts
-local layer = {
-	
-	HAT = {
-		centaurParts.Head.Layer,
-		centaurParts.HorseLeftEar.Layer,
-		centaurParts.HorseRightEar.Layer,
-		centaurParts.MuleLeftEar.Layer,
-		centaurParts.MuleRightEar.Layer
-	},
-	JACKET = {
-		centaurParts.Body.Layer,
-		centaurParts.Mane.Layer
-	},
-	LEFT_SLEEVE = {
-		centaurParts.leftArmDefault.Layer,
-		centaurParts.leftArmSlim.Layer,
-		centaurParts.leftArmDefaultFP.Layer,
-		centaurParts.leftArmSlimFP.Layer
-	},
-	RIGHT_SLEEVE = {
-		centaurParts.rightArmDefault.Layer,
-		centaurParts.rightArmSlim.Layer,
-		centaurParts.rightArmDefaultFP.Layer,
-		centaurParts.rightArmSlimFP.Layer
-	},
-	LEFT_PANTS_LEG = {
-		centaurParts.FrontLeftLeg.Layer,
-		centaurParts.BackLeftLeg.Layer
-	},
-	RIGHT_PANTS_LEG = {
-		centaurParts.FrontRightLeg.Layer,
-		centaurParts.BackRightLeg.Layer
-	},
-	CAPE = {
-		centaurParts.Cape
-	},
-	LOWER_BODY = {
-		centaurParts.Main.Layer,
-		centaurParts.Saddle.Layer,
-		centaurParts.LeftBag.Layer,
-		centaurParts.RightBag.Layer,
-		centaurParts.Tail.Layer
-	}
-	
-}
+local layerTypes = {"HAT", "JACKET", "LEFT_SLEEVE", "RIGHT_SLEEVE", "LEFT_PANTS_LEG", "RIGHT_PANTS_LEG", "CAPE", "LOWER_BODY"}
+local layerParts = {}
+for _, type in pairs(layerTypes) do
+	layerParts[type] = parts:createTable(function(part) return part:getName():find(type) end)
+end
 
 -- Determine vanilla player type on init
 local vanillaAvatarType
@@ -98,29 +38,25 @@ function events.RENDER(delta, context)
 	
 	-- Model shape
 	local slimShape = (vanillaSkin and vanillaAvatarType == "SLIM") or (slim and not vanillaSkin)
-	
-	centaurParts.leftArmDefault:visible(not slimShape)
-	centaurParts.rightArmDefault:visible(not slimShape)
-	centaurParts.leftArmDefaultFP:visible(not slimShape)
-	centaurParts.rightArmDefaultFP:visible(not slimShape)
-	
-	centaurParts.leftArmSlim:visible(slimShape)
-	centaurParts.rightArmSlim:visible(slimShape)
-	centaurParts.leftArmSlimFP:visible(slimShape)
-	centaurParts.rightArmSlimFP:visible(slimShape)
+	for _, part in ipairs(defaultParts) do
+		part:visible(not slimShape)
+	end
+	for _, part in ipairs(slimParts) do
+		part:visible(slimShape)
+	end
 	
 	-- Skin textures
 	local skinType = vanillaSkin and "SKIN" or "PRIMARY"
-	for _, part in ipairs(skin) do
+	for _, part in ipairs(skinParts) do
 		part:primaryTexture(skinType)
 	end
 	
 	-- Cape textures
-	centaurParts.Cape:primaryTexture(vanillaSkin and "CAPE" or "PRIMARY")
+	parts.group.Cape:primaryTexture(vanillaSkin and "CAPE" or "PRIMARY")
 	
 	-- Layer toggling
-	for layerType, parts in pairs(layer) do
 		local enabled = enabled
+	for layerType, parts in pairs(layerParts) do
 		if layerType == "LOWER_BODY" then
 			enabled = player:isSkinLayerVisible("RIGHT_PANTS_LEG") or player:isSkinLayerVisible("LEFT_PANTS_LEG")
 		else

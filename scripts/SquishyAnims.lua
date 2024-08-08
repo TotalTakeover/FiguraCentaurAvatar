@@ -1,9 +1,10 @@
 -- Required scripts
-local centaurParts = require("lib.GroupIndex")(models.models.Centaur)
-local squapi       = require("lib.SquAPI")
-local ground       = require("lib.GroundCheck")
-local pose         = require("scripts.Posing")
-local effects      = require("scripts.SyncedVariables")
+local parts   = require("lib.PartsAPI")
+local squapi  = require("lib.SquAPI")
+local lerp    = require("lib.LerpAPI")
+local ground  = require("lib.GroundCheck")
+local pose    = require("scripts.Posing")
+local effects = require("scripts.SyncedVariables")
 
 -- Animation setup
 local anims = animations["models.Centaur"]
@@ -23,52 +24,15 @@ local function calculateParentRot(m)
 	
 end
 
--- Lerp left arm table
-local leftArmLerp = {
-	current    = 0,
-	nextTick   = 0,
-	target     = 0,
-	currentPos = 0
-}
-
--- Lerp right arm table
-local rightArmLerp = {
-	current    = 0,
-	nextTick   = 0,
-	target     = 0,
-	currentPos = 0
-}
-
--- Lerp leg table
-local legLerp = {
-	current    = 0,
-	nextTick   = 0,
-	target     = 0,
-	currentPos = 0
-}
-
--- Set lerp starts on init
-function events.ENTITY_INIT()
-	
-	local apply = armsMove and 1 or 0
-	for k, v in pairs(leftArmLerp) do
-		leftArmLerp[k] = apply
-	end
-	for k, v in pairs(rightArmLerp) do
-		rightArmLerp[k] = apply
-	end
-	
-	local apply = ground() and 1 or 0
-	for k, v in pairs(legLerp) do
-		legLerp[k] = apply
-	end
-	
-end
+-- Lerp tables
+local leftArmLerp  = lerp:new(0.5, armsMove and 1 or 0)
+local rightArmLerp = lerp:new(0.5, armsMove and 1 or 0)
+local legLerp      = lerp:new(0.5, 1)
 
 -- Squishy ears
 local ears = squapi.ear:new(
-	centaurParts.LeftEar,
-	centaurParts.RightEar,
+	parts.group.LeftEar,
+	parts.group.RightEar,
 	0.5,   -- Range Multiplier (0.5)
 	false, -- Horizontal (false)
 	0.2,   -- Bend Strength (0.2)
@@ -81,7 +45,7 @@ local ears = squapi.ear:new(
 -- Tails table
 local tailParts = {
 	
-	centaurParts.Tail
+	parts.group.Tail
 	
 }
 
@@ -106,7 +70,7 @@ local tail = squapi.tail:new(
 -- Head table
 local headParts = {
 	
-	centaurParts.UpperBody
+	parts.group.UpperBody
 	
 }
 
@@ -121,14 +85,14 @@ local head = squapi.smoothHead:new(
 
 -- Squishy vanilla arms
 local leftArm = squapi.arm:new(
-	centaurParts.LeftArm,
+	parts.group.LeftArm,
 	1,     -- Strength (1)
 	false, -- Right Arm (false)
 	true   -- Keep Position (false)
 )
 
 local rightArm = squapi.arm:new(
-	centaurParts.RightArm,
+	parts.group.RightArm,
 	1,    -- Strength (1)
 	true, -- Right Arm (true)
 	true  -- Keep Position (false)
@@ -140,28 +104,28 @@ local rightArmStrength = rightArm.strength
 
 -- Squishy vanilla legs
 local frontLeftLeg = squapi.leg:new(
-	centaurParts.FrontLeftLeg,
+	parts.group.FrontLeftLeg,
 	0.5,   -- Strength (0.5)
 	false, -- Right Leg (false)
 	false  -- Keep Position (false)
 )
 
 local frontRightLeg = squapi.leg:new(
-	centaurParts.FrontRightLeg,
+	parts.group.FrontRightLeg,
 	0.5,  -- Strength (0.5)
 	true, -- Right Leg (true)
 	false -- Keep Position (false)
 )
 
 local backLeftLeg = squapi.leg:new(
-	centaurParts.BackLeftLeg,
+	parts.group.BackLeftLeg,
 	0.5,  -- Strength (0.5)
 	true, -- Right Leg (true)
 	false -- Keep Position (false)
 )
 
 local backRightLeg = squapi.leg:new(
-	centaurParts.BackRightLeg,
+	parts.group.BackRightLeg,
 	0.5,   -- Strength (0.5)
 	false, -- Right Leg (false)
 	false  -- Keep Position (false)
@@ -175,9 +139,9 @@ local backRightLegStrength  = backRightLeg.strength
 
 -- Squishy taur
 local taur = squapi.taur:new(
-	centaurParts.LowerBody,
-	centaurParts.FrontLegs,
-	centaurParts.BackLegs
+	parts.group.LowerBody,
+	parts.group.FrontLegs,
+	parts.group.BackLegs
 )
 
 -- Squishy crouch
@@ -214,14 +178,6 @@ function events.TICK()
 	legLerp.target      = (onGround or inWater or pose.elytra or effects.cF) and 1 or 0
 	taur.target         = (onGround or effects.cF) and 0 or taur.target
 	
-	-- Tick lerp
-	leftArmLerp.current   = leftArmLerp.nextTick
-	rightArmLerp.current  = rightArmLerp.nextTick
-	legLerp.current       = legLerp.nextTick
-	leftArmLerp.nextTick  = math.lerp(leftArmLerp.nextTick,  leftArmLerp.target,  0.5)
-	rightArmLerp.nextTick = math.lerp(rightArmLerp.nextTick, rightArmLerp.target, 0.5)
-	legLerp.nextTick      = math.lerp(legLerp.nextTick,      legLerp.target,      0.5)
-	
 end
 
 function events.RENDER(delta, context)
@@ -231,53 +187,48 @@ function events.RENDER(delta, context)
 	local idleRot     = vec(math.deg(math.sin(idleTimer * 0.067) * 0.05), 0, math.deg(math.cos(idleTimer * 0.09) * 0.05 + 0.05))
 	local firstPerson = context == "FIRST_PERSON"
 	
-	-- Render lerp
-	leftArmLerp.currentPos  = math.lerp(leftArmLerp.current,  leftArmLerp.nextTick,  delta)
-	rightArmLerp.currentPos = math.lerp(rightArmLerp.current, rightArmLerp.nextTick, delta)
-	legLerp.currentPos      = math.lerp(legLerp.current,      legLerp.nextTick,      delta)
-	
 	-- Adjust arm strengths
-	leftArm.strength  = leftArmStrength  * leftArmLerp.currentPos
-	rightArm.strength = rightArmStrength * rightArmLerp.currentPos
+	leftArm.strength  = leftArmStrength  * leftArmLerp.currPos
+	rightArm.strength = rightArmStrength * rightArmLerp.currPos
 	
 	-- Adjust leg strengths
-	frontLeftLeg.strength  = frontLeftLegStrength  * legLerp.currentPos
-	frontRightLeg.strength = frontRightLegStrength * legLerp.currentPos
-	backLeftLeg.strength   = backLeftLegStrength   * legLerp.currentPos
-	backRightLeg.strength  = backRightLegStrength  * legLerp.currentPos
+	frontLeftLeg.strength  = frontLeftLegStrength  * legLerp.currPos
+	frontRightLeg.strength = frontRightLegStrength * legLerp.currPos
+	backLeftLeg.strength   = backLeftLegStrength   * legLerp.currPos
+	backRightLeg.strength  = backRightLegStrength  * legLerp.currPos
 	
 	-- Adjust arm characteristics after applied by squapi
-	centaurParts.LeftArm
+	parts.group.LeftArm
 		:offsetRot(
-			centaurParts.LeftArm:getOffsetRot()
-			+ ((-idleRot + (vanilla_model.BODY:getOriginRot() * 0.75)) * math.map(leftArmLerp.currentPos, 0, 1, 1, 0))
-			+ (centaurParts.LeftArm:getAnimRot() * math.map(leftArmLerp.currentPos, 0, 1, 0, -2))
+			parts.group.LeftArm:getOffsetRot()
+			+ ((-idleRot + (vanilla_model.BODY:getOriginRot() * 0.75)) * math.map(leftArmLerp.currPos, 0, 1, 1, 0))
+			+ (parts.group.LeftArm:getAnimRot() * math.map(leftArmLerp.currPos, 0, 1, 0, -2))
 		)
-		:pos(centaurParts.LeftArm:getPos() * vec(1, 1, -1))
+		:pos(parts.group.LeftArm:getPos() * vec(1, 1, -1))
 		:visible(not firstPerson)
 	
-	centaurParts.RightArm
+	parts.group.RightArm
 		:offsetRot(
-			centaurParts.RightArm:getOffsetRot()
-			+ ((idleRot + (vanilla_model.BODY:getOriginRot() * 0.75)) * math.map(rightArmLerp.currentPos, 0, 1, 1, 0))
-			+ (centaurParts.RightArm:getAnimRot() * math.map(rightArmLerp.currentPos, 0, 1, 0, -2))
+			parts.group.RightArm:getOffsetRot()
+			+ ((idleRot + (vanilla_model.BODY:getOriginRot() * 0.75)) * math.map(rightArmLerp.currPos, 0, 1, 1, 0))
+			+ (parts.group.RightArm:getAnimRot() * math.map(rightArmLerp.currPos, 0, 1, 0, -2))
 		)
-		:pos(centaurParts.RightArm:getPos() * vec(1, 1, -1))
+		:pos(parts.group.RightArm:getPos() * vec(1, 1, -1))
 		:visible(not firstPerson)
 	
 	-- Set visible if in first person
-	centaurParts.LeftArmFP:visible(firstPerson)
-	centaurParts.RightArmFP:visible(firstPerson)
+	parts.group.LeftArmFP:visible(firstPerson)
+	parts.group.RightArmFP:visible(firstPerson)
 	
 	-- Set upperbody to offset rot and crouching pivot point
-	centaurParts.UpperBody
-		:rot(-centaurParts.LowerBody:getRot())
-		:offsetPivot(anims.crouch:isPlaying() and -centaurParts.UpperBody:getAnimPos() or 0)
+	parts.group.UpperBody
+		:rot(-parts.group.LowerBody:getRot())
+		:offsetPivot(anims.crouch:isPlaying() and -parts.group.UpperBody:getAnimPos() or 0)
 	
 	-- Offset smooth torso in various parts
-	-- Note: acts strangely with `centaurParts.body`
-	for _, group in ipairs(centaurParts.UpperBody:getChildren()) do
-		if group ~= centaurParts.Body then
+	-- Note: acts strangely with `parts.group.body`
+	for _, group in ipairs(parts.group.UpperBody:getChildren()) do
+		if group ~= parts.group.Body then
 			group:rot(-calculateParentRot(group:getParent()))
 		end
 	end

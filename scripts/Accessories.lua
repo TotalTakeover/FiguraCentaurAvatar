@@ -1,5 +1,5 @@
 -- Required script
-local centaurParts = require("lib.GroupIndex")(models.models.Centaur)
+local parts = require("lib.PartsAPI")
 
 -- Config setup
 config:name("Centaur")
@@ -9,15 +9,15 @@ local bags   = config:load("AccessoriesBags")   or false
 -- Saddle parts
 local saddleParts = {
 	
-	centaurParts.Saddle
+	parts.group.Saddle
 	
 }
 
 -- Bag parts
 local bagParts = {
 	
-	centaurParts.LeftBag,
-	centaurParts.RightBag
+	parts.group.LeftBag,
+	parts.group.RightBag
 	
 }
 

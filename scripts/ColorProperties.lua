@@ -1,5 +1,5 @@
 -- Required scripts
-local centaurParts = require("lib.GroupIndex")(models.models.Centaur)
+local parts = require("lib.PartsAPI")
 
 -- Variables
 local sum, count = vectors.vec3(), 0
@@ -22,7 +22,7 @@ end
 function events.TICK()
 	
 	-- Variables
-	local type, primary = centaurParts.Main.Body:getPrimaryTexture()
+	local type, primary = parts.group.Main.Body:getPrimaryTexture()
 	
 	-- If texture changed
 	if type ~= prevType or primary ~= prevPrimary then
@@ -42,10 +42,10 @@ function events.TICK()
 	average = findAverage(sum, count)
 	
 	-- Store previous textures
-	prevType, prevPrimary = centaurParts.Main.Body:getPrimaryTexture()
 	
 	-- Glowing outline
 	renderer:outlineColor(average)
+	prevType, prevPrimary = parts.group.Main.Body:getPrimaryTexture()
 	
 	-- Avatar color
 	avatar:color(average)
@@ -67,10 +67,16 @@ t.secondary = "#"..vectors.rgbToHex(vectors.vec3())
 function events.RENDER(delta, context)
 	
 	-- Set colors
-	t.hover     = average
-	t.active    = (average + 0.25):applyFunc(function(a) return math.min(a, 1) end)
-	t.primary   = "#"..vectors.rgbToHex(average)
-	t.secondary = "#"..vectors.rgbToHex((average + 0.25):applyFunc(function(a) return math.min(a, 1) end))
+	t.hover     = color.currPos
+	t.active    = (color.currPos + 0.25):applyFunc(function(a) return math.min(a, 1) end)
+	t.primary   = "#"..vectors.rgbToHex(color.currPos)
+	t.secondary = "#"..vectors.rgbToHex((color.currPos + 0.25):applyFunc(function(a) return math.min(a, 1) end))
+	
+	-- Glowing outline
+	renderer:outlineColor(color.currPos)
+	
+	-- Avatar color
+	avatar:color(color.currPos)
 	
 end
 
