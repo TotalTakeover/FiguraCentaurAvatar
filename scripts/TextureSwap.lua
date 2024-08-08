@@ -41,33 +41,7 @@ local secondaryTypes = {
 }
 
 -- Texture parts
-local textureParts = {
-	
-	-- Upper Body
-	parts.group.HorseLeftEar.Ear,
-	parts.group.HorseRightEar.Ear,
-	parts.group.MuleLeftEar.Ear,
-	parts.group.MuleRightEar.Ear,
-	parts.group.Mane.Mane,
-	
-	-- Skull
-	parts.group.HorseLeftEarSkull.Ear,
-	parts.group.HorseRightEarSkull.Ear,
-	parts.group.MuleLeftEarSkull.Ear,
-	parts.group.MuleRightEarSkull.Ear,
-	
-	-- Lower Body
-	parts.group.Main.Body,
-	parts.group.Saddle.Saddle,
-	parts.group.LeftBag.Bag,
-	parts.group.RightBag.Bag,
-	parts.group.FrontLeftLeg.Leg,
-	parts.group.FrontRightLeg.Leg,
-	parts.group.BackLeftLeg.Leg,
-	parts.group.BackRightLeg.Leg,
-	parts.group.Tail.Tail
-
-}
+local textureParts = parts:createTable(function(part) return part:getName():find("_Swap") end)
 
 -- Set render type start on init
 for _, part in ipairs(textureParts) do
