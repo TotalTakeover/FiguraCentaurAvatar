@@ -39,8 +39,6 @@ local pages = {
 	camera           = action_wheel:newPage("Camera"),
 	centaur          = action_wheel:newPage("Centaur"),
 	texture          = action_wheel:newPage("Texture"),
-	primaryTexture   = action_wheel:newPage("PrimaryTexture"),
-	secondaryTexture = action_wheel:newPage("SecondaryTexture"),
 	anims            = action_wheel:newPage("Anims")
 	
 }
@@ -59,14 +57,6 @@ local pageActions = {
 	texture = action_wheel:newAction()
 		:item(itemCheck("brush"))
 		:onLeftClick(function() descend(pages.texture) end),
-	
-	primaryTexture = action_wheel:newAction()
-		:item(itemCheck("item_frame"))
-		:onLeftClick(function() descend(pages.primaryTexture) end),
-	
-	secondaryTexture = action_wheel:newAction()
-		:item(itemCheck("painting"))
-		:onLeftClick(function() descend(pages.secondaryTexture) end),
 	
 	anims = action_wheel:newAction()
 		:item(itemCheck("jukebox"))
@@ -99,16 +89,6 @@ function events.RENDER(delta, context)
 		pageActions.texture
 			:title(toJson
 				{text = "Texture Settings", bold = true, color = color.primary}
-			)
-		
-		pageActions.primaryTexture
-			:title(toJson
-				{text = "Primary Textures", bold = true, color = color.primary}
-			)
-		
-		pageActions.secondaryTexture
-			:title(toJson
-				{text = "Secondary Textures", bold = true, color = color.primary}
 			)
 		
 		pageActions.anims
@@ -184,35 +164,8 @@ pages.centaur
 
 -- Texture actions
 pages.texture
-	:action( -1, pageActions.primaryTexture)
-	:action( -1, pageActions.secondaryTexture)
-	:action( -1, backAction)
-
--- Primary texture actions
-pages.primaryTexture
-	:action( 8, backAction)
-	:action( -1, texture.horseWhitePage)
-	:action( -1, texture.horseGrayPage)
-	:action( -1, texture.horseBlackPage)
-	:action( -1, texture.horseCreamyPage)
-	:action( -1, texture.horseChestnutPage)
-	:action( -1, texture.horseBrownPage)
-	:action( -1, texture.horseDarkBrownPage)
-	:action( -1, texture.horseZombiePage)
-	:action( -1, texture.horseSkeletonPage)
-	:action( -1, texture.donkeyPage)
-	:action( -1, texture.mulePage)
-	:action( -1, texture.horseDefaultPage)
-	:action( -1, backAction)
-
--- Secondary texture actions
-pages.secondaryTexture
-	:action( -1, texture.horseMarkingsBlankPage)
-	:action( -1, texture.horseMarkingsWhitePage)
-	:action( -1, texture.horseMarkingsWhiteFieldPage)
-	:action( -1, texture.horseMarkingsWhiteDotsPage)
-	:action( -1, texture.horseMarkingsBlackDotsPage)
-	:action( -1, texture.horseMarkingsDefaultPage)
+	:action( -1, texture.primaryPage)
+	:action( -1, texture.secondaryPage)
 	:action( -1, backAction)
 
 -- Animation actions

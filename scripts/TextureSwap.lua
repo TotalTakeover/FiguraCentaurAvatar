@@ -7,42 +7,38 @@ blankTexture:fill(0, 0, 64, 64, 0, 0, 0, 0)
 
 -- Config setup
 config:name("Centaur")
-local primaryType   = config:load("TexturePrimary")   or 12
-local secondaryType = config:load("TextureSecondary") or 6
+local primaryType   = config:load("TexturePrimary")   or 1
+local secondaryType = config:load("TextureSecondary") or 2
 
--- All primary textures + settings
+-- All primary textures
 local primaryTypes = {
 	
-	{ path = "horse_white",     active = false },
-	{ path = "horse_gray",      active = false },
-	{ path = "horse_black",     active = false },
-	{ path = "horse_creamy",    active = false },
-	{ path = "horse_chestnut",  active = false },
-	{ path = "horse_brown",     active = false },
-	{ path = "horse_darkbrown", active = false },
-	{ path = "horse_zombie",    active = false },
-	{ path = "horse_skeleton",  active = false },
-	{ path = "donkey",          active = false },
-	{ path = "mule",            active = false },
-	{ path = "default",         active = false }
+	"default",
+	"horse_white",
+	"horse_gray",
+	"horse_black",
+	"horse_creamy",
+	"horse_chestnut",
+	"horse_brown",
+	"horse_darkbrown",
+	"horse_zombie",
+	"horse_skeleton",
+	"donkey",
+	"mule"
 	
 }
 
--- All secondary textures + settings
+-- All secondary textures
 local secondaryTypes = {
 	
-	{ path = "none",                      active = false },
-	{ path = "horse_markings_white",      active = false },
-	{ path = "horse_markings_whitefield", active = false },
-	{ path = "horse_markings_whitedots",  active = false },
-	{ path = "horse_markings_blackdots",  active = false },
-	{ path = "default",                   active = false }
+	"none",
+	"default",
+	"horse_markings_white",
+	"horse_markings_whitefield",
+	"horse_markings_whitedots",
+	"horse_markings_blackdots"
 	
 }
-
--- Init texture setup
-primaryTypes[primaryType].active     = true
-secondaryTypes[secondaryType].active = true
 
 -- Texture parts
 local textureParts = {
@@ -91,30 +87,30 @@ function events.TICK()
 	-- Apply textures
 	for _, part in ipairs(textureParts) do
 		
-		-- If set to use primary default (12), use primary
-		if primaryType == 12 then
+		-- If set to use primary default (1), use primary
+		if primaryType == 1 then
 			
 			part:primaryTexture("Primary")
 			
 		else
 			
-			part:primaryTexture("Resource", "textures/entity/horse/"..primaryTypes[primaryType].path..".png")
+			part:primaryTexture("Resource", "textures/entity/horse/"..primaryTypes[primaryType]..".png")
 			
 		end
 		
 		-- If set to use primaries between 8 and 11 (special varients), or if the secondary is none (1), set to blank texture
 		-- else if secondary default (6), use secondary
-		if (primaryType >= 8 and primaryType <= 11) or secondaryType == 1 then
+		if primaryType >= 9 or secondaryType == 1 then
 			
 			part:secondaryTexture("CUSTOM", blankTexture)
 			
-		elseif secondaryType == 6 then
+		elseif secondaryType == 2 then
 			
 			part:secondaryTexture("Secondary")
 			
 		else
 			
-			part:secondaryTexture("Resource", "textures/entity/horse/"..secondaryTypes[secondaryType].path..".png")
+			part:secondaryTexture("Resource", "textures/entity/horse/"..secondaryTypes[secondaryType]..".png")
 			
 		end
 		
@@ -122,7 +118,7 @@ function events.TICK()
 	end
 	
 	-- Apply size, ears, and mane
-	local horse = primaryType ~= 10 and primaryType ~= 11
+	local horse = primaryType < 11
 	
 	parts.group.HorseLeftEar:visible(horse)
 	parts.group.HorseRightEar:visible(horse)
@@ -144,35 +140,23 @@ function events.TICK()
 end
 
 -- Set the primary texture
-function pings.setTexturesPrimary(v)
-	
-	-- Resets primary settings
-	for _, setting in ipairs(primaryTypes) do
-		setting.active = false
-	end
-	
-	-- Chooses primary
-	primaryTypes[v].active = true
+function pings.setTexturesPrimary(i)
 	
 	-- Saves primary
-	primaryType = v
+	primaryType = primaryType + i
+	if primaryType > #primaryTypes then primaryType = 1 end
+	if primaryType < 1 then primaryType = #primaryTypes end
 	config:save("TexturePrimary", primaryType)
 	
 end
 
 -- Set the secondary texture
-function pings.setTexturesSecondary(v)
-	
-	-- Resets secondary settings
-	for _, setting in ipairs(secondaryTypes) do
-		setting.active = false
-	end
-	
-	-- Chooses secondary
-	secondaryTypes[v].active = true
+function pings.setTexturesSecondary(i)
 	
 	-- Saves secondary
-	secondaryType = v
+	secondaryType = secondaryType + i
+	if secondaryType > #secondaryTypes then secondaryType = 1 end
+	if secondaryType < 1 then secondaryType = #secondaryTypes end
 	config:save("TextureSecondary", secondaryType)
 	
 end
@@ -205,228 +189,138 @@ end
 local t = {}
 
 -- Actions
-t.horseWhitePage = action_wheel:newAction()
-	:item(itemCheck("white_dye"))
+t.primaryPage = action_wheel:newAction()
+	:item(itemCheck("item_frame"))
 	:onLeftClick(function() pings.setTexturesPrimary(1) end)
+	:onRightClick(function() pings.setTexturesPrimary(-1) end)
+	:onScroll(pings.setTexturesPrimary)
 
-t.horseGrayPage = action_wheel:newAction()
-	:item(itemCheck("gray_dye"))
-	:onLeftClick(function() pings.setTexturesPrimary(2) end)
-
-t.horseBlackPage = action_wheel:newAction()
-	:item(itemCheck("black_dye"))
-	:onLeftClick(function() pings.setTexturesPrimary(3) end)
-
-t.horseCreamyPage = action_wheel:newAction()
-	:item(itemCheck("rabbit_hide"))
-	:onLeftClick(function() pings.setTexturesPrimary(4) end)
-
-t.horseChestnutPage = action_wheel:newAction()
-	:item(itemCheck("oak_log"))
-	:onLeftClick(function() pings.setTexturesPrimary(5) end)
-
-t.horseBrownPage = action_wheel:newAction()
-	:item(itemCheck("brown_dye"))
-	:onLeftClick(function() pings.setTexturesPrimary(6) end)
-
-t.horseDarkBrownPage = action_wheel:newAction()
-	:item(itemCheck("dark_oak_log"))
-	:onLeftClick(function() pings.setTexturesPrimary(7) end)
-
-t.horseZombiePage = action_wheel:newAction()
-	:item(itemCheck("rotten_flesh"))
-	:onLeftClick(function() pings.setTexturesPrimary(8) end)
-
-t.horseSkeletonPage = action_wheel:newAction()
-	:item(itemCheck("bone"))
-	:onLeftClick(function() pings.setTexturesPrimary(9) end)
-
-t.donkeyPage = action_wheel:newAction()
-	:item(itemCheck("lead"))
-	:onLeftClick(function() pings.setTexturesPrimary(10) end)
-
-t.mulePage = action_wheel:newAction()
-	:item(itemCheck("chest"))
-	:onLeftClick(function() pings.setTexturesPrimary(11) end)
-
-t.horseDefaultPage = action_wheel:newAction()
-	:item(itemCheck("player_head{'SkullOwner':'"..avatar:getEntityName().."'}"))
-	:onLeftClick(function() pings.setTexturesPrimary(12) end)
-
-t.horseMarkingsBlankPage = action_wheel:newAction()
-	:item(itemCheck("glass_bottle"))
+t.secondaryPage = action_wheel:newAction()
+	:item(itemCheck("painting"))
 	:onLeftClick(function() pings.setTexturesSecondary(1) end)
+	:onRightClick(function() pings.setTexturesSecondary(-1) end)
+	:onScroll(pings.setTexturesSecondary)
 
-t.horseMarkingsWhitePage = action_wheel:newAction()
-	:item(itemCheck("paper"))
-	:onLeftClick(function() pings.setTexturesSecondary(2) end)
+-- Primary info table
+local primaryInfo = {
+	{
+		title = "Default",
+		text  = "its default",
+		item  = itemCheck("player_head{SkullOwner:"..avatar:getEntityName().."}")
+	},
+	{
+		title = "White",
+		text  = "the \"Horse White\" vanilla",
+		item  = itemCheck("white_dye")
+	},
+	{
+		title = "Gray",
+		text  = "the \"Horse Gray\" vanilla",
+		item  = itemCheck("gray_dye")
+	},
+	{
+		title = "Black",
+		text  = "the \"Horse Black\" vanilla",
+		item  = itemCheck("black_dye")
+	},
+	{
+		title = "Creamy",
+		text  = "the \"Horse Creamy\" vanilla",
+		item  = itemCheck("rabbit_hide")
+	},
+	{
+		title = "Chestnut",
+		text  = "the \"Horse Chestnut\" vanilla",
+		item  = itemCheck("oak_log")
+	},
+	{
+		title = "Brown",
+		text  = "the \"Horse Brown\" vanilla",
+		item  = itemCheck("brown_dye")
+	},
+	{
+		title = "Dark Brown",
+		text  = "the \"Horse Dark Brown\" vanilla",
+		item  = itemCheck("dark_oak_log")
+	},
+	{
+		title = "Zombie",
+		text  = "the \"Zombie\" vanilla",
+		item  = itemCheck("rotten_flesh")
+	},
+	{
+		title = "Skeleton",
+		text  = "the \"Skeleton\" vanilla",
+		item  = itemCheck("bone")
+	},
+	{
+		title = "Mule",
+		text  = "the \"Mule\" vanilla",
+		item  = itemCheck("lead")
+	},
+	{
+		title = "Donkey",
+		text  = "the \"Donkey\" vanilla",
+		item  = itemCheck("chest")
+	}
+}
 
-t.horseMarkingsWhiteFieldPage = action_wheel:newAction()
-	:item(itemCheck("snow"))
-	:onLeftClick(function() pings.setTexturesSecondary(3) end)
-
-t.horseMarkingsWhiteDotsPage = action_wheel:newAction()
-	:item(itemCheck("snowball"))
-	:onLeftClick(function() pings.setTexturesSecondary(4) end)
-
-t.horseMarkingsBlackDotsPage = action_wheel:newAction()
-	:item(itemCheck("sculk_vein"))
-	:onLeftClick(function() pings.setTexturesSecondary(5) end)
-
-t.horseMarkingsDefaultPage = action_wheel:newAction()
-	:item(itemCheck("player_head{'SkullOwner':'"..avatar:getEntityName().."'}"))
-	:onLeftClick(function() pings.setTexturesSecondary(6) end)
+-- Secondary info table
+local secondaryInfo = {
+	{
+		title = "Disabled",
+		text  = "not use a",
+		item  = itemCheck("glass_bottle")
+	},
+	{
+		title = "Default",
+		text  = "use its default",
+		item  = itemCheck("player_head{SkullOwner:"..avatar:getEntityName().."}")
+	},
+	{
+		title = "White",
+		text  = "use the \"White\" vanilla",
+		item  = itemCheck("paper")
+	},
+	{
+		title = "White Field",
+		text  = "use the \"White Field\" vanilla",
+		item  = itemCheck("snow")
+	},
+	{
+		title = "White Dots",
+		text  = "use the \"White Dots\" vanilla",
+		item  = itemCheck("snowball")
+	},
+	{
+		title = "Black Dots",
+		text  = "use the \"Black Dots\" vanilla",
+		item  = itemCheck("sculk_vein")
+	}
+}
 
 -- Update actions
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
-		t.horseWhitePage
+		t.primaryPage
 			:title(toJson
 				{"",
-				{text = "Set Primary Horse White\n\n", bold = true, color = color.primary},
-				{text = "Sets the lower body to use the \"Horse White\" vanilla texture.", color = color.secondary}}
+				{text = ("Primary: %s\n\n"):format(primaryInfo[primaryType].title), bold = true, color = color.primary},
+				{text = ("Sets the lower body to use %s primary texture."):format(primaryInfo[primaryType].text), color = color.secondary}}
 			)
-			:toggled(primaryTypes[1].active)
+			:item(primaryInfo[primaryType].item)
 		
-		t.horseGrayPage
+		t.secondaryPage
 			:title(toJson
 				{"",
-				{text = "Set Primary Horse Gray\n\n", bold = true, color = color.primary},
-				{text = "Sets the lower body to use the \"Horse Gray\" vanilla texture.", color = color.secondary}}
+				{text = ("Secondary: %s\n\n"):format(secondaryInfo[secondaryType].title), bold = true, color = color.primary},
+				{text = ("Sets the lower body to %s secondary texture."):format(secondaryInfo[secondaryType].text), color = color.secondary}}
 			)
-			:toggled(primaryTypes[2].active)
-		
-		t.horseBlackPage
-			:title(toJson
-				{"",
-				{text = "Set Primary Horse Black\n\n", bold = true, color = color.primary},
-				{text = "Sets the lower body to use the \"Horse Black\" vanilla texture.", color = color.secondary}}
-			)
-			:toggled(primaryTypes[3].active)
-		
-		t.horseCreamyPage
-			:title(toJson
-				{"",
-				{text = "Set Primary Horse Creamy\n\n", bold = true, color = color.primary},
-				{text = "Sets the lower body to use the \"Horse Creamy\" vanilla texture.", color = color.secondary}}
-			)
-			:toggled(primaryTypes[4].active)
-		
-		t.horseChestnutPage
-			:title(toJson
-				{"",
-				{text = "Set Primary Horse Chestnut\n\n", bold = true, color = color.primary},
-				{text = "Sets the lower body to use the \"Horse Chestnut\" vanilla texture.", color = color.secondary}}
-			)
-			:toggled(primaryTypes[5].active)
-		
-		t.horseBrownPage
-			:title(toJson
-				{"",
-				{text = "Set Primary Horse Brown\n\n", bold = true, color = color.primary},
-				{text = "Sets the lower body to use the \"Horse Brown\" vanilla texture.", color = color.secondary}}
-			)
-			:toggled(primaryTypes[6].active)
-		
-		t.horseDarkBrownPage
-			:title(toJson
-				{"",
-				{text = "Set Primary Horse Dark Brown\n\n", bold = true, color = color.primary},
-				{text = "Sets the lower body to use the \"Horse Dark Brown\" vanilla texture.", color = color.secondary}}
-			)
-			:toggled(primaryTypes[7].active)
-		
-		t.horseZombiePage
-			:title(toJson
-				{"",
-				{text = "Set Primary Horse Zombie\n\n", bold = true, color = color.primary},
-				{text = "Sets the lower body to use the \"Horse Zombie\" vanilla texture.", color = color.secondary}}
-			)
-			:toggled(primaryTypes[8].active)
-		
-		t.horseSkeletonPage
-			:title(toJson
-				{"",
-				{text = "Set Primary Horse Skeleton\n\n", bold = true, color = color.primary},
-				{text = "Sets the lower body to use the \"Horse Skeleton\" vanilla texture.", color = color.secondary}}
-			)
-			:toggled(primaryTypes[9].active)
-		
-		t.donkeyPage
-			:title(toJson
-				{"",
-				{text = "Set Primary Donkey\n\n", bold = true, color = color.primary},
-				{text = "Sets the lower body to use the \"Donkey\" vanilla texture.", color = color.secondary}}
-			)
-			:toggled(primaryTypes[10].active)
-		
-		t.mulePage
-			:title(toJson
-				{"",
-				{text = "Set Primary Mule\n\n", bold = true, color = color.primary},
-				{text = "Sets the lower body to use the \"Mule\" vanilla texture.", color = color.secondary}}
-			)
-			:toggled(primaryTypes[11].active)
-		
-		t.horseDefaultPage
-			:title(toJson
-				{"",
-				{text = "Set Primary Horse Default\n\n", bold = true, color = color.primary},
-				{text = "Sets the lower body to use the default blockbench texture.", color = color.secondary}}
-			)
-			:toggled(primaryTypes[12].active)
-		
-		t.horseMarkingsBlankPage
-			:title(toJson
-				{"",
-				{text = "Disable Secondary\n\n", bold = true, color = color.primary},
-				{text = "Sets the lower body to not use a secondary texture.", color = color.secondary}}
-			)
-			:toggled(secondaryTypes[1].active)
-		
-		t.horseMarkingsWhitePage
-			:title(toJson
-				{"",
-				{text = "Set Secondary White\n\n", bold = true, color = color.primary},
-				{text = "Sets the lower body to use the \"White\" vanilla texture.", color = color.secondary}}
-			)
-			:toggled(secondaryTypes[2].active)
-		
-		t.horseMarkingsWhiteFieldPage
-			:title(toJson
-				{"",
-				{text = "Set Secondary White Field\n\n", bold = true, color = color.primary},
-				{text = "Sets the lower body to use the \"White Field\" vanilla texture.", color = color.secondary}}
-			)
-			:toggled(secondaryTypes[3].active)
-		
-		t.horseMarkingsWhiteDotsPage
-			:title(toJson
-				{"",
-				{text = "Set Secondary White Dots\n\n", bold = true, color = color.primary},
-				{text = "Sets the lower body to use the \"White Dots\" vanilla texture.", color = color.secondary}}
-			)
-			:toggled(secondaryTypes[4].active)
-		
-		t.horseMarkingsBlackDotsPage
-			:title(toJson
-				{"",
-				{text = "Set Secondary Black Dots\n\n", bold = true, color = color.primary},
-				{text = "Sets the lower body to use the \"Black Dots\" vanilla texture.", color = color.secondary}}
-			)
-			:toggled(secondaryTypes[5].active)
-		
-		t.horseMarkingsDefaultPage
-			:title(toJson
-				{"",
-				{text = "Set Secondary Default\n\n", bold = true, color = color.primary},
-				{text = "Sets the lower body to use the default blockbench texture.", color = color.secondary}}
-			)
-			:toggled(secondaryTypes[6].active)
+			:item(secondaryInfo[secondaryType].item)
 		
 		for _, page in pairs(t) do
-			page:hoverColor(color.hover):toggleColor(color.active)
+			page:hoverColor(color.hover)
 		end
 		
 	end
