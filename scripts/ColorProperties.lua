@@ -1,10 +1,14 @@
 -- Required scripts
 local parts = require("lib.PartsAPI")
+local lerp  = require("lib.LerpAPI")
 
 -- Variables
 local sum, count = vectors.vec3(), 0
 local average = vectors.vec3()
 local prevType, prevPrimary
+
+-- Lerp
+local color = lerp:new(1, vec(1, 1, 1))
 
 -- Add up primary colors
 local function findSum(color)
@@ -42,13 +46,10 @@ function events.TICK()
 	average = findAverage(sum, count)
 	
 	-- Store previous textures
-	
-	-- Glowing outline
-	renderer:outlineColor(average)
 	prevType, prevPrimary = parts.group.Main.Body:getPrimaryTexture()
 	
-	-- Avatar color
-	avatar:color(average)
+	-- Set color target
+	color.target = average
 	
 end
 
