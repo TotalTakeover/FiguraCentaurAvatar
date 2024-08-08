@@ -21,7 +21,7 @@ local bagParts = {
 	
 }
 
-function events.TICK()
+function events.RENDER(delta, context)
 	
 	-- Apply
 	for _, part in ipairs(saddleParts) do
@@ -96,7 +96,7 @@ t.bagsPage = action_wheel:newAction()
 	:toggled(bags)
 
 -- Update actions
-function events.TICK()
+function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
 		t.saddlePage

@@ -278,7 +278,7 @@ t.horseMarkingsDefaultPage = action_wheel:newAction()
 	:onLeftClick(function() pings.setTexturesSecondary(6) end)
 
 -- Update actions
-function events.TICK()
+function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
 		t.horseWhitePage

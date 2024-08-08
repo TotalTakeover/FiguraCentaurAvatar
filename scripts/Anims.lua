@@ -161,7 +161,7 @@ t.rearUpPage = action_wheel:newAction()
 	:onLeftClick(pings.animPlayRearUp)
 
 -- Update action
-function events.TICK()
+function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
 		t.rearUpPage

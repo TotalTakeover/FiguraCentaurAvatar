@@ -326,7 +326,7 @@ t.armsPage = action_wheel:newAction()
 	:toggled(armsMove)
 
 -- Update action
-function events.TICK()
+function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
 		t.armsPage

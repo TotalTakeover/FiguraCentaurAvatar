@@ -64,7 +64,7 @@ t.active    = vectors.vec3()
 t.primary   = "#"..vectors.rgbToHex(vectors.vec3())
 t.secondary = "#"..vectors.rgbToHex(vectors.vec3())
 
-function events.TICK()
+function events.RENDER(delta, context)
 	
 	-- Set colors
 	t.hover     = average
