@@ -26,7 +26,7 @@ end
 function events.TICK()
 	
 	-- Variables
-	local type, primary = parts.group.Main.Body:getPrimaryTexture()
+	local type, primary = parts.group.Main.Body_Swap:getPrimaryTexture()
 	
 	-- If texture changed
 	if type ~= prevType or primary ~= prevPrimary then
@@ -46,7 +46,7 @@ function events.TICK()
 	average = findAverage(sum, count)
 	
 	-- Store previous textures
-	prevType, prevPrimary = parts.group.Main.Body:getPrimaryTexture()
+	prevType, prevPrimary = parts.group.Main.Body_Swap:getPrimaryTexture()
 	
 	-- Set color target
 	color.target = average
