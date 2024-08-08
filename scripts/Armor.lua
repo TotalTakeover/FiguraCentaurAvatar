@@ -16,8 +16,8 @@ kattArmor.Armor.Leggings
 	:addParts(table.unpack(parts:createTable(function(part) return part:getName() == "Leggings" end)))
 	:addTrimParts(table.unpack(parts:createTable(function(part) return part:getName() == "LeggingsTrim" end)))
 kattArmor.Armor.Boots
-	:addParts(table.unpack(parts:createTable(function(part) return part:getName() == "Boots" end)))
-	:addTrimParts(table.unpack(parts:createTable(function(part) return part:getName() == "BootsTrim" end)))
+	:addParts(table.unpack(parts:createTable(function(part) return part:getName() == "Boot" end)))
+	:addTrimParts(table.unpack(parts:createTable(function(part) return part:getName() == "BootTrim" end)))
 
 -- Leather armor
 kattArmor.Materials.leather
@@ -25,7 +25,7 @@ kattArmor.Materials.leather
 	:addParts(kattArmor.Armor.Helmet,     table.unpack(parts:createTable(function(part) return part:getName() == "HelmetLeather" end)))
 	:addParts(kattArmor.Armor.Chestplate, table.unpack(parts:createTable(function(part) return part:getName() == "ChestplateLeather" end)))
 	:addParts(kattArmor.Armor.Leggings,   table.unpack(parts:createTable(function(part) return part:getName() == "LeggingsLeather" end)))
-	:addParts(kattArmor.Armor.Boots,      table.unpack(parts:createTable(function(part) return part:getName() == "BootsLeather" end)))
+	:addParts(kattArmor.Armor.Boots,      table.unpack(parts:createTable(function(part) return part:getName() == "BootLeather" end)))
 
 -- Chainmail armor
 kattArmor.Materials.chainmail
@@ -137,7 +137,7 @@ local chestplateGroups = parts:createTable(function(part) return part:getName():
 local leggingsGroups = parts:createTable(function(part) return part:getName():find("ArmorLeggings") end)
 
 -- Boots parts
-local bootsGroups = parts:createTable(function(part) return part:getName():find("ArmorBoots") end)
+local bootsGroups = parts:createTable(function(part) return part:getName():find("ArmorBoot") end)
 
 function events.RENDER(delta, context)
 	
