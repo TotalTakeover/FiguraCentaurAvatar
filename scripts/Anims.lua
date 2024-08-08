@@ -5,7 +5,7 @@ local ground = require("lib.GroundCheck")
 local pose   = require("scripts.Posing")
 
 -- Animations setup
-local anims = animations["models.Centaur"]
+local anims = animations.Centaur
 
 -- Variables
 local wasGround = false

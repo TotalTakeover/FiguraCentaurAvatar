@@ -7,7 +7,7 @@ local pose    = require("scripts.Posing")
 local effects = require("scripts.SyncedVariables")
 
 -- Animation setup
-local anims = animations["models.Centaur"]
+local anims = animations.Centaur
 
 -- Config setup
 config:name("Centaur")

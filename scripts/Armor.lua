@@ -21,7 +21,7 @@ kattArmor.Armor.Boots
 
 -- Leather armor
 kattArmor.Materials.leather
-	:setTexture(textures["models.Centaur.leatherArmor"])
+	:setTexture(textures["textures.armor.leatherArmor"] or textures["Centaur.leatherArmor"])
 	:addParts(kattArmor.Armor.Helmet,     table.unpack(parts:createTable(function(part) return part:getName() == "HelmetLeather" end)))
 	:addParts(kattArmor.Armor.Chestplate, table.unpack(parts:createTable(function(part) return part:getName() == "ChestplateLeather" end)))
 	:addParts(kattArmor.Armor.Leggings,   table.unpack(parts:createTable(function(part) return part:getName() == "LeggingsLeather" end)))
@@ -29,92 +29,92 @@ kattArmor.Materials.leather
 
 -- Chainmail armor
 kattArmor.Materials.chainmail
-	:setTexture(textures["models.Centaur.chainmailArmor"])
+	:setTexture(textures["textures.armor.chainmailArmor"] or textures["Centaur.chainmailArmor"])
 
 -- Iron armor
 kattArmor.Materials.iron
-	:setTexture(textures["models.Centaur.ironArmor"])
+	:setTexture(textures["textures.armor.ironArmor"] or textures["Centaur.ironArmor"])
 
 -- Golden armor
 kattArmor.Materials.golden
-	:setTexture(textures["models.Centaur.goldenArmor"])
+	:setTexture(textures["textures.armor.goldenArmor"] or textures["Centaur.goldenArmor"])
 
 -- Diamond armor
 kattArmor.Materials.diamond
-	:setTexture(textures["models.Centaur.diamondArmor"])
+	:setTexture(textures["textures.armor.diamondArmor"] or textures["Centaur.diamondArmor"])
 
 -- Netherite armor
 kattArmor.Materials.netherite
-	:setTexture(textures["models.Centaur.netheriteArmor"])
+	:setTexture(textures["textures.armor.netheriteArmor"] or textures["Centaur.netheriteArmor"])
 
 -- Turtle helmet
 kattArmor.Materials.turtle
-	:setTexture(textures["models.Centaur.turtleHelmet"])
+	:setTexture(textures["textures.armor.turtleHelmet"] or textures["Centaur.turtleHelmet"])
 
 -- Trims
 -- Coast
 kattArmor.TrimPatterns.coast
-	:setTexture(textures["models.Centaur.coastTrim"])
+	:setTexture(textures["textures.armor.trims.coastTrim"] or textures["Centaur.coastTrim"])
 
 -- Dune
 kattArmor.TrimPatterns.dune
-	:setTexture(textures["models.Centaur.duneTrim"])
+	:setTexture(textures["textures.armor.trims.duneTrim"] or textures["Centaur.duneTrim"])
 
 -- Eye
 kattArmor.TrimPatterns.eye
-	:setTexture(textures["models.Centaur.eyeTrim"])
+	:setTexture(textures["textures.armor.trims.eyeTrim"] or textures["Centaur.eyeTrim"])
 
 -- Host
 kattArmor.TrimPatterns.host
-	:setTexture(textures["models.Centaur.hostTrim"])
+	:setTexture(textures["textures.armor.trims.hostTrim"] or textures["Centaur.hostTrim"])
 
 -- Raiser
 kattArmor.TrimPatterns.raiser
-	:setTexture(textures["models.Centaur.raiserTrim"])
+	:setTexture(textures["textures.armor.trims.raiserTrim"] or textures["Centaur.raiserTrim"])
 
 -- Rib
 kattArmor.TrimPatterns.rib
-	:setTexture(textures["models.Centaur.ribTrim"])
+	:setTexture(textures["textures.armor.trims.ribTrim"] or textures["Centaur.ribTrim"])
 
 -- Sentry
 kattArmor.TrimPatterns.sentry
-	:setTexture(textures["models.Centaur.sentryTrim"])
+	:setTexture(textures["textures.armor.trims.sentryTrim"] or textures["Centaur.sentryTrim"])
 
 -- Shaper
 kattArmor.TrimPatterns.shaper
-	:setTexture(textures["models.Centaur.shaperTrim"])
+	:setTexture(textures["textures.armor.trims.shaperTrim"] or textures["Centaur.shaperTrim"])
 
 -- Silence
 kattArmor.TrimPatterns.silence
-	:setTexture(textures["models.Centaur.silenceTrim"])
+	:setTexture(textures["textures.armor.trims.silenceTrim"] or textures["Centaur.silenceTrim"])
 
 -- Snout
 kattArmor.TrimPatterns.snout
-	:setTexture(textures["models.Centaur.snoutTrim"])
+	:setTexture(textures["textures.armor.trims.snoutTrim"] or textures["Centaur.snoutTrim"])
 
 -- Spire
 kattArmor.TrimPatterns.spire
-	:setTexture(textures["models.Centaur.spireTrim"])
+	:setTexture(textures["textures.armor.trims.spireTrim"] or textures["Centaur.spireTrim"])
 
 -- Tide
 kattArmor.TrimPatterns.tide
-	:setTexture(textures["models.Centaur.tideTrim"])
+	:setTexture(textures["textures.armor.trims.tideTrim"] or textures["Centaur.tideTrim"])
 
 -- Vex
 kattArmor.TrimPatterns.vex
-	:setTexture(textures["models.Centaur.vexTrim"])
+	:setTexture(textures["textures.armor.trims.vexTrim"] or textures["Centaur.vexTrim"])
 
 -- Ward
 kattArmor.TrimPatterns.ward
-	:setTexture(textures["models.Centaur.wardTrim"])
+	:setTexture(textures["textures.armor.trims.wardTrim"] or textures["Centaur.wardTrim"])
 
 -- Wayfinder
 kattArmor.TrimPatterns.wayfinder
-	:setTexture(textures["models.Centaur.wayfinderTrim"])
+	:setTexture(textures["textures.armor.trims.wayfinderTrim"] or textures["Centaur.wayfinderTrim"])
 
 -- Wild
 kattArmor.TrimPatterns.wild
-	:setTexture(textures["models.Centaur.wildTrim"])
+	:setTexture(textures["textures.armor.trims.wildTrim"] or textures["Centaur.wildTrim"])
 
 -- Config setup
 config:name("Centaur")

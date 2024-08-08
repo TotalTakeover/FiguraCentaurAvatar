@@ -32,7 +32,7 @@ function events.TICK()
 	if type ~= prevType or primary ~= prevPrimary then
 		
 		-- Get/Create texture
-		local tex = type == "RESOURCE" and textures:fromVanilla("Primary", primary) or textures["models.Centaur.horse"]
+		local tex = type == "RESOURCE" and textures:fromVanilla("Primary", primary) or (textures["textures.horse"] or textures["Centaur.horse"])
 		
 		-- Reset variables
 		sum, count = vectors.vec3(), 0
