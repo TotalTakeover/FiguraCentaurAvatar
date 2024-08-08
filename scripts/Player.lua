@@ -55,8 +55,8 @@ function events.RENDER(delta, context)
 	parts.group.Cape:primaryTexture(vanillaSkin and "CAPE" or "PRIMARY")
 	
 	-- Layer toggling
-		local enabled = enabled
 	for layerType, parts in pairs(layerParts) do
+		local enabled
 		if layerType == "LOWER_BODY" then
 			enabled = player:isSkinLayerVisible("RIGHT_PANTS_LEG") or player:isSkinLayerVisible("LEFT_PANTS_LEG")
 		else
