@@ -711,7 +711,8 @@
 			"autouv": 0,
 			"color": 0,
 			"visibility": false,
-			"origin": [0, 0, 0],
+			"rotation": [0, -180, 0],
+			"origin": [0, 32, -7.5],
 			"faces": {
 				"north": {
 					"uv": [1, 1, 11, 17],
