@@ -2,16 +2,18 @@
 	"name": "Centaur",
 	"description": "\"At least one horsepower.\"",
 	"authors": [
-		"\nIrri (Animation Assist)\n",
-		"Psycho Breadstick (QA, Origin)\n",
-		"Katt (Updated scripts, APIs)\n",
-		"Grandpa Scout (APIs)\n",
-		"Jimmy (QA, Animation code)\n",
-		"Squishy (APIs)\n",
-		"4P5 (APIs, Better Action Wheel)\n",
-		"PoolloverNathan (JSONs)\n",
-		"Snqwblind (Support)\n",
-		"Total (Avatar Maker)\n"
+		"Total",
+		"§f§nCredits§r",
+		"Psycho Breadstick",
+		"Snqwblind",
+		"Irri",
+		"Jimmy",
+		"PoolloverNathan",
+		"§f§nLibraries§r",
+		"Grandpa Scout (GSAnimBlend, GSCarrier)",
+		"Squishy (SquAPI)",
+		"Katt (OriginsAPI, KattArmor, DynamicCrosshair)",
+		"4P5 (GroundCheck)"
 	],
 	"version": "0.1.4"
 }
