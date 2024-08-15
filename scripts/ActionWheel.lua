@@ -3,14 +3,30 @@ if not host:isHost() then return end
 
 -- Required scripts
 local itemCheck = require("lib.ItemCheck")
-local avatar    = require("scripts.Player")
-local armor     = require("scripts.Armor")
-local camera    = require("scripts.CameraControl")
-local accessory = require("scripts.Accessories")
-local texture   = require("scripts.TextureSwap")
-local anims     = require("scripts.Anims")
-local squapi    = require("scripts.SquishyAnims")
-local color     = require("scripts.ColorProperties")
+
+local s, avatar = pcall(require, "scripts.Player")
+if not s then avatar = {} end
+
+local s, armor = pcall(require, "scripts.Armor")
+if not s then armor = {} end
+
+local s, camera = pcall(require, "scripts.CameraControl")
+if not s then camera = {} end
+
+local s, accessory = pcall(require, "scripts.Accessories")
+if not s then accessory = {} end
+
+local s, texture = pcall(require, "scripts.TextureSwap")
+if not s then texture = {} end
+
+local s, anims = pcall(require, "scripts.Anims")
+if not s then anims = {} end
+
+local s, squapi = pcall(require, "scripts.SquishyAnims")
+if not s then squapi = {} end
+
+local s, color = pcall(require, "scripts.ColorProperties")
+if not s then color = {} end
 
 -- Logs pages for navigation
 local navigation = {}
