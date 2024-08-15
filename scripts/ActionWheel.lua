@@ -44,7 +44,7 @@ local pages = {
 }
 
 -- Page actions
-local pageActions = {
+local pageActs = {
 	
 	avatar = action_wheel:newAction()
 		:item(itemCheck("armor_stand"))
@@ -76,37 +76,37 @@ local pageActions = {
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
-		pageActions.avatar
+		pageActs.avatar
 			:title(toJson
 				{text = "Avatar Settings", bold = true, color = color.primary}
 			)
 		
-		pageActions.centaur
+		pageActs.centaur
 			:title(toJson
 				{text = "Centaur Settings", bold = true, color = color.primary}
 			)
 		
-		pageActions.texture
+		pageActs.texture
 			:title(toJson
 				{text = "Texture Settings", bold = true, color = color.primary}
 			)
 		
-		pageActions.anims
+		pageActs.anims
 			:title(toJson
 				{text = "Animations", bold = true, color = color.primary}
 			)
 		
-		pageActions.armor
+		pageActs.armor
 			:title(toJson
 				{text = "Armor Settings", bold = true, color = color.primary}
 			)
 		
-		pageActions.camera
+		pageActs.camera
 			:title(toJson
 				{text = "Camera Settings", bold = true, color = color.primary}
 			)
 		
-		for _, page in pairs(pageActions) do
+		for _, page in pairs(pageActs) do
 			page:hoverColor(color.hover)
 		end
 		
@@ -128,16 +128,16 @@ action_wheel:setPage(pages.main)
 
 -- Main actions
 pages.main
-	:action( -1, pageActions.avatar)
-	:action( -1, pageActions.centaur)
-	:action( -1, pageActions.anims)
+	:action( -1, pageActs.avatar)
+	:action( -1, pageActs.centaur)
+	:action( -1, pageActs.anims)
 
 -- Avatar actions
 pages.avatar
 	:action( -1, avatar.vanillaSkinAct)
 	:action( -1, avatar.modelAct)
-	:action( -1, pageActions.armor)
-	:action( -1, pageActions.camera)
+	:action( -1, pageActs.armor)
+	:action( -1, pageActs.camera)
 	:action( -1, backAct)
 
 -- Armor actions
@@ -159,7 +159,7 @@ pages.camera
 pages.centaur
 	:action( -1, accessory.saddleAct)
 	:action( -1, accessory.bagsAct)
-	:action( -1, pageActions.texture)
+	:action( -1, pageActs.texture)
 	:action( -1, backAct)
 
 -- Texture actions
