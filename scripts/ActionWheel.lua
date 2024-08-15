@@ -115,7 +115,7 @@ function events.RENDER(delta, context)
 end
 
 -- Action back to previous page
-local backAction = action_wheel:newAction()
+local backAct = action_wheel:newAction()
 	:title(toJson
 		{text = "Go Back?", bold = true, color = "red"}
 	)
@@ -138,7 +138,7 @@ pages.avatar
 	:action( -1, avatar.modelAct)
 	:action( -1, pageActions.armor)
 	:action( -1, pageActions.camera)
-	:action( -1, backAction)
+	:action( -1, backAct)
 
 -- Armor actions
 pages.armor
@@ -147,29 +147,29 @@ pages.armor
 	:action( -1, armor.leggingsAct)
 	:action( -1, armor.chestplateAct)
 	:action( -1, armor.helmetAct)
-	:action( -1, backAction)
+	:action( -1, backAct)
 
 -- Camera actions
 pages.camera
 	:action( -1, camera.posAct)
 	:action( -1, camera.eyeAct)
-	:action( -1, backAction)
+	:action( -1, backAct)
 
 -- Centaur actions
 pages.centaur
 	:action( -1, accessory.saddleAct)
 	:action( -1, accessory.bagsAct)
 	:action( -1, pageActions.texture)
-	:action( -1, backAction)
+	:action( -1, backAct)
 
 -- Texture actions
 pages.texture
 	:action( -1, texture.primaryAct)
 	:action( -1, texture.secondaryAct)
-	:action( -1, backAction)
+	:action( -1, backAct)
 
 -- Animation actions
 pages.anims
 	:action( -1, anims.rearUpAct)
 	:action( -1, squapi.armsAct)
-	:action( -1, backAction)
+	:action( -1, backAct)
