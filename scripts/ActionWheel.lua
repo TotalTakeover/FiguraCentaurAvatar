@@ -134,42 +134,42 @@ pages.main
 
 -- Avatar actions
 pages.avatar
-	:action( -1, avatar.vanillaSkinPage)
-	:action( -1, avatar.modelPage)
+	:action( -1, avatar.vanillaSkinAct)
+	:action( -1, avatar.modelAct)
 	:action( -1, pageActions.armor)
 	:action( -1, pageActions.camera)
 	:action( -1, backAction)
 
 -- Armor actions
 pages.armor
-	:action( -1, armor.allPage)
-	:action( -1, armor.bootsPage)
-	:action( -1, armor.leggingsPage)
-	:action( -1, armor.chestplatePage)
-	:action( -1, armor.helmetPage)
+	:action( -1, armor.allAct)
+	:action( -1, armor.bootsAct)
+	:action( -1, armor.leggingsAct)
+	:action( -1, armor.chestplateAct)
+	:action( -1, armor.helmetAct)
 	:action( -1, backAction)
 
 -- Camera actions
 pages.camera
-	:action( -1, camera.posPage)
-	:action( -1, camera.eyePage)
+	:action( -1, camera.posAct)
+	:action( -1, camera.eyeAct)
 	:action( -1, backAction)
 
 -- Centaur actions
 pages.centaur
-	:action( -1, accessory.saddlePage)
-	:action( -1, accessory.bagsPage)
+	:action( -1, accessory.saddleAct)
+	:action( -1, accessory.bagsAct)
 	:action( -1, pageActions.texture)
 	:action( -1, backAction)
 
 -- Texture actions
 pages.texture
-	:action( -1, texture.primaryPage)
-	:action( -1, texture.secondaryPage)
+	:action( -1, texture.primaryAct)
+	:action( -1, texture.secondaryAct)
 	:action( -1, backAction)
 
 -- Animation actions
 pages.anims
-	:action( -1, anims.rearUpPage)
-	:action( -1, squapi.armsPage)
+	:action( -1, anims.rearUpAct)
+	:action( -1, squapi.armsAct)
 	:action( -1, backAction)

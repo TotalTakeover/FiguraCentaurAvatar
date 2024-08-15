@@ -83,13 +83,13 @@ end
 local t = {}
 
 -- Actions
-t.saddlePage = action_wheel:newAction()
+t.saddleAct = action_wheel:newAction()
 	:item(itemCheck("leather"))
 	:toggleItem(itemCheck("saddle"))
 	:onToggle(pings.setAccessoriesSaddle)
 	:toggled(saddle)
 
-t.bagsPage = action_wheel:newAction()
+t.bagsAct = action_wheel:newAction()
 	:texture(textures:fromVanilla("BundleFilled", "textures/item/bundle_filled.png"))
 	:toggleTexture(textures:fromVanilla("Bundle", "textures/item/bundle.png"))
 	:onToggle(pings.setAccessoriesBags)
@@ -99,14 +99,14 @@ t.bagsPage = action_wheel:newAction()
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
-		t.saddlePage
+		t.saddleAct
 			:title(toJson
 				{"",
 				{text = "Toggle Saddle\n\n", bold = true, color = color.primary},
 				{text = "Toggles visibility of the saddle.", color = color.secondary}}
 			)
 		
-		t.bagsPage
+		t.bagsAct
 			:title(toJson
 				{"",
 				{text = "Toggle Bags\n\n", bold = true, color = color.primary},

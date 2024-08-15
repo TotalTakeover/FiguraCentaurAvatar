@@ -163,13 +163,13 @@ end
 local t = {}
 
 -- Actions
-t.primaryPage = action_wheel:newAction()
+t.primaryAct = action_wheel:newAction()
 	:item(itemCheck("item_frame"))
 	:onLeftClick(function() pings.setTexturesPrimary(1) end)
 	:onRightClick(function() pings.setTexturesPrimary(-1) end)
 	:onScroll(pings.setTexturesPrimary)
 
-t.secondaryPage = action_wheel:newAction()
+t.secondaryAct = action_wheel:newAction()
 	:item(itemCheck("painting"))
 	:onLeftClick(function() pings.setTexturesSecondary(1) end)
 	:onRightClick(function() pings.setTexturesSecondary(-1) end)
@@ -277,7 +277,7 @@ local secondaryInfo = {
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
-		t.primaryPage
+		t.primaryAct
 			:title(toJson
 				{"",
 				{text = ("Primary: %s\n\n"):format(primaryInfo[primaryType].title), bold = true, color = color.primary},
@@ -285,7 +285,7 @@ function events.RENDER(delta, context)
 			)
 			:item(primaryInfo[primaryType].item)
 		
-		t.secondaryPage
+		t.secondaryAct
 			:title(toJson
 				{"",
 				{text = ("Secondary: %s\n\n"):format(secondaryInfo[secondaryType].title), bold = true, color = color.primary},

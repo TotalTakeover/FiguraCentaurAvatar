@@ -156,7 +156,7 @@ end
 local t = {}
 
 -- Action
-t.rearUpPage = action_wheel:newAction()
+t.rearUpAct = action_wheel:newAction()
 	:item(itemCheck("golden_axe"))
 	:onLeftClick(pings.animPlayRearUp)
 
@@ -164,7 +164,7 @@ t.rearUpPage = action_wheel:newAction()
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
-		t.rearUpPage
+		t.rearUpAct
 			:title(toJson
 				{text = "Play Rear Up animation", bold = true, color = color.primary}
 			)
