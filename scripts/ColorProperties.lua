@@ -53,6 +53,16 @@ function events.TICK()
 	
 end
 
+function events.RENDER(delta, context)
+	
+	-- Glowing outline
+	renderer:outlineColor(color.currPos)
+	
+	-- Avatar color
+	avatar:color(color.currPos)
+	
+end
+
 -- Host only instructions
 if not host:isHost() then return end
 
@@ -72,12 +82,6 @@ function events.RENDER(delta, context)
 	t.active    = (color.currPos + 0.25):applyFunc(function(a) return math.min(a, 1) end)
 	t.primary   = "#"..vectors.rgbToHex(color.currPos)
 	t.secondary = "#"..vectors.rgbToHex((color.currPos + 0.25):applyFunc(function(a) return math.min(a, 1) end))
-	
-	-- Glowing outline
-	renderer:outlineColor(color.currPos)
-	
-	-- Avatar color
-	avatar:color(color.currPos)
 	
 end
 
