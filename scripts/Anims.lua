@@ -9,6 +9,7 @@ local anims = animations.Centaur
 
 -- Variables
 local wasGround = false
+local canSit    = false
 local canRear   = false
 local holdJump  = 0
 
@@ -43,7 +44,8 @@ function events.TICK()
 	local sprint = sprinting and not pose.crouch and not pose.swim
 	local extend = pose.swim or pose.elytra or pose.spin or pose.crawl
 	local sleep  = pose.sleep
-	canRear = vel:length() == 0 and (pose.stand or pose.crouch)
+	canSit  = canSit and pose.stand and vel:length() == 0 and not anims.rearUp:isPlaying()
+	canRear = vel:length() == 0 and (pose.stand or pose.crouch) and not anims.sit:isPlaying()
 	
 	-- Control rearing up animation
 	holdJump = not canRear and 0 or math.max(holdJump - 1, 0)
@@ -51,6 +53,7 @@ function events.TICK()
 	-- Animations
 	anims.sprint:playing(sprint)
 	anims.extend:playing(extend)
+	anims.sit:playing(canSit)
 	anims.sleep:playing(sleep)
 	anims.rearUp:playing(canRear and holdJump ~= 0)
 	
@@ -101,9 +104,10 @@ end
 
 -- GS Blending Setup
 local blendAnims = {
-	{ anim = anims.sprint, ticks = {7,7} },
-	{ anim = anims.extend, ticks = {7,7} },
-	{ anim = anims.rearUp, ticks = {5,5} }
+	{ anim = anims.sprint, ticks = {7,7}  },
+	{ anim = anims.extend, ticks = {7,7}  },
+	{ anim = anims.sit,    ticks = {14,7} },
+	{ anim = anims.rearUp, ticks = {5,5}  }
 }
 
 -- Apply GS Blending
@@ -118,6 +122,13 @@ function events.RENDER(delta, context)
 	rot.x = math.clamp(rot.x, -90, 30)
 	parts.group.Spyglass:offsetRot(rot)
 		:pos(pose.crouch and vec(0, -4, 0) or nil)
+	
+end
+
+-- Play sit anim
+function pings.setAnimToggleSit(boolean)
+	
+	canSit = boolean
 	
 end
 
@@ -138,14 +149,23 @@ local itemCheck = require("lib.ItemCheck")
 local s, color = pcall(require, "scripts.ColorProperties")
 if not s then color = {} end
 
+-- Sit keybind
+local sitBind   = config:load("AnimSitKeybind") or "key.keyboard.keypad.1"
+local setSitKey = keybinds:newKeybind("Sit Animation"):onPress(function() pings.setAnimToggleSit(not canSit) end):key(sitBind)
+
 -- Rear Up keybind
-local rearUpBind   = config:load("AnimRearUpKeybind") or "key.keyboard.keypad.1"
+local rearUpBind   = config:load("AnimRearUpKeybind") or "key.keyboard.keypad.2"
 local setRearUpKey = keybinds:newKeybind("Rear Up Animation"):onPress(pings.animPlayRearUp):key(rearUpBind)
 
 -- Keybind updaters
 function events.TICK()
 	
 	local rearUpKey = setRearUpKey:getKey()
+	local sitKey    = setSitKey:getKey()
+	if sitKey ~= sitBind then
+		sitBind = sitKey
+		config:save("AnimSitKeybind", sitKey)
+	end
 	if rearUpKey ~= rearUpBind then
 		rearUpBind = rearUpKey
 		config:save("AnimRearUpKeybind", rearUpKey)
@@ -156,7 +176,12 @@ end
 -- Table setup
 local t = {}
 
--- Action
+-- Actions
+t.sitAct = action_wheel:newAction()
+	:item(itemCheck("scaffolding"))
+	:toggleItem(itemCheck("saddle"))
+	:onToggle(pings.setAnimToggleSit)
+
 t.rearUpAct = action_wheel:newAction()
 	:item(itemCheck("golden_axe"))
 	:onLeftClick(pings.animPlayRearUp)
@@ -165,6 +190,12 @@ t.rearUpAct = action_wheel:newAction()
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
+		t.sitAct
+			:title(toJson
+				{text = "Play Sit animation", bold = true, color = color.primary}
+			)
+			:toggled(canSit)
+		
 		t.rearUpAct
 			:title(toJson
 				{text = "Play Rear Up animation", bold = true, color = color.primary}
