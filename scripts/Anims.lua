@@ -1,14 +1,12 @@
 -- Required scripts
 require("lib.GSAnimBlend")
 local parts  = require("lib.PartsAPI")
-local ground = require("lib.GroundCheck")
 local pose   = require("scripts.Posing")
 
 -- Animations setup
 local anims = animations.Centaur
 
 -- Variables
-local wasGround = false
 local canSit    = false
 local canRear   = false
 local holdJump  = 0
@@ -36,7 +34,6 @@ function events.TICK()
 	
 	-- Variables
 	local vel       = player:getVelocity()
-	local onGround  = ground()
 	local sprinting = player:isSprinting()
 	local inWater   = player:isInWater()
 	
@@ -56,9 +53,6 @@ function events.TICK()
 	anims.sit:playing(canSit)
 	anims.sleep:playing(sleep)
 	anims.rearUp:playing(canRear and holdJump ~= 0)
-	
-	-- Store ground state
-	wasGround = onGround
 	
 end
 
