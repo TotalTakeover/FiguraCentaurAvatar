@@ -7,9 +7,9 @@ local pose   = require("scripts.Posing")
 local anims = animations.Centaur
 
 -- Variables
-local canSit    = false
-local canRear   = false
-local holdJump  = 0
+local canAct  = false
+local canSit  = false
+local canRear = false
 
 -- Parrot pivots
 local parrots = {
@@ -41,18 +41,26 @@ function events.TICK()
 	local sprint = sprinting and not pose.crouch and not pose.swim
 	local extend = pose.swim or pose.elytra or pose.spin or pose.crawl
 	local sleep  = pose.sleep
-	canSit  = canSit and pose.stand and vel:length() == 0 and not anims.rearUp:isPlaying()
-	canRear = vel:length() == 0 and (pose.stand or pose.crouch) and not anims.sit:isPlaying()
 	
-	-- Control rearing up animation
-	holdJump = not canRear and 0 or math.max(holdJump - 1, 0)
+	-- Animation actions
+	canAct  = pose.stand and not(vel:length() ~= 0 or player:getVehicle())
+	canSit  = canAct and not anims.rearUp:isPlaying()
+	canRear = canAct and not anims.sit:isPlaying()
+	
+	-- Stop Sit animation
+	if not canSit then
+		anims.sit:stop()
+	end
+	
+	-- Stop Rear Up animation
+	if not canRear then
+		anims.rearUp:stop()
+	end
 	
 	-- Animations
 	anims.sprint:playing(sprint)
 	anims.extend:playing(extend)
-	anims.sit:playing(canSit)
 	anims.sleep:playing(sleep)
-	anims.rearUp:playing(canRear and holdJump ~= 0)
 	
 end
 
@@ -122,16 +130,14 @@ end
 -- Play sit anim
 function pings.setAnimToggleSit(boolean)
 	
-	canSit = boolean
+	anims.sit:playing(canSit and boolean)
 	
 end
 
 -- Play rear up anim
 function pings.animPlayRearUp()
 	
-	if canRear then
-		holdJump = 20
-	end
+	anims.rearUp:playing(canRear)
 	
 end
 
@@ -145,7 +151,7 @@ if not s then color = {} end
 
 -- Sit keybind
 local sitBind   = config:load("AnimSitKeybind") or "key.keyboard.keypad.1"
-local setSitKey = keybinds:newKeybind("Sit Animation"):onPress(function() pings.setAnimToggleSit(not canSit) end):key(sitBind)
+local setSitKey = keybinds:newKeybind("Sit Animation"):onPress(function() pings.setAnimToggleSit(not anims.sit:isPlaying()) end):key(sitBind)
 
 -- Rear Up keybind
 local rearUpBind   = config:load("AnimRearUpKeybind") or "key.keyboard.keypad.2"
@@ -188,7 +194,7 @@ function events.RENDER(delta, context)
 			:title(toJson
 				{text = "Play Sit animation", bold = true, color = color.primary}
 			)
-			:toggled(canSit)
+			:toggled(anims.sit:isPlaying())
 		
 		t.rearUpAct
 			:title(toJson
