@@ -2155,7 +2155,7 @@
 			"color": 0,
 			"visibility": false,
 			"inflate": 0.25,
-			"origin": [0, -1, -1],
+			"origin": [0, 0, 0],
 			"uv_offset": [0, 12],
 			"faces": {
 				"north": {
