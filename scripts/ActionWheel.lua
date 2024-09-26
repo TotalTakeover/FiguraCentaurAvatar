@@ -49,13 +49,13 @@ end
 -- Page setups
 local pages = {
 	
-	main             = action_wheel:newPage("Main"),
-	avatar           = action_wheel:newPage("Avatar"),
-	armor            = action_wheel:newPage("Armor"),
-	camera           = action_wheel:newPage("Camera"),
-	centaur          = action_wheel:newPage("Centaur"),
-	texture          = action_wheel:newPage("Texture"),
-	anims            = action_wheel:newPage("Anims")
+	main    = action_wheel:newPage("Main"),
+	avatar  = action_wheel:newPage("Avatar"),
+	armor   = action_wheel:newPage("Armor"),
+	camera  = action_wheel:newPage("Camera"),
+	centaur = action_wheel:newPage("Centaur"),
+	texture = action_wheel:newPage("Texture"),
+	anims   = action_wheel:newPage("Anims")
 	
 }
 
