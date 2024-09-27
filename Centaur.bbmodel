@@ -716,7 +716,7 @@
 			"uuid": "da8a43bd-854e-e901-4d06-47a0f572f4ab"
 		},
 		{
-			"name": "Cape",
+			"name": "CAPE",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -4699,7 +4699,7 @@
 											"mirror_uv": false,
 											"isOpen": false,
 											"locked": false,
-											"visibility": false,
+											"visibility": true,
 											"autouv": 0,
 											"children": ["7504abfa-14e8-d089-4a40-25f73cab22f7"]
 										},
