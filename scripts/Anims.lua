@@ -99,7 +99,7 @@ function events.RENDER(delta, context)
 	
 	-- Parrot rot offset
 	for _, parrot in pairs(parrots) do
-		parrot:rot(-calculateParentRot(parrot:getParent()))
+		parrot:rot(-calculateParentRot(parrot:getParent()) - vanilla_model.BODY:getOriginRot())
 	end
 	
 end
