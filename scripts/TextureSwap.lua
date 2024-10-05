@@ -41,7 +41,7 @@ local secondaryTypes = {
 }
 
 -- Texture parts
-local textureParts = parts:createTable(function(part) return part:getName():find("_Swap") end)
+local textureParts = parts:createTable(function(part) return part:getName():find("_[sS]wap") end)
 
 -- Set render type start on init
 for _, part in ipairs(textureParts) do
