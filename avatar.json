@@ -13,7 +13,8 @@
 		"Grandpa Scout (GSAnimBlend, GSCarrier)",
 		"Squishy (SquAPI)",
 		"Katt (OriginsAPI, KattArmor, DynamicCrosshair)",
-		"4P5 (GroundCheck)"
+		"4P5 (GroundCheck)",
+		"Manuel_ (Molang Conversions)"
 	],
 	"version": "0.1.4"
 }

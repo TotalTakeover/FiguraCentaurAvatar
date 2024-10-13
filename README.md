@@ -17,6 +17,7 @@ This Figura avatar is a template designed around turning the user into a Centaur
 - Squishy (SquAPI)
 - Katt (OriginsAPI, KattArmor, DynamicCrosshair)
 - 4P5 (GroundCheck)
+- Manuel (Molang Conversions)
 
 ## Features
 Section under construction
