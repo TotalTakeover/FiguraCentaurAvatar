@@ -9,15 +9,18 @@ local wasGround = false
 local lastHeight = 0
 local sprintTimer = 0
 
--- Leg ground pivots
-local legGrounds = {
+-- Find all ground parts
+local groundParts = parts:createTable(function(part) return part:getName():find("Ground") end)
+
+-- Stop script if ground parts could not be found
+if #groundParts == 0 then return end
+
+-- Setup groundParts table
+for k, i in ipairs(groundParts) do
 	
-	{ part = parts.group.FrontLeftGround,  wasGround = true },
-	{ part = parts.group.FrontRightGround, wasGround = true },
-	{ part = parts.group.BackLeftGround,   wasGround = true },
-	{ part = parts.group.BackRightGround,  wasGround = true }
+	groundParts[k] = { part = i, wasGround = true }
 	
-}
+end
 
 local function playFootstep(p, b)
 	
@@ -96,7 +99,7 @@ function events.TICK()
 	-- Play footsteps based on placement
 	if onGround and not sprinting and not inWater and not player:getVehicle() and not effects.cF then
 		
-		for _, leg in ipairs(legGrounds) do
+		for _, leg in ipairs(groundParts) do
 			
 			-- Block variables
 			local groundPos   = leg.part:partToWorldMatrix():apply()
@@ -133,7 +136,7 @@ function events.TICK()
 	else
 		
 		-- If conditions arent met, legs are considered previously on ground
-		for _, leg in ipairs(legGrounds) do
+		for _, leg in ipairs(groundParts) do
 			
 			leg.wasGround = true
 			
