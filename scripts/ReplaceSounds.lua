@@ -22,6 +22,7 @@ for k, i in ipairs(groundParts) do
 	
 end
 
+-- Play footstep sound
 local function playFootstep(p, b)
 	
 	-- Check for wood material
