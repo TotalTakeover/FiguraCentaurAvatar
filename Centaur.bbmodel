@@ -6792,7 +6792,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "(0 * prepare{...}) +\nMath.sin(q.anim_time*1080)*45",
+									"x": "q(...) +\nMath.sin(q.anim_time*1080)*45",
 									"y": "0",
 									"z": "0"
 								}
@@ -6812,7 +6812,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "(0 * prepare{...}) +\nMath.sin(q.anim_time*1080+180)*45",
+									"x": "q(...) +\nMath.sin(q.anim_time*1080+180)*45",
 									"y": "0",
 									"z": "0"
 								}
