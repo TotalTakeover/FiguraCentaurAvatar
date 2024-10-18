@@ -1,8 +1,8 @@
 -- Required scripts
 require("lib.GSAnimBlend")
 require("lib.Molang")
-local parts  = require("lib.PartsAPI")
-local pose   = require("scripts.Posing")
+local parts = require("lib.PartsAPI")
+local pose  = require("scripts.Posing")
 
 -- Animations setup
 local anims = animations.Centaur
