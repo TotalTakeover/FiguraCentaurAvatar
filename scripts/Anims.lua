@@ -11,6 +11,7 @@ local anims = animations.Centaur
 local canAct  = false
 local canSit  = false
 local canRear = false
+local canKick = false
 
 -- Parrot pivots
 local parrots = {
@@ -42,11 +43,13 @@ function events.TICK()
 	local sprint = sprinting and not pose.crouch and not pose.swim
 	local extend = pose.swim or pose.elytra or pose.spin or pose.crawl
 	local sleep  = pose.sleep
+	local isAct  = anims.sit:isPlaying() or anims.rearUp:isPlaying() or anims.kick:isPlaying()
 	
 	-- Animation actions
 	canAct  = pose.stand and not(vel:length() ~= 0 or player:getVehicle())
-	canSit  = canAct and not anims.rearUp:isPlaying()
-	canRear = canAct and not anims.sit:isPlaying()
+	canSit  = canAct and (not isAct or anims.sit:isPlaying())
+	canRear = canAct and (not isAct or anims.rearUp:isPlaying())
+	canKick = canAct and (not isAct or anims.kick:isPlaying())
 	
 	-- Stop Sit animation
 	if not canSit then
@@ -56,6 +59,11 @@ function events.TICK()
 	-- Stop Rear Up animation
 	if not canRear then
 		anims.rearUp:stop()
+	end
+	
+	-- Stop Kick animation
+	if not canKick then
+		anims.kick:stop()
 	end
 	
 	-- Animations
@@ -110,7 +118,8 @@ local blendAnims = {
 	{ anim = anims.sprint, ticks = {7,7}  },
 	{ anim = anims.extend, ticks = {7,7}  },
 	{ anim = anims.sit,    ticks = {14,7} },
-	{ anim = anims.rearUp, ticks = {5,5}  }
+	{ anim = anims.rearUp, ticks = {5,5}  },
+	{ anim = anims.kick,   ticks = {5,5}  }
 }
 
 -- Apply GS Blending
@@ -142,6 +151,13 @@ function pings.animPlayRearUp()
 	
 end
 
+-- Play kick anim
+function pings.animPlayKick()
+	
+	anims.kick:playing(canKick)
+	
+end
+
 -- Host only instructions
 if not host:isHost() then return end
 
@@ -158,11 +174,16 @@ local setSitKey = keybinds:newKeybind("Sit Animation"):onPress(function() pings.
 local rearUpBind   = config:load("AnimRearUpKeybind") or "key.keyboard.keypad.2"
 local setRearUpKey = keybinds:newKeybind("Rear Up Animation"):onPress(pings.animPlayRearUp):key(rearUpBind)
 
+-- Kick keybind
+local kickBind   = config:load("AnimKickKeybind") or "key.keyboard.keypad.3"
+local setKickKey = keybinds:newKeybind("Kick Animation"):onPress(pings.animPlayKick):key(kickBind)
+
 -- Keybind updaters
 function events.TICK()
 	
 	local rearUpKey = setRearUpKey:getKey()
 	local sitKey    = setSitKey:getKey()
+	local kickKey   = setKickKey:getKey()
 	if sitKey ~= sitBind then
 		sitBind = sitKey
 		config:save("AnimSitKeybind", sitKey)
@@ -170,6 +191,10 @@ function events.TICK()
 	if rearUpKey ~= rearUpBind then
 		rearUpBind = rearUpKey
 		config:save("AnimRearUpKeybind", rearUpKey)
+	end
+	if kickKey ~= kickBind then
+		kickBind = kickKey
+		config:save("AnimKickKeybind", kickKey)
 	end
 	
 end
@@ -187,6 +212,10 @@ t.rearUpAct = action_wheel:newAction()
 	:item(itemCheck("golden_axe"))
 	:onLeftClick(pings.animPlayRearUp)
 
+t.kickAct = action_wheel:newAction()
+	:item(itemCheck("carrot"))
+	:onLeftClick(pings.animPlayKick)
+
 -- Update action
 function events.RENDER(delta, context)
 	
@@ -200,6 +229,11 @@ function events.RENDER(delta, context)
 		t.rearUpAct
 			:title(toJson
 				{text = "Play Rear Up animation", bold = true, color = color.primary}
+			)
+		
+		t.kickAct
+			:title(toJson
+				{text = "Play Kick animation", bold = true, color = color.primary}
 			)
 		
 		for _, page in pairs(t) do
