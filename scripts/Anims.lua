@@ -1,8 +1,9 @@
 -- Required scripts
 require("lib.GSAnimBlend")
 require("lib.Molang")
-local parts = require("lib.PartsAPI")
-local pose  = require("scripts.Posing")
+local parts   = require("lib.PartsAPI")
+local pose    = require("scripts.Posing")
+local origins = require("lib.OriginsAPI")
 
 -- Animations setup
 local anims = animations.Centaur
@@ -12,6 +13,7 @@ local canAct  = false
 local canSit  = false
 local canRear = false
 local canKick = false
+local prevKickData = 0
 
 -- Parrot pivots
 local parrots = {
@@ -29,6 +31,13 @@ local function calculateParentRot(m)
 		return m:getTrueRot()
 	end
 	return calculateParentRot(parent) + m:getTrueRot()
+	
+end
+
+-- Store previous origins data
+function events.ENTITY_INIT()
+	
+	prevKickData = origins.getPowerData(player, "centaur:horse_kick") or 0
 	
 end
 
@@ -61,15 +70,21 @@ function events.TICK()
 		anims.rearUp:stop()
 	end
 	
-	-- Stop Kick animation
-	if not canKick then
-		anims.kick:stop()
-	end
-	
 	-- Animations
 	anims.sprint:playing(sprint)
 	anims.extend:playing(extend)
 	anims.sleep:playing(sleep)
+	
+	-- Origins powers
+	local hasKickPower = origins.hasPower(player, "centaur:horse_kick")
+	local kickData = origins.getPowerData(player, "centaur:horse_kick") or 0
+	
+	-- Play kick if power is activated
+	if hasKickPower and kickData ~= prevKickData then
+		anims.kick:play()
+	end
+	
+	prevKickData = kickData
 	
 end
 
