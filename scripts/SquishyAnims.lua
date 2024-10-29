@@ -297,7 +297,7 @@ t.armsAct = action_wheel:newAction()
 	:onToggle(pings.setSquapiArmsMove)
 	:toggled(armsMove)
 
--- Update action
+-- Update actions
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
