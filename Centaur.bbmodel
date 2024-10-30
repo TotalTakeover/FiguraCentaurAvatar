@@ -1647,7 +1647,7 @@
 			"uuid": "6f6d9e62-e1bd-d0cb-c407-534d89fce044"
 		},
 		{
-			"name": "LOWER_BODY",
+			"name": "LOWER_LAYER",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -1874,7 +1874,7 @@
 			"uuid": "fab77709-a77d-c021-5046-6639212727a2"
 		},
 		{
-			"name": "LOWER_BODY",
+			"name": "LOWER_LAYER",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -1919,7 +1919,7 @@
 			"uuid": "44345855-8176-f87c-af04-dd845ead6d5a"
 		},
 		{
-			"name": "LOWER_BODY",
+			"name": "LOWER_LAYER",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -1964,7 +1964,7 @@
 			"uuid": "c5bb24ff-da31-89ed-92d4-7917c3f7101a"
 		},
 		{
-			"name": "LOWER_BODY",
+			"name": "LOWER_LAYER",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -2010,7 +2010,7 @@
 			"uuid": "447583a9-45de-601e-7b04-279c9c9b18e0"
 		},
 		{
-			"name": "LOWER_BODY",
+			"name": "LOWER_LAYER",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
