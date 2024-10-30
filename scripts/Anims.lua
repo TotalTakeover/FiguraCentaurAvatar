@@ -195,8 +195,8 @@ local setKickKey = keybinds:newKeybind("Kick Animation"):onPress(pings.animPlayK
 -- Keybind updaters
 function events.TICK()
 	
-	local rearUpKey = setRearUpKey:getKey()
 	local sitKey    = setSitKey:getKey()
+	local rearUpKey = setRearUpKey:getKey()
 	local kickKey   = setKickKey:getKey()
 	if sitKey ~= sitBind then
 		sitBind = sitKey
