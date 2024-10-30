@@ -230,7 +230,7 @@ t.kickAct = action_wheel:newAction()
 	:item(itemCheck("carrot"))
 	:onLeftClick(pings.animPlayKick)
 
--- Update action
+-- Update actions
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
