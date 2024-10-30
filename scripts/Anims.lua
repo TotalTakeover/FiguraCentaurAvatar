@@ -46,7 +46,6 @@ function events.TICK()
 	-- Variables
 	local vel       = player:getVelocity()
 	local sprinting = player:isSprinting()
-	local inWater   = player:isInWater()
 	
 	-- Animation states
 	local sprint = sprinting and not pose.crouch and not pose.swim
