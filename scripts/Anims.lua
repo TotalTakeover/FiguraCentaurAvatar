@@ -258,5 +258,5 @@ function events.RENDER(delta, context)
 	
 end
 
--- Returns action
+-- Returns actions
 return t
