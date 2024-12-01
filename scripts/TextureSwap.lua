@@ -279,19 +279,23 @@ function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
 		t.primaryAct
-			:title(toJson
-				{"",
-				{text = ("Primary: %s\n\n"):format(primaryInfo[primaryType].title), bold = true, color = c.primary},
-				{text = ("Sets the lower body to use %s primary texture."):format(primaryInfo[primaryType].text), color = c.secondary}}
-			)
+			:title(toJson(
+				{
+					"",
+					{text = ("Primary: %s\n\n"):format(primaryInfo[primaryType].title), bold = true, color = c.primary},
+					{text = ("Sets the lower body to use %s primary texture."):format(primaryInfo[primaryType].text), color = c.secondary}
+				}
+			))
 			:item(primaryInfo[primaryType].item)
 		
 		t.secondaryAct
-			:title(toJson
-				{"",
-				{text = ("Secondary: %s\n\n"):format(secondaryInfo[secondaryType].title), bold = true, color = c.primary},
-				{text = ("Sets the lower body to %s secondary texture."):format(secondaryInfo[secondaryType].text), color = c.secondary}}
-			)
+			:title(toJson(
+				{
+					"",
+					{text = ("Secondary: %s\n\n"):format(secondaryInfo[secondaryType].title), bold = true, color = c.primary},
+					{text = ("Sets the lower body to %s secondary texture."):format(secondaryInfo[secondaryType].text), color = c.secondary}
+				}
+			))
 			:item(secondaryInfo[secondaryType].item)
 		
 		for _, page in pairs(t) do

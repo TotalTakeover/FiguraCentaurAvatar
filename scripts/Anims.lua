@@ -235,20 +235,20 @@ function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
 		t.sitAct
-			:title(toJson
+			:title(toJson(
 				{text = "Play Sit animation", bold = true, color = c.primary}
-			)
+			))
 			:toggled(anims.sit:isPlaying())
 		
 		t.rearUpAct
-			:title(toJson
+			:title(toJson(
 				{text = "Play Rear Up animation", bold = true, color = c.primary}
-			)
+			))
 		
 		t.kickAct
-			:title(toJson
+			:title(toJson(
 				{text = "Play Kick animation", bold = true, color = c.primary}
-			)
+			))
 		
 		for _, page in pairs(t) do
 			page:hoverColor(c.hover):toggleColor(c.active)

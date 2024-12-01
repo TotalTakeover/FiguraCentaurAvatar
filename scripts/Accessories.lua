@@ -101,18 +101,22 @@ function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
 		t.saddleAct
-			:title(toJson
-				{"",
-				{text = "Toggle Saddle\n\n", bold = true, color = c.primary},
-				{text = "Toggles visibility of the saddle.", color = c.secondary}}
-			)
+			:title(toJson(
+				{
+					"",
+					{text = "Toggle Saddle\n\n", bold = true, color = c.primary},
+					{text = "Toggles visibility of the saddle.", color = c.secondary}
+				}
+			))
 		
 		t.bagsAct
-			:title(toJson
-				{"",
-				{text = "Toggle Bags\n\n", bold = true, color = c.primary},
-				{text = "Toggles visibility of the bags.", color = c.secondary}}
-			)
+			:title(toJson(
+				{
+					"",
+					{text = "Toggle Bags\n\n", bold = true, color = c.primary},
+					{text = "Toggles visibility of the bags.", color = c.secondary}
+				}
+			))
 		
 		for _, page in pairs(t) do
 			page:hoverColor(c.hover):toggleColor(c.active)

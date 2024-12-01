@@ -93,34 +93,34 @@ function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
 		pageActs.avatar
-			:title(toJson
+			:title(toJson(
 				{text = "Avatar Settings", bold = true, color = c.primary}
-			)
+			))
 		
 		pageActs.centaur
-			:title(toJson
+			:title(toJson(
 				{text = "Centaur Settings", bold = true, color = c.primary}
-			)
+			))
 		
 		pageActs.texture
-			:title(toJson
+			:title(toJson(
 				{text = "Texture Settings", bold = true, color = c.primary}
-			)
+			))
 		
 		pageActs.anims
-			:title(toJson
+			:title(toJson(
 				{text = "Animations", bold = true, color = c.primary}
-			)
+			))
 		
 		pageActs.armor
-			:title(toJson
+			:title(toJson(
 				{text = "Armor Settings", bold = true, color = c.primary}
-			)
+			))
 		
 		pageActs.camera
-			:title(toJson
+			:title(toJson(
 				{text = "Camera Settings", bold = true, color = c.primary}
-			)
+			))
 		
 		for _, page in pairs(pageActs) do
 			page:hoverColor(c.hover)
@@ -132,9 +132,9 @@ end
 
 -- Action back to previous page
 local backAct = action_wheel:newAction()
-	:title(toJson
+	:title(toJson(
 		{text = "Go Back?", bold = true, color = "red"}
-	)
+	))
 	:hoverColor(vectors.hexToRGB("FF5555"))
 	:item(itemCheck("barrier"))
 	:onLeftClick(function() ascend() end)
