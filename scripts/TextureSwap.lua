@@ -148,8 +148,8 @@ if not host:isHost() then return end
 
 -- Required scripts
 local itemCheck = require("lib.ItemCheck")
-local s, color = pcall(require, "scripts.ColorProperties")
-if not s then color = {} end
+local s, c = pcall(require, "scripts.ColorProperties")
+if not s then c = {} end
 
 -- Sync on tick
 function events.TICK()
@@ -281,21 +281,21 @@ function events.RENDER(delta, context)
 		t.primaryAct
 			:title(toJson
 				{"",
-				{text = ("Primary: %s\n\n"):format(primaryInfo[primaryType].title), bold = true, color = color.primary},
-				{text = ("Sets the lower body to use %s primary texture."):format(primaryInfo[primaryType].text), color = color.secondary}}
+				{text = ("Primary: %s\n\n"):format(primaryInfo[primaryType].title), bold = true, color = c.primary},
+				{text = ("Sets the lower body to use %s primary texture."):format(primaryInfo[primaryType].text), color = c.secondary}}
 			)
 			:item(primaryInfo[primaryType].item)
 		
 		t.secondaryAct
 			:title(toJson
 				{"",
-				{text = ("Secondary: %s\n\n"):format(secondaryInfo[secondaryType].title), bold = true, color = color.primary},
-				{text = ("Sets the lower body to %s secondary texture."):format(secondaryInfo[secondaryType].text), color = color.secondary}}
+				{text = ("Secondary: %s\n\n"):format(secondaryInfo[secondaryType].title), bold = true, color = c.primary},
+				{text = ("Sets the lower body to %s secondary texture."):format(secondaryInfo[secondaryType].text), color = c.secondary}}
 			)
 			:item(secondaryInfo[secondaryType].item)
 		
 		for _, page in pairs(t) do
-			page:hoverColor(color.hover)
+			page:hoverColor(c.hover)
 		end
 		
 	end

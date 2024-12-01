@@ -25,8 +25,8 @@ if not s then anims = {} end
 local s, squapi = pcall(require, "scripts.SquishyAnims")
 if not s then squapi = {} end
 
-local s, color = pcall(require, "scripts.ColorProperties")
-if not s then color = {} end
+local s, c = pcall(require, "scripts.ColorProperties")
+if not s then c = {} end
 
 -- Logs pages for navigation
 local navigation = {}
@@ -94,36 +94,36 @@ function events.RENDER(delta, context)
 	if action_wheel:isEnabled() then
 		pageActs.avatar
 			:title(toJson
-				{text = "Avatar Settings", bold = true, color = color.primary}
+				{text = "Avatar Settings", bold = true, color = c.primary}
 			)
 		
 		pageActs.centaur
 			:title(toJson
-				{text = "Centaur Settings", bold = true, color = color.primary}
+				{text = "Centaur Settings", bold = true, color = c.primary}
 			)
 		
 		pageActs.texture
 			:title(toJson
-				{text = "Texture Settings", bold = true, color = color.primary}
+				{text = "Texture Settings", bold = true, color = c.primary}
 			)
 		
 		pageActs.anims
 			:title(toJson
-				{text = "Animations", bold = true, color = color.primary}
+				{text = "Animations", bold = true, color = c.primary}
 			)
 		
 		pageActs.armor
 			:title(toJson
-				{text = "Armor Settings", bold = true, color = color.primary}
+				{text = "Armor Settings", bold = true, color = c.primary}
 			)
 		
 		pageActs.camera
 			:title(toJson
-				{text = "Camera Settings", bold = true, color = color.primary}
+				{text = "Camera Settings", bold = true, color = c.primary}
 			)
 		
 		for _, page in pairs(pageActs) do
-			page:hoverColor(color.hover)
+			page:hoverColor(c.hover)
 		end
 		
 	end

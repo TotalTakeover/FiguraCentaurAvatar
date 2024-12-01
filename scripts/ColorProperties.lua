@@ -67,23 +67,23 @@ end
 if not host:isHost() then return end
 
 -- Table setup
-local t = {}
+local c = {}
 
 -- Action variables
-t.hover     = vectors.vec3()
-t.active    = vectors.vec3()
-t.primary   = "#"..vectors.rgbToHex(vectors.vec3())
-t.secondary = "#"..vectors.rgbToHex(vectors.vec3())
+c.hover     = vectors.vec3()
+c.active    = vectors.vec3()
+c.primary   = "#"..vectors.rgbToHex(vectors.vec3())
+c.secondary = "#"..vectors.rgbToHex(vectors.vec3())
 
 function events.RENDER(delta, context)
 	
 	-- Set colors
-	t.hover     = color.currPos
-	t.active    = (color.currPos + 0.25):applyFunc(function(a) return math.min(a, 1) end)
-	t.primary   = "#"..vectors.rgbToHex(color.currPos)
-	t.secondary = "#"..vectors.rgbToHex((color.currPos + 0.25):applyFunc(function(a) return math.min(a, 1) end))
+	c.hover     = color.currPos
+	c.active    = (color.currPos + 0.25):applyFunc(function(a) return math.min(a, 1) end)
+	c.primary   = "#"..vectors.rgbToHex(color.currPos)
+	c.secondary = "#"..vectors.rgbToHex((color.currPos + 0.25):applyFunc(function(a) return math.min(a, 1) end))
 	
 end
 
 -- Return variables
-return t
+return c
