@@ -52,6 +52,10 @@ centaurArmor.Materials.turtle
 	:setTexture(textures["textures.armor.turtleHelmet"] or textures["Centaur.turtleHelmet"])
 
 -- Trims
+-- Bolt
+centaurArmor.TrimPatterns.bolt
+	:setTexture(textures["textures.armor.trims.boltTrim"] or textures["Centaur.boltTrim"])
+
 -- Coast
 centaurArmor.TrimPatterns.coast
 	:setTexture(textures["textures.armor.trims.coastTrim"] or textures["Centaur.coastTrim"])
@@ -63,6 +67,10 @@ centaurArmor.TrimPatterns.dune
 -- Eye
 centaurArmor.TrimPatterns.eye
 	:setTexture(textures["textures.armor.trims.eyeTrim"] or textures["Centaur.eyeTrim"])
+
+-- Flow
+centaurArmor.TrimPatterns.flow
+	:setTexture(textures["textures.armor.trims.flowTrim"] or textures["Centaur.flowTrim"])
 
 -- Host
 centaurArmor.TrimPatterns.host
