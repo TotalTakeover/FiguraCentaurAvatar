@@ -165,13 +165,11 @@ local t = {}
 
 -- Actions
 t.primaryAct = action_wheel:newAction()
-	:item(itemCheck("item_frame"))
 	:onLeftClick(function() pings.setTexturesPrimary(1) end)
 	:onRightClick(function() pings.setTexturesPrimary(-1) end)
 	:onScroll(pings.setTexturesPrimary)
 
 t.secondaryAct = action_wheel:newAction()
-	:item(itemCheck("painting"))
 	:onLeftClick(function() pings.setTexturesSecondary(1) end)
 	:onRightClick(function() pings.setTexturesSecondary(-1) end)
 	:onScroll(pings.setTexturesSecondary)
