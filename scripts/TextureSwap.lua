@@ -40,6 +40,14 @@ local secondaryTypes = {
 	
 }
 
+-- Reset if types is out of bounds
+if primaryType > #primaryTypes then
+	primaryType = 1
+end
+if secondaryType > #secondaryTypes then
+	secondaryType = 2
+end
+
 -- Texture parts
 local textureParts = parts:createTable(function(part) return part:getName():find("_[sS]wap") end)
 
