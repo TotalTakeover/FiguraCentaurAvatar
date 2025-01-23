@@ -304,8 +304,8 @@ function events.RENDER(delta, context)
 			))
 			:item(secondaryInfo[secondaryType].item)
 		
-		for _, page in pairs(t) do
-			page:hoverColor(c.hover)
+		for _, act in pairs(t) do
+			act:hoverColor(c.hover)
 		end
 		
 	end

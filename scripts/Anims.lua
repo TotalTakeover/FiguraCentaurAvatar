@@ -250,8 +250,8 @@ function events.RENDER(delta, context)
 				{text = "Play Kick animation", bold = true, color = c.primary}
 			))
 		
-		for _, page in pairs(t) do
-			page:hoverColor(c.hover):toggleColor(c.active)
+		for _, act in pairs(t) do
+			act:hoverColor(c.hover):toggleColor(c.active)
 		end
 		
 	end
