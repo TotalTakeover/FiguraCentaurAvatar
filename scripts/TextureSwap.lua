@@ -125,9 +125,7 @@ end
 function pings.setTexturesPrimary(i)
 	
 	-- Saves primary
-	primaryType = primaryType + i
-	if primaryType > #primaryTypes then primaryType = 1 end
-	if primaryType < 1 then primaryType = #primaryTypes end
+	primaryType = ((primaryType + i - 1) % #primaryTypes) + 1
 	config:save("TexturePrimary", primaryType)
 	
 end
@@ -136,9 +134,7 @@ end
 function pings.setTexturesSecondary(i)
 	
 	-- Saves secondary
-	secondaryType = secondaryType + i
-	if secondaryType > #secondaryTypes then secondaryType = 1 end
-	if secondaryType < 1 then secondaryType = #secondaryTypes end
+	secondaryType = ((secondaryType + i - 1) % #secondaryTypes) + 1
 	config:save("TextureSecondary", secondaryType)
 	
 end
