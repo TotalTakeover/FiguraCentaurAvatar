@@ -2,8 +2,8 @@
 require("lib.GSAnimBlend")
 require("lib.Molang")
 local parts   = require("lib.PartsAPI")
-local pose    = require("scripts.Posing")
 local origins = require("lib.OriginsAPI")
+local pose    = require("scripts.Posing")
 
 -- Animations setup
 local anims = animations.Centaur
