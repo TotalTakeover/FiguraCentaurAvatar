@@ -149,9 +149,6 @@ local taur = squapi.taur:new(
 	parts.group.BackLegs
 )
 
--- Squishy crouch
-squapi.crouch(anims.crouch)
-
 function events.TICK()
 	
 	-- Variables
@@ -229,9 +226,7 @@ function events.RENDER(delta, context)
 	parts.group.RightArmFP:visible(firstPerson)
 	
 	-- Set upperbody to offset rot and crouching pivot point
-	parts.group.UpperBody
-		:rot(-parts.group.LowerBody:getRot())
-		:offsetPivot(anims.crouch:isPlaying() and -parts.group.UpperBody:getAnimPos() or 0)
+	parts.group.UpperBody:rot(-parts.group.LowerBody:getRot())
 	
 	-- Offset smooth torso in various parts
 	-- Note: acts strangely with `parts.group.body`
