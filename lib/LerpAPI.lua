@@ -8,7 +8,7 @@
 --			   \ \__\ \ \_______\   \ \__\ \ \__\ \__\ \_______\
 --				\|__|  \|_______|    \|__|  \|__|\|__|\|_______|
 --
--- Version: 1.0.1
+-- Version: 1.0.2
 
 -- Create API
 local lerpAPI = {}
@@ -16,15 +16,11 @@ local lerpAPI = {}
 -- List of every lerp instance
 local list = {}
 
--- Counter
-local counter = 0
-
 -- Create a table of variables that can be lerped
 function lerpAPI:new(speed, initPos)
 	
 	-- Create instance
 	local inst = {}
-	counter = counter + 1
 	
 	-- Speed
 	inst.speed = speed
@@ -50,28 +46,27 @@ end
 function lerpAPI:remove(inst)
 	
 	list[inst] = nil
-	counter = counter - 1
 	
 end
 
 -- Iterate through the list to set the next tick of each lerp
-function events.TICK()
+events.TICK:register(function()
 	for _, inst in pairs(list) do
 		if inst.enabled then
 			inst.prevTick = inst.currTick
 			inst.currTick = math.lerp(inst.currTick, inst.target, inst.speed)
 		end
 	end
-end
+end, "tickLerp")
 
 -- Iterate through the list to smooth the lerp each frame
-function events.RENDER(delta, context)
+events.RENDER:register(function(delta, context)
 	for _, inst in pairs(list) do
 		if inst.enabled then
 			inst.currPos = math.lerp(inst.prevTick, inst.currTick, delta)
 		end
 	end
-end
+end, "renderLerp")
 
 -- Return API
 return lerpAPI
