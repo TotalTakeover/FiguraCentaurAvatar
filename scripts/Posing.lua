@@ -7,7 +7,7 @@ local t  = {
 	climb  = false, -- Climbing
 	elytra = false, -- Elytra
 	sleep  = false, -- Sleeping
-	spin   = false, -- Riptide Spin
+	spin   = false, -- Riptide spin
 	crawl  = false  -- Crawling (Crawl mod required)
 	
 }

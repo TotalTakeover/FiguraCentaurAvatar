@@ -68,7 +68,7 @@ local tail = squapi.tail:new(
 	0.01, -- Stiffness (0.01)
 	0.9,  -- Bounce (0.9)
 	60,   -- Fly Offset (60)
-	-90,  -- Down Limit (-15)
+	-90,  -- Down Limit (-90)
 	25    -- Up Limit (25)
 )
 
@@ -93,14 +93,14 @@ local leftArm = squapi.arm:new(
 	parts.group.LeftArm,
 	1,     -- Strength (1)
 	false, -- Right Arm (false)
-	true   -- Keep Position (false)
+	true   -- Keep Position (true)
 )
 
 local rightArm = squapi.arm:new(
 	parts.group.RightArm,
 	1,    -- Strength (1)
 	true, -- Right Arm (true)
-	true  -- Keep Position (false)
+	true  -- Keep Position (true)
 )
 
 -- Arm strength variables
