@@ -20,6 +20,9 @@ This Figura avatar is a template designed around turning the user into a Centaur
 - Manuel (Molang Conversions)
 - Auria (Molang Conversions)
 
+### Origin Datapack:
+- [Centaur Origin](https://github.com/PsychoBreadstick/Centaur-Origin) (Created by Psycho Breadstick)
+
 ## Features
 Section under construction
 
