@@ -79,7 +79,7 @@ function events.TICK()
 	local inWater   = player:isInWater()
 	
 	-- Play jump sound
-	if wasGround and not onGround and vel.y > 0 and not inWater then
+	if wasGround and vel.y > 0 and not (onGround or inWater) then
 		
 		sounds:playSound("entity.horse.jump", player:getPos(), 0.25)
 		
@@ -98,7 +98,7 @@ function events.TICK()
 	end
 	
 	-- Play footsteps based on placement
-	if onGround and not sprinting and not inWater and not player:getVehicle() and not effects.cF then
+	if onGround and not (sprinting or inWater or player:getVehicle() or effects.cF) then
 		
 		for _, leg in ipairs(groundParts) do
 			
@@ -149,7 +149,7 @@ function events.TICK()
 	sprintTimer = math.clamp(sprintTimer - 1, 0, 8)
 	
 	-- Play gallop sound
-	if onGround and vel:length() ~= 0 and sprinting and sprintTimer == 0 and not inWater and not effects.cF then
+	if onGround and vel:length() ~= 0 and sprinting and sprintTimer == 0 and not (inWater or effects.cF) then
 		
 		sprintTimer = 10
 		sounds:playSound("entity.horse.gallop", player:getPos(), 0.25)
