@@ -178,7 +178,7 @@ function events.TICK()
 	leftArmLerp.target  = (armsMove or armShouldMove or leftSwing  or bow or ((crossL or crossR) or (using and usingL ~= "NONE"))) and 1 or 0
 	rightArmLerp.target = (armsMove or armShouldMove or rightSwing or bow or ((crossL or crossR) or (using and usingR ~= "NONE"))) and 1 or 0
 	legLerp.target      = (onGround or inWater or pose.elytra or effects.cF) and 1 or 0
-	taur.target         = (onGround or effects.cF) and 0 or taur.target
+	taur.target         = (onGround or player:getVehicle() or effects.cF) and 0 or taur.target
 	
 	-- Control ear flick based on variables
 	ears.doEarFlick = earFlick

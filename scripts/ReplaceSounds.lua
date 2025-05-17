@@ -86,7 +86,7 @@ function events.TICK()
 	end
 	
 	-- Play land sound based on distance fallen
-	if onGround and player:getPos().y - lastHeight < -1 and not inWater then
+	if onGround and player:getPos().y - lastHeight < -1 and not (inWater or player:getVehicle()) then
 		
 		sounds:playSound("entity.horse.land", player:getPos(), 0.25)
 		lastHeight = player:getPos().y
