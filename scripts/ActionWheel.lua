@@ -182,6 +182,7 @@ pages.centaur
 pages.texture
 	:action( -1, texture.primaryAct)
 	:action( -1, texture.secondaryAct)
+	:action( -1, texture.originAct)
 	:action( -1, backAct)
 
 -- Animation actions

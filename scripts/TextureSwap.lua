@@ -1,5 +1,6 @@
--- Required script
+-- Required scripts
 local parts = require("lib.PartsAPI")
+local origins = require("lib.OriginsAPI")
 
 -- Blank texure
 local blankTexture = textures:newTexture("Blank", 64, 64)
@@ -40,6 +41,8 @@ config:name("Centaur")
 local uuidSeed = vec(client.uuidToIntArray(avatar:getUUID()))
 local primaryType   = config:load("TexturePrimary") or uuidSeed.x % (#primaryTypes - 1) + 2
 local secondaryType = config:load("TextureSecondary") or uuidSeed.y % (#secondaryTypes - 1) + 2
+local originType    = config:load("TextureOrigin")
+if originType == nil then originType = true end
 
 -- Reset if types is out of bounds
 if primaryType > #primaryTypes then
@@ -65,15 +68,31 @@ parts.group.HorseRightEar:scale(1.15)
 parts.group.HorseLeftEarSkull:scale(1.15)
 parts.group.HorseRightEarSkull:scale(1.15)
 
+-- Check origin
+local function isOrigin(s)
+	
+	return origins.hasOrigin(player, s)
+	
+end
+
 function events.TICK()
 	
-	-- Apply textures
+	-- Variables
 	local primaryString = primaryTypes[primaryType]
 	local secondaryString = secondaryTypes[secondaryType]
+	local isZombie, isSkeleton = isOrigin("centaur:zombified_centaur"), isOrigin("centaur:skeletonized_centaur")
+	local originOverride = originType and (isZombie or isSkeleton)
+	
+	-- Apply textures
 	for _, part in ipairs(textureParts) do
 		
-		-- If set to use primary default, use primary
-		if primaryString == "default" then
+		-- If originOverride, use special varient
+		-- else if set to use primary default, use primary
+		if originOverride then
+			
+			part:primaryTexture("Resource", "textures/entity/horse/"..(isZombie and "horse_zombie" or isSkeleton and "horse_skeleton")..".png")
+			
+		elseif primaryString == "default" then
 			
 			part:primaryTexture("Primary")
 			
@@ -85,7 +104,7 @@ function events.TICK()
 		
 		-- If set to use primaries special varients, or if the secondary is none, set to blank texture
 		-- else if secondary default, use secondary
-		if secondaryString == "none" or secondaryString == "horse_zombie" or secondaryString == "horse_skeleton" or secondaryString == "donkey" or secondaryString == "mule" then
+		if originOverride or secondaryString == "none" or secondaryString == "horse_zombie" or secondaryString == "horse_skeleton" or secondaryString == "donkey" or secondaryString == "mule" then
 			
 			part:secondaryTexture("CUSTOM", blankTexture)
 			
@@ -103,7 +122,7 @@ function events.TICK()
 	end
 	
 	-- Apply size, ears, and mane
-	local horse = primaryString ~= "donkey" and primaryString ~= "mule"
+	local horse = originOverride or (primaryString ~= "donkey" and primaryString ~= "mule")
 	
 	parts.group.HorseLeftEar:visible(horse)
 	parts.group.HorseRightEar:visible(horse)
@@ -142,11 +161,20 @@ function pings.setTexturesSecondary(i)
 	
 end
 
+-- Set the origin toggle
+function pings.setOriginTextures(boolean)
+	
+	originType = boolean
+	config:save("TextureOrigin", originType)
+	
+end
+
 -- Sync variables
-function pings.syncTextures(a, b)
+function pings.syncTextures(a, b, c)
 	
 	primaryType   = a
 	secondaryType = b
+	originType    = c
 	
 end
 
@@ -162,7 +190,7 @@ if not s then c = {} end
 function events.TICK()
 	
 	if world.getTime() % 200 == 0 then
-		pings.syncTextures(primaryType, secondaryType)
+		pings.syncTextures(primaryType, secondaryType, originType)
 	end
 	
 end
@@ -180,6 +208,12 @@ t.secondaryAct = action_wheel:newAction()
 	:onLeftClick(function() pings.setTexturesSecondary(1) end)
 	:onRightClick(function() pings.setTexturesSecondary(-1) end)
 	:onScroll(pings.setTexturesSecondary)
+
+t.originAct = action_wheel:newAction()
+	:item(itemCheck("ender_pearl"))
+	:toggleItem(itemCheck("origins:orb_of_origin", "snowball"))
+	:onToggle(pings.setOriginTextures)
+	:toggled(originType)
 
 -- Primary info table
 local primaryInfo = {
@@ -302,6 +336,15 @@ function events.RENDER(delta, context)
 				}
 			))
 			:item(secondaryInfo[secondaryType].item)
+		
+		t.originAct
+			:title(toJson(
+				{
+					"",
+					{text = "Toggle Origin Override\n\n", bold = true, color = c.primary},
+					{text = "Allow your origin to override your chosen texture.", color = c.secondary}
+				}
+			))
 		
 		for _, act in pairs(t) do
 			act:hoverColor(c.hover)
