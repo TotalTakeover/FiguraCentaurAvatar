@@ -5,11 +5,6 @@ local parts = require("lib.PartsAPI")
 local blankTexture = textures:newTexture("Blank", 64, 64)
 blankTexture:fill(0, 0, 64, 64, 0, 0, 0, 0)
 
--- Config setup
-config:name("Centaur")
-local primaryType   = config:load("TexturePrimary")   or 1
-local secondaryType = config:load("TextureSecondary") or 2
-
 -- All primary textures
 local primaryTypes = {
 	
@@ -31,8 +26,8 @@ local primaryTypes = {
 -- All secondary textures
 local secondaryTypes = {
 	
-	"none",
 	"default",
+	"none",
 	"horse_markings_white",
 	"horse_markings_whitefield",
 	"horse_markings_whitedots",
@@ -40,12 +35,18 @@ local secondaryTypes = {
 	
 }
 
+-- Config setup
+config:name("Centaur")
+local uuidSeed = vec(client.uuidToIntArray(avatar:getUUID()))
+local primaryType   = config:load("TexturePrimary") or uuidSeed.x % (#primaryTypes - 1) + 2
+local secondaryType = config:load("TextureSecondary") or uuidSeed.y % (#secondaryTypes - 1) + 2
+
 -- Reset if types is out of bounds
 if primaryType > #primaryTypes then
 	primaryType = 1
 end
 if secondaryType > #secondaryTypes then
-	secondaryType = 2
+	secondaryType = 1
 end
 
 -- Texture parts
@@ -67,32 +68,34 @@ parts.group.HorseRightEarSkull:scale(1.15)
 function events.TICK()
 	
 	-- Apply textures
+	local primaryString = primaryTypes[primaryType]
+	local secondaryString = secondaryTypes[secondaryType]
 	for _, part in ipairs(textureParts) do
 		
-		-- If set to use primary default (1), use primary
-		if primaryType == 1 then
+		-- If set to use primary default, use primary
+		if primaryString == "default" then
 			
 			part:primaryTexture("Primary")
 			
 		else
 			
-			part:primaryTexture("Resource", "textures/entity/horse/"..primaryTypes[primaryType]..".png")
+			part:primaryTexture("Resource", "textures/entity/horse/"..primaryString..".png")
 			
 		end
 		
-		-- If set to use primaries between 8 and 11 (special varients), or if the secondary is none (1), set to blank texture
-		-- else if secondary default (6), use secondary
-		if primaryType >= 9 or secondaryType == 1 then
+		-- If set to use primaries special varients, or if the secondary is none, set to blank texture
+		-- else if secondary default, use secondary
+		if secondaryString == "none" or secondaryString == "horse_zombie" or secondaryString == "horse_skeleton" or secondaryString == "donkey" or secondaryString == "mule" then
 			
 			part:secondaryTexture("CUSTOM", blankTexture)
 			
-		elseif secondaryType == 2 then
+		elseif secondaryString == "default" then
 			
 			part:secondaryTexture("Secondary")
 			
 		else
 			
-			part:secondaryTexture("Resource", "textures/entity/horse/"..secondaryTypes[secondaryType]..".png")
+			part:secondaryTexture("Resource", "textures/entity/horse/"..secondaryString..".png")
 			
 		end
 		
@@ -100,7 +103,7 @@ function events.TICK()
 	end
 	
 	-- Apply size, ears, and mane
-	local horse = primaryType < 11
+	local horse = primaryString ~= "donkey" and primaryString ~= "mule"
 	
 	parts.group.HorseLeftEar:visible(horse)
 	parts.group.HorseRightEar:visible(horse)
@@ -231,28 +234,28 @@ local primaryInfo = {
 		item  = itemCheck("bone")
 	},
 	{
-		title = "Mule",
-		text  = "the \"Mule\" vanilla",
-		item  = itemCheck("lead")
-	},
-	{
 		title = "Donkey",
 		text  = "the \"Donkey\" vanilla",
 		item  = itemCheck("chest")
+	},
+	{
+		title = "Mule",
+		text  = "the \"Mule\" vanilla",
+		item  = itemCheck("lead")
 	}
 }
 
 -- Secondary info table
 local secondaryInfo = {
 	{
-		title = "Disabled",
-		text  = "not use a",
-		item  = itemCheck("glass_bottle")
-	},
-	{
 		title = "Default",
 		text  = "use its default",
 		item  = itemCheck("player_head{SkullOwner:"..avatar:getEntityName().."}")
+	},
+	{
+		title = "Disabled",
+		text  = "not use a",
+		item  = itemCheck("glass_bottle")
 	},
 	{
 		title = "White",
