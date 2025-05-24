@@ -25,20 +25,29 @@ end
 -- Play footstep sound
 local function playFootstep(p, b)
 	
+	-- Snow check
+	local snow = false
+	if world.getBlockState(p + vec(0, 1, 0)):getID() == "minecraft:snow" then
+		b = world.getBlockState(p + vec(0, 1, 0))
+		snow = true
+	end
+	
 	-- Check for wood material
 	local isWood = false
-	for _, tag in ipairs(b:getTags()) do
-		if #player:getPassengers() ~= 0 or tag == "apoli:material/wood" then
-			isWood = true
-			break
+	if not snow then
+		for _, tag in ipairs(b:getTags()) do
+			if #player:getPassengers() ~= 0 or tag == "apoli:material/wood" then
+				isWood = true
+				break
+			end
 		end
 	end
 	
 	-- Play sound
 	sounds:playSound(
-		"entity.horse."..(isWood and "step_wood" or "step"),
+		snow and b:getSounds()["step"] or "entity.horse."..(isWood and "step_wood" or "step"),
 		p,
-		0.25
+		snow and 0.5 or 0.25
 	)
 	
 end
