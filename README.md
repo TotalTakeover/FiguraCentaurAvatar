@@ -16,6 +16,7 @@ This Figura avatar is a template designed around turning the user into a Centaur
 - Grandpa Scout (GSAnimBlend, GSCarrier)
 - Squishy (SquAPI)
 - Katt (OriginsAPI, KattArmor, DynamicCrosshair)
+- Bitslayn (Gaze API)
 - 4P5 (GroundCheck)
 - Manuel (Molang Conversions)
 - Auria (Molang Conversions)
