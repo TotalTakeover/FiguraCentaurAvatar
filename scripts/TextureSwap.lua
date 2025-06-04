@@ -104,7 +104,7 @@ function events.TICK()
 		
 		-- If set to use primaries special varients, or if the secondary is none, set to blank texture
 		-- else if secondary default, use secondary
-		if originOverride or secondaryString == "none" or secondaryString == "horse_zombie" or secondaryString == "horse_skeleton" or secondaryString == "donkey" or secondaryString == "mule" then
+		if originOverride or secondaryString == "none" or primaryString == "horse_zombie" or primaryString == "horse_skeleton" or primaryString == "donkey" or primaryString == "mule" then
 			
 			part:secondaryTexture("CUSTOM", blankTexture)
 			
