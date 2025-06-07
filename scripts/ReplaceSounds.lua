@@ -72,9 +72,7 @@ function events.ON_PLAY_SOUND(id, pos, vol, pitch, loop, cat, path)
 	
 	-- If sound contains ".step", stop the sound
 	if id:find(".step") then
-		
 		return true
-		
 	end
 	
 end
