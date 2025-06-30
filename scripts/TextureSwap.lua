@@ -181,11 +181,6 @@ end
 -- Host only instructions
 if not host:isHost() then return end
 
--- Required scripts
-local itemCheck = require("lib.ItemCheck")
-local s, c = pcall(require, "scripts.ColorProperties")
-if not s then c = {} end
-
 -- Sync on tick
 function events.TICK()
 	
@@ -195,21 +190,34 @@ function events.TICK()
 	
 end
 
--- Table setup
-local t = {}
+-- Required scripts
+local s, wheel, itemCheck, c = pcall(require, "scripts.ActionWheel")
+if not s then return end -- Kills script early if ActionWheel.lua isnt found
+pcall(require, "scripts.Accessories") -- Tries to find script, not required
+
+-- Pages
+local parentPage  = action_wheel:getPage("Centaur") or action_wheel:getPage("Main")
+local texturePage = action_wheel:newPage("Texture")
+
+-- Actions table setup
+local a = {}
 
 -- Actions
-t.primaryAct = action_wheel:newAction()
+a.pageAct = parentPage:newAction()
+	:item(itemCheck("brush"))
+	:onLeftClick(function() wheel:descend(texturePage) end)
+
+a.primaryAct = texturePage:newAction()
 	:onLeftClick(function() pings.setTexturesPrimary(1) end)
 	:onRightClick(function() pings.setTexturesPrimary(-1) end)
 	:onScroll(pings.setTexturesPrimary)
 
-t.secondaryAct = action_wheel:newAction()
+a.secondaryAct = texturePage:newAction()
 	:onLeftClick(function() pings.setTexturesSecondary(1) end)
 	:onRightClick(function() pings.setTexturesSecondary(-1) end)
 	:onScroll(pings.setTexturesSecondary)
 
-t.originAct = action_wheel:newAction()
+a.originAct = texturePage:newAction()
 	:item(itemCheck("ender_pearl"))
 	:toggleItem(itemCheck("origins:orb_of_origin", "snowball"))
 	:onToggle(pings.setOriginTextures)
@@ -317,7 +325,12 @@ local secondaryInfo = {
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
-		t.primaryAct
+		a.pageAct
+			:title(toJson(
+				{text = "Texture Settings", bold = true, color = c.primary}
+			))
+		
+		a.primaryAct
 			:title(toJson(
 				{
 					"",
@@ -327,7 +340,7 @@ function events.RENDER(delta, context)
 			))
 			:item(primaryInfo[primaryType].item)
 		
-		t.secondaryAct
+		a.secondaryAct
 			:title(toJson(
 				{
 					"",
@@ -337,7 +350,7 @@ function events.RENDER(delta, context)
 			))
 			:item(secondaryInfo[secondaryType].item)
 		
-		t.originAct
+		a.originAct
 			:title(toJson(
 				{
 					"",
@@ -346,13 +359,10 @@ function events.RENDER(delta, context)
 				}
 			))
 		
-		for _, act in pairs(t) do
+		for _, act in pairs(a) do
 			act:hoverColor(c.hover)
 		end
 		
 	end
 	
 end
-
--- Return actions
-return t

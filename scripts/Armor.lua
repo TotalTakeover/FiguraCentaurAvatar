@@ -245,11 +245,6 @@ end
 -- Host only instructions
 if not host:isHost() then return end
 
--- Required scripts
-local itemCheck = require("lib.ItemCheck")
-local s, c = pcall(require, "scripts.ColorProperties")
-if not s then c = {} end
-
 -- Sync on tick
 function events.TICK()
 	
@@ -259,31 +254,44 @@ function events.TICK()
 	
 end
 
--- Table setup
-local t = {}
+-- Required scripts
+local s, wheel, itemCheck, c = pcall(require, "scripts.ActionWheel")
+if not s then return end -- Kills script early if ActionWheel.lua isnt found
+pcall(require, "scripts.Player") -- Tries to find script, not required
+
+-- Pages
+local parentPage = action_wheel:getPage("Player") or action_wheel:getPage("Main")
+local armorPage  = action_wheel:newPage("Armor")
+
+-- Actions table setup
+local a = {}
 
 -- Actions
-t.allAct = action_wheel:newAction()
+a.pageAct = parentPage:newAction()
+	:item(itemCheck("iron_chestplate"))
+	:onLeftClick(function() wheel:descend(armorPage) end)
+
+a.allAct = armorPage:newAction()
 	:item(itemCheck("armor_stand"))
 	:toggleItem(itemCheck("netherite_chestplate"))
 	:onToggle(pings.setArmorAll)
 
-t.helmetAct = action_wheel:newAction()
+a.helmetAct = armorPage:newAction()
 	:item(itemCheck("iron_helmet"))
 	:toggleItem(itemCheck("diamond_helmet"))
 	:onToggle(pings.setArmorHelmet)
 
-t.chestplateAct = action_wheel:newAction()
+a.chestplateAct = armorPage:newAction()
 	:item(itemCheck("iron_chestplate"))
 	:toggleItem(itemCheck("diamond_chestplate"))
 	:onToggle(pings.setArmorChestplate)
 
-t.leggingsAct = action_wheel:newAction()
+a.leggingsAct = armorPage:newAction()
 	:item(itemCheck("iron_leggings"))
 	:toggleItem(itemCheck("diamond_leggings"))
 	:onToggle(pings.setArmorLeggings)
 
-t.bootsAct = action_wheel:newAction()
+a.bootsAct = armorPage:newAction()
 	:item(itemCheck("iron_boots"))
 	:toggleItem(itemCheck("diamond_boots"))
 	:onToggle(pings.setArmorBoots)
@@ -292,7 +300,12 @@ t.bootsAct = action_wheel:newAction()
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
-		t.allAct
+		a.pageAct
+			:title(toJson(
+				{text = "Armor Settings", bold = true, color = c.primary}
+			))
+		
+		a.allAct
 			:title(toJson(
 				{
 					"",
@@ -302,7 +315,7 @@ function events.RENDER(delta, context)
 			))
 			:toggled(helmet and chestplate and leggings and boots)
 		
-		t.helmetAct
+		a.helmetAct
 			:title(toJson(
 				{
 					"",
@@ -312,7 +325,7 @@ function events.RENDER(delta, context)
 			))
 			:toggled(helmet)
 		
-		t.chestplateAct
+		a.chestplateAct
 			:title(toJson(
 				{
 					"",
@@ -322,7 +335,7 @@ function events.RENDER(delta, context)
 			))
 			:toggled(chestplate)
 		
-		t.leggingsAct
+		a.leggingsAct
 			:title(toJson(
 				{
 					"",
@@ -332,7 +345,7 @@ function events.RENDER(delta, context)
 			))
 			:toggled(leggings)
 		
-		t.bootsAct
+		a.bootsAct
 			:title(toJson(
 				{
 					"",
@@ -342,13 +355,10 @@ function events.RENDER(delta, context)
 			))
 			:toggled(boots)
 		
-		for _, act in pairs(t) do
+		for _, act in pairs(a) do
 			act:hoverColor(c.hover):toggleColor(c.active)
 		end
 		
 	end
 	
 end
-
--- Return actions
-return t

@@ -66,11 +66,6 @@ end
 -- Host only instructions
 if not host:isHost() then return end
 
--- Required scripts
-local itemCheck = require("lib.ItemCheck")
-local s, c = pcall(require, "scripts.ColorProperties")
-if not s then c = {} end
-
 -- Sync on tick
 function events.TICK()
 	
@@ -80,17 +75,34 @@ function events.TICK()
 	
 end
 
--- Table setup
-local t = {}
+-- Required scripts
+local s, wheel, itemCheck, c = pcall(require, "scripts.ActionWheel")
+if not s then return end -- Kills script early if ActionWheel.lua isnt found
+
+-- Check for if page already exists
+local pageExists = action_wheel:getPage("Centaur")
+
+-- Pages
+local parentPage  = action_wheel:getPage("Main")
+local centaurPage = pageExists or action_wheel:newPage("Centaur")
+
+-- Actions table setup
+local a = {}
 
 -- Actions
-t.saddleAct = action_wheel:newAction()
+if not pageExists then
+	a.pageAct = parentPage:newAction()
+		:item(itemCheck("saddle"))
+		:onLeftClick(function() wheel:descend(centaurPage) end)
+end
+
+a.saddleAct = centaurPage:newAction()
 	:item(itemCheck("leather"))
 	:toggleItem(itemCheck("saddle"))
 	:onToggle(pings.setAccessoriesSaddle)
 	:toggled(saddle)
 
-t.bagsAct = action_wheel:newAction()
+a.bagsAct = centaurPage:newAction()
 	:texture(textures:fromVanilla("BundleFilled", "textures/item/bundle_filled.png"))
 	:toggleTexture(textures:fromVanilla("Bundle", "textures/item/bundle.png"))
 	:onToggle(pings.setAccessoriesBags)
@@ -100,7 +112,14 @@ t.bagsAct = action_wheel:newAction()
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
-		t.saddleAct
+		if a.pageAct then
+			a.pageAct
+				:title(toJson(
+					{text = "Centaur Settings", bold = true, color = c.primary}
+				))
+		end
+		
+		a.saddleAct
 			:title(toJson(
 				{
 					"",
@@ -109,7 +128,7 @@ function events.RENDER(delta, context)
 				}
 			))
 		
-		t.bagsAct
+		a.bagsAct
 			:title(toJson(
 				{
 					"",
@@ -118,13 +137,10 @@ function events.RENDER(delta, context)
 				}
 			))
 		
-		for _, act in pairs(t) do
+		for _, act in pairs(a) do
 			act:hoverColor(c.hover):toggleColor(c.active)
 		end
 		
 	end
 	
 end
-
--- Return actions
-return t
