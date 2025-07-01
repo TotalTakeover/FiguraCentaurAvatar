@@ -9,18 +9,54 @@ blankTexture:fill(0, 0, 64, 64, 0, 0, 0, 0)
 -- All primary textures
 local primaryTypes = {
 	
-	"default",
-	"horse_white",
-	"horse_gray",
-	"horse_black",
-	"horse_creamy",
-	"horse_chestnut",
-	"horse_brown",
-	"horse_darkbrown",
-	"horse_zombie",
-	"horse_skeleton",
-	"donkey",
-	"mule"
+	{
+		name  = "default",
+		color = vectors.hexToRGB(avatar:getColor() or "default")
+	},
+	{
+		name  = "horse_white",
+		color = vectors.hexToRGB("BDBDBD")
+	},
+	{
+		name  = "horse_gray",
+		color = vectors.hexToRGB("4B4B4B")
+	},
+	{
+		name  = "horse_black",
+		color = vectors.hexToRGB("1A1C21")
+	},
+	{
+		name  = "horse_creamy",
+		color = vectors.hexToRGB("744A1B")
+	},
+	{
+		name  = "horse_chestnut",
+		color = vectors.hexToRGB("642914")
+	},
+	{
+		name  = "horse_brown",
+		color = vectors.hexToRGB("431D09")
+	},
+	{
+		name  = "horse_darkbrown",
+		color = vectors.hexToRGB("23120B")
+	},
+	{
+		name  = "horse_zombie",
+		color = vectors.hexToRGB("578853")
+	},
+	{
+		name  = "horse_skeleton",
+		color = vectors.hexToRGB("D4D4D4")
+	},
+	{
+		name  = "donkey",
+		color = vectors.hexToRGB("736355")
+	},
+	{
+		name  = "mule",
+		color = vectors.hexToRGB("3A2017")
+	}
 	
 }
 
@@ -75,10 +111,10 @@ local function isOrigin(s)
 	
 end
 
-function events.TICK()
+function events.RENDER(delta, context)
 	
 	-- Variables
-	local primaryString = primaryTypes[primaryType]
+	local primaryString = primaryTypes[primaryType].name
 	local secondaryString = secondaryTypes[secondaryType]
 	local isZombie, isSkeleton = isOrigin("centaur:zombified_centaur"), isOrigin("centaur:skeletonized_centaur")
 	local originOverride = originType and (isZombie or isSkeleton)
@@ -120,6 +156,12 @@ function events.TICK()
 		
 		
 	end
+	
+	-- Glowing outline
+	renderer:outlineColor(primaryTypes[primaryType].color)
+	
+	-- Avatar color
+	avatar:color(primaryTypes[primaryType].color)
 	
 	-- Apply size, ears, and mane
 	local horse = originOverride or (primaryString ~= "donkey" and primaryString ~= "mule")
@@ -194,6 +236,39 @@ end
 local s, wheel, itemCheck, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Accessories") -- Tries to find script, not required
+
+
+-- Dont preform if color properties is empty
+if next(c) ~= nil then
+	
+	-- Store init colors
+	local initColors = {}
+	for k, v in pairs(c) do
+		initColors[k] = v
+	end
+	
+	-- Update action wheel colors
+	function events.RENDER(delta, context)
+		
+		-- Variable
+		local color = primaryTypes[primaryType].color
+		
+		-- Create mermod colors
+		local appliedColors = {
+			hover     = color,
+			active    = (color + 0.25):applyFunc(function(a) return math.min(a, 1) end),
+			primary   = "#"..vectors.rgbToHex(color),
+			secondary = "#"..vectors.rgbToHex((color):applyFunc(function(a) return math.min(a, 1) end))
+		}
+		
+		-- Update action wheel colors
+		for k in pairs(c) do
+			c[k] = appliedColors[k]
+		end
+		
+	end
+	
+end
 
 -- Pages
 local parentPage  = action_wheel:getPage("Centaur") or action_wheel:getPage("Main")
