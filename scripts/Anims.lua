@@ -48,7 +48,7 @@ function events.TICK()
 	local sprinting = player:isSprinting()
 	
 	-- Animation states
-	local sprint = sprinting and not pose.crouch and not pose.swim
+	local sprint = sprinting and not (pose.crouch or pose.swim)
 	local extend = pose.swim or pose.elytra or pose.spin or pose.crawl
 	local sleep  = pose.sleep
 	local isAct  = anims.sit:isPlaying() or anims.rearUp:isPlaying() or anims.kick:isPlaying()
