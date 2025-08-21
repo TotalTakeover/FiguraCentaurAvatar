@@ -237,7 +237,6 @@ local s, wheel, itemCheck, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Accessories") -- Tries to find script, not required
 
-
 -- Dont preform if color properties is empty
 if next(c) ~= nil then
 	
