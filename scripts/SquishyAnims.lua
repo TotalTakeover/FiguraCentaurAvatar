@@ -30,9 +30,9 @@ local function calculateParentRot(m)
 end
 
 -- Lerp tables
-local leftArmLerp  = lerp:new(0.5, armsMove and 1 or 0)
-local rightArmLerp = lerp:new(0.5, armsMove and 1 or 0)
-local legLerp      = lerp:new(0.5, 1)
+local leftArmLerp  = lerp:new(armsMove and 1 or 0, 0.5)
+local rightArmLerp = lerp:new(armsMove and 1 or 0, 0.5)
+local legLerp      = lerp:new(1, 0.5)
 
 -- Squishy ears
 local ears = squapi.ear:new(
