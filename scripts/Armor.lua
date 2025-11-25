@@ -52,77 +52,34 @@ centaurArmor.Materials.turtle
 	:setTexture(textures["textures.armor.turtleHelmet"] or textures["Centaur.turtleHelmet"])
 
 -- Trims
--- Bolt
-centaurArmor.TrimPatterns.bolt
-	:setTexture(textures["textures.armor.trims.boltTrim"] or textures["Centaur.boltTrim"])
+local trims = {
+	"bolt",
+	"coast",
+	"dune",
+	"eye",
+	"flow",
+	"host",
+	"raiser",
+	"rib",
+	"sentry",
+	"shaper",
+	"silence",
+	"snout",
+	"spire",
+	"tide",
+	"vex",
+	"ward",
+	"wayfinder",
+	"wild"
+}
 
--- Coast
-centaurArmor.TrimPatterns.coast
-	:setTexture(textures["textures.armor.trims.coastTrim"] or textures["Centaur.coastTrim"])
-
--- Dune
-centaurArmor.TrimPatterns.dune
-	:setTexture(textures["textures.armor.trims.duneTrim"] or textures["Centaur.duneTrim"])
-
--- Eye
-centaurArmor.TrimPatterns.eye
-	:setTexture(textures["textures.armor.trims.eyeTrim"] or textures["Centaur.eyeTrim"])
-
--- Flow
-centaurArmor.TrimPatterns.flow
-	:setTexture(textures["textures.armor.trims.flowTrim"] or textures["Centaur.flowTrim"])
-
--- Host
-centaurArmor.TrimPatterns.host
-	:setTexture(textures["textures.armor.trims.hostTrim"] or textures["Centaur.hostTrim"])
-
--- Raiser
-centaurArmor.TrimPatterns.raiser
-	:setTexture(textures["textures.armor.trims.raiserTrim"] or textures["Centaur.raiserTrim"])
-
--- Rib
-centaurArmor.TrimPatterns.rib
-	:setTexture(textures["textures.armor.trims.ribTrim"] or textures["Centaur.ribTrim"])
-
--- Sentry
-centaurArmor.TrimPatterns.sentry
-	:setTexture(textures["textures.armor.trims.sentryTrim"] or textures["Centaur.sentryTrim"])
-
--- Shaper
-centaurArmor.TrimPatterns.shaper
-	:setTexture(textures["textures.armor.trims.shaperTrim"] or textures["Centaur.shaperTrim"])
-
--- Silence
-centaurArmor.TrimPatterns.silence
-	:setTexture(textures["textures.armor.trims.silenceTrim"] or textures["Centaur.silenceTrim"])
-
--- Snout
-centaurArmor.TrimPatterns.snout
-	:setTexture(textures["textures.armor.trims.snoutTrim"] or textures["Centaur.snoutTrim"])
-
--- Spire
-centaurArmor.TrimPatterns.spire
-	:setTexture(textures["textures.armor.trims.spireTrim"] or textures["Centaur.spireTrim"])
-
--- Tide
-centaurArmor.TrimPatterns.tide
-	:setTexture(textures["textures.armor.trims.tideTrim"] or textures["Centaur.tideTrim"])
-
--- Vex
-centaurArmor.TrimPatterns.vex
-	:setTexture(textures["textures.armor.trims.vexTrim"] or textures["Centaur.vexTrim"])
-
--- Ward
-centaurArmor.TrimPatterns.ward
-	:setTexture(textures["textures.armor.trims.wardTrim"] or textures["Centaur.wardTrim"])
-
--- Wayfinder
-centaurArmor.TrimPatterns.wayfinder
-	:setTexture(textures["textures.armor.trims.wayfinderTrim"] or textures["Centaur.wayfinderTrim"])
-
--- Wild
-centaurArmor.TrimPatterns.wild
-	:setTexture(textures["textures.armor.trims.wildTrim"] or textures["Centaur.wildTrim"])
+-- Apply trims
+for _, trim in ipairs(trims) do
+	local tex = textures["textures.armor.trims."..trim.."Trim"] or textures["Centaur."..trim.."Trim"] or false
+	if tex then
+		centaurArmor.TrimPatterns[trim]:setTexture(tex)
+	end
+end
 
 -- Config setup
 config:name("Centaur")
