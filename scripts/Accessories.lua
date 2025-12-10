@@ -56,10 +56,9 @@ function pings.setAccessoriesBags(boolean)
 end
 
 -- Sync variables
-function pings.syncAccessories(a, b)
+function pings.syncAccessories(...)
 	
-	saddle = a
-	bags   = b
+	saddle, bags = ...
 	
 end
 

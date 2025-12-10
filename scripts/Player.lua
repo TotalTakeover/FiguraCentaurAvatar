@@ -92,10 +92,9 @@ function pings.setAvatarModelType(boolean)
 end
 
 -- Sync variables
-function pings.syncPlayer(a, b)
+function pings.syncPlayer(...)
 	
-	vanillaSkin = a
-	slim = b
+	vanillaSkin, slim = ...
 	
 end
 

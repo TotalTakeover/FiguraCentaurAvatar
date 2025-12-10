@@ -212,11 +212,9 @@ function pings.setOriginTextures(boolean)
 end
 
 -- Sync variables
-function pings.syncTextures(a, b, c)
+function pings.syncTextures(...)
 	
-	primaryType   = a
-	secondaryType = b
-	originType    = c
+	primaryType, secondaryType, originType = ...
 	
 end
 
