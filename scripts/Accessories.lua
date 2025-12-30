@@ -75,7 +75,7 @@ function events.TICK()
 end
 
 -- Required scripts
-local s, wheel, itemCheck, c = pcall(require, "scripts.ActionWheel")
+local s, wheel, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 
 -- Check for if page already exists
@@ -91,13 +91,13 @@ local a = {}
 -- Actions
 if not pageExists then
 	a.pageAct = parentPage:newAction()
-		:item(itemCheck("saddle"))
+		:item("saddle")
 		:onLeftClick(function() wheel:descend(centaurPage) end)
 end
 
 a.saddleAct = centaurPage:newAction()
-	:item(itemCheck("leather"))
-	:toggleItem(itemCheck("saddle"))
+	:item("leather")
+	:toggleItem("saddle")
 	:onToggle(pings.setAccessoriesSaddle)
 	:toggled(saddle)
 

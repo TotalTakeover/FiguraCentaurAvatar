@@ -231,7 +231,7 @@ function events.TICK()
 end
 
 -- Required scripts
-local s, wheel, itemCheck, c = pcall(require, "scripts.ActionWheel")
+local s, wheel, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Accessories") -- Tries to find script, not required
 
@@ -276,7 +276,7 @@ local a = {}
 
 -- Actions
 a.pageAct = parentPage:newAction()
-	:item(itemCheck("brush"))
+	:item("brush")
 	:onLeftClick(function() wheel:descend(texturePage) end)
 
 a.primaryAct = texturePage:newAction()
@@ -290,8 +290,8 @@ a.secondaryAct = texturePage:newAction()
 	:onScroll(pings.setTexturesSecondary)
 
 a.originAct = texturePage:newAction()
-	:item(itemCheck("ender_pearl"))
-	:toggleItem(itemCheck("origins:orb_of_origin", "snowball"))
+	:item("ender_pearl")
+	:toggleItem("origins:orb_of_origin", "snowball")
 	:onToggle(pings.setOriginTextures)
 	:toggled(originType)
 
@@ -300,62 +300,62 @@ local primaryInfo = {
 	{
 		title = "Default",
 		text  = "its default",
-		item  = itemCheck("player_head{SkullOwner:"..avatar:getEntityName().."}")
+		item  = "player_head{SkullOwner:"..avatar:getEntityName().."}"
 	},
 	{
 		title = "White",
 		text  = "the \"Horse White\" vanilla",
-		item  = itemCheck("white_dye")
+		item  = "white_dye"
 	},
 	{
 		title = "Gray",
 		text  = "the \"Horse Gray\" vanilla",
-		item  = itemCheck("gray_dye")
+		item  = "gray_dye"
 	},
 	{
 		title = "Black",
 		text  = "the \"Horse Black\" vanilla",
-		item  = itemCheck("black_dye")
+		item  = "black_dye"
 	},
 	{
 		title = "Creamy",
 		text  = "the \"Horse Creamy\" vanilla",
-		item  = itemCheck("rabbit_hide")
+		item  = "rabbit_hide"
 	},
 	{
 		title = "Chestnut",
 		text  = "the \"Horse Chestnut\" vanilla",
-		item  = itemCheck("oak_log")
+		item  = "oak_log"
 	},
 	{
 		title = "Brown",
 		text  = "the \"Horse Brown\" vanilla",
-		item  = itemCheck("brown_dye")
+		item  = "brown_dye"
 	},
 	{
 		title = "Dark Brown",
 		text  = "the \"Horse Dark Brown\" vanilla",
-		item  = itemCheck("dark_oak_log")
+		item  = "dark_oak_log"
 	},
 	{
 		title = "Zombie",
 		text  = "the \"Zombie\" vanilla",
-		item  = itemCheck("rotten_flesh")
+		item  = "rotten_flesh"
 	},
 	{
 		title = "Skeleton",
 		text  = "the \"Skeleton\" vanilla",
-		item  = itemCheck("bone")
+		item  = "bone"
 	},
 	{
 		title = "Donkey",
 		text  = "the \"Donkey\" vanilla",
-		item  = itemCheck("chest")
+		item  = "chest"
 	},
 	{
 		title = "Mule",
 		text  = "the \"Mule\" vanilla",
-		item  = itemCheck("lead")
+		item  = "lead"
 	}
 }
 
@@ -364,32 +364,32 @@ local secondaryInfo = {
 	{
 		title = "Default",
 		text  = "use its default",
-		item  = itemCheck("player_head{SkullOwner:"..avatar:getEntityName().."}")
+		item  = "player_head{SkullOwner:"..avatar:getEntityName().."}"
 	},
 	{
 		title = "Disabled",
 		text  = "not use a",
-		item  = itemCheck("glass_bottle")
+		item  = "glass_bottle"
 	},
 	{
 		title = "White",
 		text  = "use the \"White\" vanilla",
-		item  = itemCheck("paper")
+		item  = "paper"
 	},
 	{
 		title = "White Field",
 		text  = "use the \"White Field\" vanilla",
-		item  = itemCheck("snow")
+		item  = "snow"
 	},
 	{
 		title = "White Dots",
 		text  = "use the \"White Dots\" vanilla",
-		item  = itemCheck("snowball")
+		item  = "snowball"
 	},
 	{
 		title = "Black Dots",
 		text  = "use the \"Black Dots\" vanilla",
-		item  = itemCheck("sculk_vein")
+		item  = "sculk_vein"
 	}
 }
 

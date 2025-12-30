@@ -1,5 +1,5 @@
 # [Centaur](https://github.com/Taurs-with-Keyboards/FiguraCentaurAvatar)
-### Version: 1.2.4
+### Version: 1.2.5
 This Figura avatar is a template designed around turning the user into a Centaur.
 
 ### Authors:

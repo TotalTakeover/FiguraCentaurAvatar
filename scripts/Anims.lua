@@ -285,7 +285,7 @@ end
 local t = {}
 
 -- Required scripts
-local s, wheel, itemCheck, c = pcall(require, "scripts.ActionWheel")
+local s, wheel, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Accessories") -- Tries to find script, not required
 
@@ -302,26 +302,26 @@ local a = {}
 -- Actions
 if not pageExists then
 	a.pageAct = parentPage:newAction()
-		:item(itemCheck("jukebox"))
+		:item("jukebox")
 		:onLeftClick(function() wheel:descend(animsPage) end)
 end
 
 a.sitAct = animsPage:newAction()
-	:item(itemCheck("scaffolding"))
-	:toggleItem(itemCheck("saddle"))
+	:item("scaffolding")
+	:toggleItem("saddle")
 	:onToggle(pings.setAnimToggleSit)
 
 a.rearUpAct = animsPage:newAction()
-	:item(itemCheck("golden_axe"))
+	:item("golden_axe")
 	:onLeftClick(pings.animPlayRearUp)
 
 a.kickAct = animsPage:newAction()
-	:item(itemCheck("carrot"))
+	:item("carrot")
 	:onLeftClick(pings.animPlayKick)
 
 a.armsAct = animsPage:newAction()
-	:item(itemCheck("red_dye"))
-	:toggleItem(itemCheck("rabbit_foot"))
+	:item("red_dye")
+	:toggleItem("rabbit_foot")
 	:onToggle(pings.setAnimsArmsMove)
 	:toggled(armsMove)
 
