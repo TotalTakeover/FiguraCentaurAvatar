@@ -1,9 +1,11 @@
 {
 	"meta": {
 		"format_version": "5.0",
-		"model_format": "figura",
+		"model_format": "free",
 		"box_uv": false
 	},
+	"name": "Centaur",
+	"model_identifier": "",
 	"visible_box": [1, 1, 0],
 	"variable_placeholders": "",
 	"multi_file_ruleset": "",
