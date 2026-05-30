@@ -18,7 +18,7 @@ local sitting  = sync.new("AnimsSit", false)
 local canSit  = false
 local canRear = false
 local canKick = false
-local prevKickData = 0
+local _kickData = 0
 
 -- Arms setup
 local leftArmLerp  = lerp.new(armsMove.curr and 1 or 0, 0.5)
@@ -53,7 +53,7 @@ end
 -- Store previous origins data
 function events.ENTITY_INIT()
 	
-	prevKickData = origins.getPowerData(player, "centaur:horse_kick") or 0
+	_kickData = origins.getPowerData(player)["centaur:horse_kick"]
 	
 end
 
@@ -90,12 +90,11 @@ function events.TICK()
 	anims.extend:playing(extend)
 	anims.sleep:playing(sleep)
 	
-	-- Origins powers
-	local hasKickPower = origins.hasPower(player, "centaur:horse_kick")
-	local kickData = origins.getPowerData(player, "centaur:horse_kick") or 0
+	-- Origins power
+	local kickData = origins.getPowerData(player)["centaur:horse_kick"]
 	
 	-- Play kick if power is activated
-	if hasKickPower and kickData ~= prevKickData then
+	if kickData ~= nil and _kickData ~= nil and kickData ~= _kickData then
 		anims.kick:play()
 	end
 	
@@ -121,7 +120,7 @@ function events.TICK()
 	rightArmLerp.target = (armsMove.curr or armShouldMove or swingR or usingR or bow) and 0 or -1
 	
 	-- Store data
-	prevKickData = kickData
+	_kickData = kickData
 	
 end
 

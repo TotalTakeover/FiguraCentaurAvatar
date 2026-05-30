@@ -103,19 +103,12 @@ parts.group.HorseRightEar:scale(1.15)
 parts.group.HorseLeftEarSkull:scale(1.15)
 parts.group.HorseRightEarSkull:scale(1.15)
 
--- Check origin
-local function isOrigin(s)
-	
-	return origins.hasOrigin(player, s)
-	
-end
-
 function events.RENDER(delta, context)
 	
 	-- Variables
 	local primaryString = primaryTypes[primaryType.curr].name
 	local secondaryString = secondaryTypes[secondaryType.curr]
-	local isZombie, isSkeleton = isOrigin("centaur:zombified_centaur"), isOrigin("centaur:skeletonized_centaur")
+	local isZombie, isSkeleton = origins.hasOrigin(player, "centaur:zombified_centaur"), origins.hasOrigin(player, "centaur:skeletonized_centaur")
 	local originOverride = originType.curr and (isZombie or isSkeleton)
 	
 	-- Apply textures
@@ -414,7 +407,7 @@ function events.RENDER(delta, context)
 			))
 		
 		for _, act in pairs(a) do
-			act:hoverColor(c.hover)
+			act:hoverColor(c.hover):toggleColor(c.active)
 		end
 		
 	end

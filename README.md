@@ -18,7 +18,7 @@ This Figura avatar is a template designed around turning the user into a Centaur
 - Katt (OriginsAPI, KattArmor)
 - Bitslayn (Gaze API)
 - 4P5 (GroundCheck)
-- Manuel (Molang Conversions)
+- Manuel (Molang Conversions, OriginsAPI)
 - Auria (Molang Conversions)
 
 ### Origin Datapack:
