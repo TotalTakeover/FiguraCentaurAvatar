@@ -1,5 +1,6 @@
 -- Required scripts
-local parts = require("lib.PartsAPI")
+local parts   = require("lib.PartsAPI")
+local sync    = require("lib.LetThatSyncFig")
 local origins = require("lib.OriginsAPI")
 
 -- Blank texure
@@ -72,20 +73,18 @@ local secondaryTypes = {
 	
 }
 
--- Config setup
-config:name("Centaur")
-local uuidSeed = vec(client.uuidToIntArray(avatar:getUUID()))
-local primaryType   = config:load("TexturePrimary") or uuidSeed.x % (#primaryTypes - 1) + 2
-local secondaryType = config:load("TextureSecondary") or uuidSeed.y % (#secondaryTypes - 1) + 2
-local originType    = config:load("TextureOrigin")
-if originType == nil then originType = true end
+-- Synced variables setup
+local uuidSeed      = vec(client.uuidToIntArray(avatar:getUUID()))
+local primaryType   = sync.new("TexturePrimary",   uuidSeed.x % (#primaryTypes   - 1) + 2):config()
+local secondaryType = sync.new("TextureSecondary", uuidSeed.y % (#secondaryTypes - 1) + 2):config()
+local originType    = sync.new("TextureOrigin", true):config()
 
 -- Reset if types is out of bounds
-if primaryType > #primaryTypes then
-	primaryType = 1
+if primaryType.curr > #primaryTypes then
+	primaryType.curr = 1
 end
-if secondaryType > #secondaryTypes then
-	secondaryType = 1
+if secondaryType.curr > #secondaryTypes then
+	secondaryType.curr = 1
 end
 
 -- Texture parts
@@ -114,10 +113,10 @@ end
 function events.RENDER(delta, context)
 	
 	-- Variables
-	local primaryString = primaryTypes[primaryType].name
-	local secondaryString = secondaryTypes[secondaryType]
+	local primaryString = primaryTypes[primaryType.curr].name
+	local secondaryString = secondaryTypes[secondaryType.curr]
 	local isZombie, isSkeleton = isOrigin("centaur:zombified_centaur"), isOrigin("centaur:skeletonized_centaur")
-	local originOverride = originType and (isZombie or isSkeleton)
+	local originOverride = originType.curr and (isZombie or isSkeleton)
 	
 	-- Apply textures
 	for _, part in ipairs(textureParts) do
@@ -158,10 +157,10 @@ function events.RENDER(delta, context)
 	end
 	
 	-- Glowing outline
-	renderer:outlineColor(primaryTypes[primaryType].color)
+	renderer:outlineColor(primaryTypes[primaryType.curr].color)
 	
 	-- Avatar color
-	avatar:color(primaryTypes[primaryType].color)
+	avatar:color(primaryTypes[primaryType.curr].color)
 	
 	-- Apply size, ears, and mane
 	local horse = originOverride or (primaryString ~= "donkey" and primaryString ~= "mule")
@@ -189,8 +188,8 @@ end
 function pings.setTexturesPrimary(i)
 	
 	-- Saves primary
-	primaryType = ((primaryType + i - 1) % #primaryTypes) + 1
-	config:save("TexturePrimary", primaryType)
+	primaryType.curr = ((primaryType.curr + i - 1) % #primaryTypes) + 1
+	config:save("TexturePrimary", primaryType.curr)
 	
 end
 
@@ -198,37 +197,13 @@ end
 function pings.setTexturesSecondary(i)
 	
 	-- Saves secondary
-	secondaryType = ((secondaryType + i - 1) % #secondaryTypes) + 1
-	config:save("TextureSecondary", secondaryType)
-	
-end
-
--- Set the origin toggle
-function pings.setOriginTextures(boolean)
-	
-	originType = boolean
-	config:save("TextureOrigin", originType)
-	
-end
-
--- Sync variables
-function pings.syncTextures(...)
-	
-	primaryType, secondaryType, originType = ...
+	secondaryType.curr = ((secondaryType.curr + i - 1) % #secondaryTypes) + 1
+	config:save("TextureSecondary", secondaryType.curr)
 	
 end
 
 -- Host only instructions
 if not host:isHost() then return end
-
--- Sync on tick
-function events.TICK()
-	
-	if world.getTime() % 200 == 0 then
-		pings.syncTextures(primaryType, secondaryType, originType)
-	end
-	
-end
 
 -- Required scripts
 local s, wheel, c = pcall(require, "scripts.ActionWheel")
@@ -248,7 +223,7 @@ if next(c) ~= nil then
 	function events.RENDER(delta, context)
 		
 		-- Variable
-		local color = primaryTypes[primaryType].color
+		local color = primaryTypes[primaryType.curr].color
 		
 		-- Create mermod colors
 		local appliedColors = {
@@ -274,26 +249,33 @@ local texturePage = action_wheel:newPage("Texture")
 -- Actions table setup
 local a = {}
 
+-- Set texture
+local function setTexture(tex, limit, i)
+	return ((tex + i - 1) % limit) + 1
+end
+
 -- Actions
 a.pageAct = parentPage:newAction()
 	:item("brush")
 	:onLeftClick(function() wheel:descend(texturePage) end)
 
 a.primaryAct = texturePage:newAction()
-	:onLeftClick(function() pings.setTexturesPrimary(1) end)
-	:onRightClick(function() pings.setTexturesPrimary(-1) end)
-	:onScroll(pings.setTexturesPrimary)
+	:onLeftClick(function() primaryType:update(setTexture(primaryType.curr, #primaryTypes, 1)) end)
+	:onRightClick(function() primaryType:update(setTexture(primaryType.curr, #primaryTypes, 1)) end)
+	:onScroll(function(x) primaryType:update(setTexture(primaryType.curr, #primaryTypes, x), 20) end)
 
 a.secondaryAct = texturePage:newAction()
-	:onLeftClick(function() pings.setTexturesSecondary(1) end)
-	:onRightClick(function() pings.setTexturesSecondary(-1) end)
-	:onScroll(pings.setTexturesSecondary)
+	:onLeftClick(function() secondaryType:update(setTexture(secondaryType.curr, #secondaryTypes, 1)) end)
+	:onRightClick(function() secondaryType:update(setTexture(secondaryType.curr, #secondaryTypes, 1)) end)
+	:onScroll(function(x) secondaryType:update(setTexture(secondaryType.curr, #secondaryTypes, x), 20) end)
 
 a.originAct = texturePage:newAction()
 	:item("ender_pearl")
 	:toggleItem("origins:orb_of_origin", "snowball")
-	:onToggle(pings.setOriginTextures)
-	:toggled(originType)
+	:onToggle(function(bool)
+		originType:update(bool)
+	end)
+	:toggled(originType.curr)
 
 -- Primary info table
 local primaryInfo = {
@@ -406,21 +388,21 @@ function events.RENDER(delta, context)
 			:title(toJson(
 				{
 					"",
-					{text = ("Primary: %s\n\n"):format(primaryInfo[primaryType].title), bold = true, color = c.primary},
-					{text = ("Sets the lower body to use %s primary texture."):format(primaryInfo[primaryType].text), color = c.secondary}
+					{text = ("Primary: %s\n\n"):format(primaryInfo[primaryType.curr].title), bold = true, color = c.primary},
+					{text = ("Sets the lower body to use %s primary texture."):format(primaryInfo[primaryType.curr].text), color = c.secondary}
 				}
 			))
-			:item(primaryInfo[primaryType].item)
+			:item(primaryInfo[primaryType.curr].item)
 		
 		a.secondaryAct
 			:title(toJson(
 				{
 					"",
-					{text = ("Secondary: %s\n\n"):format(secondaryInfo[secondaryType].title), bold = true, color = c.primary},
-					{text = ("Sets the lower body to %s secondary texture."):format(secondaryInfo[secondaryType].text), color = c.secondary}
+					{text = ("Secondary: %s\n\n"):format(secondaryInfo[secondaryType.curr].title), bold = true, color = c.primary},
+					{text = ("Sets the lower body to %s secondary texture."):format(secondaryInfo[secondaryType.curr].text), color = c.secondary}
 				}
 			))
-			:item(secondaryInfo[secondaryType].item)
+			:item(secondaryInfo[secondaryType.curr].item)
 		
 		a.originAct
 			:title(toJson(

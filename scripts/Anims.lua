@@ -2,6 +2,7 @@
 require("lib.GSAnimBlend")
 require("lib.Molang")
 local parts   = require("lib.PartsAPI")
+local sync    = require("lib.LetThatSyncFig")
 local lerp    = require("lib.LerpAPI")
 local origins = require("lib.OriginsAPI")
 local pose    = require("scripts.Posing")
@@ -9,19 +10,19 @@ local pose    = require("scripts.Posing")
 -- Animations setup
 local anims = animations.Centaur
 
-config:name("Centaur")
-local armsMove = config:load("ArmsMove") or false
+-- Synced variables setup
+local armsMove = sync.new("AnimsArms", false):config()
+local sitting  = sync.new("AnimsSit", false)
 
 -- Variables
-local canAct  = false
 local canSit  = false
 local canRear = false
 local canKick = false
 local prevKickData = 0
 
 -- Arms setup
-local leftArmLerp  = lerp:new(armsMove and 1 or 0, 0.5)
-local rightArmLerp = lerp:new(armsMove and 1 or 0, 0.5)
+local leftArmLerp  = lerp.new(armsMove.curr and 1 or 0, 0.5)
+local rightArmLerp = lerp.new(armsMove.curr and 1 or 0, 0.5)
 
 -- Gets the origin rotation of a part, clamped
 local function getOriginRot(part, delta)
@@ -66,17 +67,17 @@ function events.TICK()
 	local sprint = sprinting and not (pose.crouch or pose.swim)
 	local extend = pose.swim or pose.elytra or pose.spin or pose.crawl
 	local sleep  = pose.sleep
+	local canAct = pose.stand and not(vel:length() ~= 0 or player:getVehicle())
 	local isAct  = anims.sit:isPlaying() or anims.rearUp:isPlaying() or anims.kick:isPlaying()
 	
 	-- Animation actions
-	canAct  = pose.stand and not(vel:length() ~= 0 or player:getVehicle())
 	canSit  = canAct and (not isAct or anims.sit:isPlaying())
 	canRear = canAct and (not isAct or anims.rearUp:isPlaying())
 	canKick = canAct and (not isAct or anims.kick:isPlaying())
 	
-	-- Stop Sit animation
-	if not canSit then
-		anims.sit:stop()
+	-- Stop Sitting animation
+	if sitting.curr and not canSit then
+		sitting:update(false)
 	end
 	
 	-- Stop Rear Up animation
@@ -116,8 +117,8 @@ function events.TICK()
 	local armShouldMove = pose.swim or pose.elytra or pose.crawl or pose.climb
 	
 	-- Arms movement targets
-	leftArmLerp.target  = (armsMove or armShouldMove or swingL or usingL or bow) and 0 or -1
-	rightArmLerp.target = (armsMove or armShouldMove or swingR or usingR or bow) and 0 or -1
+	leftArmLerp.target  = (armsMove.curr or armShouldMove or swingL or usingL or bow) and 0 or -1
+	rightArmLerp.target = (armsMove.curr or armShouldMove or swingR or usingR or bow) and 0 or -1
 	
 	-- Store data
 	prevKickData = kickData
@@ -200,13 +201,6 @@ for _, blend in ipairs(blendAnims) do
 	end
 end
 
--- Play sit anim
-function pings.setAnimToggleSit(boolean)
-	
-	anims.sit:playing(canSit and boolean)
-	
-end
-
 -- Play rear up anim
 function pings.animPlayRearUp()
 	
@@ -221,65 +215,36 @@ function pings.animPlayKick()
 	
 end
 
--- Arm movement toggle
-function pings.setAnimsArmsMove(boolean)
-	
-	armsMove = boolean
-	config:save("ArmsMove", armsMove)
-	
-end
-
--- Sync variables
-function pings.syncAnims(...)
-	
-	armsMove = ...
-	
-end
+-- Apply anims to sync updates
+sitting:applyFunc(function()
+	anims.sit:playing(sitting.curr and canSit)
+end)
 
 -- Host only instructions
 if not host:isHost() then return end
 
--- Sync on tick
-function events.TICK()
-	
-	if world.getTime() % 200 == 0 then
-		pings.syncAnims(armsMove)
-	end
-	
-end
+-- Required script
+local keybound = require("lib.Keybound")
 
--- Sit keybind
-local sitBind   = config:load("AnimSitKeybind") or "key.keyboard.keypad.1"
-local setSitKey = keybinds:newKeybind("Sit Animation"):onPress(function() pings.setAnimToggleSit(not anims.sit:isPlaying()) end):key(sitBind)
-
--- Rear Up keybind
-local rearUpBind   = config:load("AnimRearUpKeybind") or "key.keyboard.keypad.2"
-local setRearUpKey = keybinds:newKeybind("Rear Up Animation"):onPress(pings.animPlayRearUp):key(rearUpBind)
-
--- Kick keybind
-local kickBind   = config:load("AnimKickKeybind") or "key.keyboard.keypad.3"
-local setKickKey = keybinds:newKeybind("Kick Animation"):onPress(pings.animPlayKick):key(kickBind)
-
--- Keybind updaters
-function events.TICK()
-	
-	local sitKey    = setSitKey:getKey()
-	local rearUpKey = setRearUpKey:getKey()
-	local kickKey   = setKickKey:getKey()
-	if sitKey ~= sitBind then
-		sitBind = sitKey
-		config:save("AnimSitKeybind", sitKey)
-	end
-	if rearUpKey ~= rearUpBind then
-		rearUpBind = rearUpKey
-		config:save("AnimRearUpKeybind", rearUpKey)
-	end
-	if kickKey ~= kickBind then
-		kickBind = kickKey
-		config:save("AnimKickKeybind", kickKey)
-	end
-	
-end
+-- Setup keybinds
+local sitKeybind = keybound.new(
+	keybinds
+		:newKeybind("Sit Animation", "key.keyboard.keypad.1")
+		:onPress(function() sitting:update(not sitting.curr) end),
+	"AnimsSitKeybind"
+)
+local rearUpKeybind = keybound.new(
+	keybinds
+		:newKeybind("Rear Up Animation", "key.keyboard.keypad.2")
+		:onPress(pings.animPlayRearUp),
+	"AnimsRearUpKeybind"
+)
+local kickKeybind = keybound.new(
+	keybinds
+		:newKeybind("Kick Animation", "key.keyboard.keypad.3")
+		:onPress(pings.animPlayKick),
+	"AnimsKickKeybind"
+)
 
 -- Table setup
 local t = {}
@@ -309,7 +274,9 @@ end
 a.sitAct = animsPage:newAction()
 	:item("scaffolding")
 	:toggleItem("saddle")
-	:onToggle(pings.setAnimToggleSit)
+	:onToggle(function(bool)
+		sitting:update(bool)
+	end)
 
 a.rearUpAct = animsPage:newAction()
 	:item("golden_axe")
@@ -322,8 +289,10 @@ a.kickAct = animsPage:newAction()
 a.armsAct = animsPage:newAction()
 	:item("red_dye")
 	:toggleItem("rabbit_foot")
-	:onToggle(pings.setAnimsArmsMove)
-	:toggled(armsMove)
+	:onToggle(function(bool)
+		armsMove:update(bool)
+	end)
+	:toggled(armsMove.curr)
 
 -- Update actions
 function events.RENDER(delta, context)

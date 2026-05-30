@@ -4,6 +4,7 @@ if not s then return {} end
 
 -- Required scripts
 local parts   = require("lib.PartsAPI")
+local sync    = require("lib.LetThatSyncFig")
 local lerp    = require("lib.LerpAPI")
 local ground  = require("lib.GroundCheck")
 local pose    = require("scripts.Posing")
@@ -12,10 +13,8 @@ local effects = require("scripts.SyncedVariables")
 -- Animation setup
 local anims = animations.Centaur
 
--- Config setup
-config:name("Centaur")
-local earFlick = config:load("SquapiEarFlick")
-if earFlick == nil then earFlick = true end
+-- Synced variables setup
+local earFlick = sync.new("AnimsEarFlicks", true):config()
 
 -- Calculate parent's rotations
 local function calculateParentRot(m)
@@ -29,19 +28,19 @@ local function calculateParentRot(m)
 end
 
 -- Lerp table
-local legLerp = lerp:new(1, 0.5)
+local legLerp = lerp.new(1, 0.5)
 
 -- Squishy ears
 local ears = squapi.ear:new(
 	parts.group.LeftEar,
 	parts.group.RightEar,
-	0,        -- Range Multiplier (0)
-	false,    -- Horizontal (false)
-	1,        -- Bend Strength (1)
-	earFlick, -- Do Flick (earFlick)
-	400,      -- Flick Chance (400)
-	0.05,     -- Stiffness (0.05)
-	0.9       -- Bounce (0.9)
+	0,             -- Range Multiplier (0)
+	false,         -- Horizontal (false)
+	1,             -- Bend Strength (1)
+	earFlick.curr, -- Do Flick (earFlick)
+	400,           -- Flick Chance (400)
+	0.05,          -- Stiffness (0.05)
+	0.9            -- Bounce (0.9)
 )
 
 -- Tails table
@@ -138,7 +137,7 @@ function events.TICK()
 	taur.target    = (onGround or player:getVehicle() or effects.cF) and 0 or taur.target
 	
 	-- Control ear flick based on variables
-	ears.doEarFlick = earFlick
+	ears.doEarFlick = earFlick.curr
 	
 end
 
@@ -163,32 +162,8 @@ function events.RENDER(delta, context)
 	
 end
 
--- Ear flick toggle
-function pings.setSquapiEarFlick(boolean)
-	
-	earFlick = boolean
-	config:save("SquapiEarFlick", earFlick)
-	
-end
-
--- Sync variables
-function pings.syncSquapi(...)
-	
-	earFlick = ...
-	
-end
-
 -- Host only instructions
 if not host:isHost() then return end
-
--- Sync on tick
-function events.TICK()
-	
-	if world.getTime() % 200 == 0 then
-		pings.syncSquapi(earFlick)
-	end
-	
-end
 
 -- Required scripts
 local s, wheel, c = pcall(require, "scripts.ActionWheel")
@@ -215,8 +190,10 @@ end
 a.earsAct = animsPage:newAction()
 	:item("bone")
 	:toggleItem("feather")
-	:onToggle(pings.setSquapiEarFlick)
-	:toggled(earFlick)
+	:onToggle(function(bool)
+		earFlick:update(bool)
+	end)
+	:toggled(earFlick.curr)
 
 -- Update actions
 function events.RENDER(delta, context)

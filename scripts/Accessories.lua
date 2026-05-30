@@ -1,10 +1,10 @@
--- Required script
+-- Required scripts
 local parts = require("lib.PartsAPI")
+local sync  = require("lib.LetThatSyncFig")
 
--- Config setup
-config:name("Centaur")
-local saddle = config:load("AccessoriesSaddle") or false
-local bags   = config:load("AccessoriesBags")   or false
+-- Synced variables setup
+local saddle = sync.new("AccessoriesSaddle", false):config()
+local bags   = sync.new("AccessoriesBags", false):config()
 
 -- Saddle parts
 local saddleParts = {
@@ -25,54 +25,28 @@ function events.RENDER(delta, context)
 	
 	-- Apply
 	for _, part in ipairs(saddleParts) do
-		part:visible(saddle)
+		part:visible(saddle.curr)
 	end
 	for _, part in ipairs(bagParts) do
-		part:visible(bags)
+		part:visible(bags.curr)
 	end
 	
 end
 
--- Saddle toggle
-function pings.setAccessoriesSaddle(boolean)
-	
-	saddle = boolean
-	config:save("AccessoriesSaddle", saddle)
+-- Apply sound functions
+saddle:applyFunc(function()
 	if player:isLoaded() then
 		sounds:playSound("entity.horse.saddle", player:getPos(), 0.5)
 	end
-	
-end
-
--- Bags toggle
-function pings.setAccessoriesBags(boolean)
-	
-	bags = boolean
-	config:save("AccessoriesBags", bags)
+end)
+bags:applyFunc(function()
 	if player:isLoaded() then
 		sounds:playSound("item.armor.equip_generic", player:getPos(), 0.5)
 	end
-	
-end
-
--- Sync variables
-function pings.syncAccessories(...)
-	
-	saddle, bags = ...
-	
-end
+end)
 
 -- Host only instructions
 if not host:isHost() then return end
-
--- Sync on tick
-function events.TICK()
-	
-	if world.getTime() % 200 == 0 then
-		pings.syncAccessories(saddle, bags)
-	end
-	
-end
 
 -- Required scripts
 local s, wheel, c = pcall(require, "scripts.ActionWheel")
@@ -98,14 +72,18 @@ end
 a.saddleAct = centaurPage:newAction()
 	:item("leather")
 	:toggleItem("saddle")
-	:onToggle(pings.setAccessoriesSaddle)
-	:toggled(saddle)
+	:onToggle(function(bool)
+		saddle:update(bool)
+	end)
+	:toggled(saddle.curr)
 
 a.bagsAct = centaurPage:newAction()
 	:texture(textures:fromVanilla("BundleFilled", "textures/item/bundle_filled.png"))
 	:toggleTexture(textures:fromVanilla("Bundle", "textures/item/bundle.png"))
-	:onToggle(pings.setAccessoriesBags)
-	:toggled(bags)
+	:onToggle(function(bool)
+		bags:update(bool)
+	end)
+	:toggled(bags.curr)
 
 -- Update actions
 function events.RENDER(delta, context)
