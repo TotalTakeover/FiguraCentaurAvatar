@@ -199,7 +199,7 @@ end
 if not host:isHost() then return end
 
 -- Required scripts
-local s, wheel, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Accessories") -- Tries to find script, not required
 
@@ -250,7 +250,7 @@ end
 -- Actions
 a.pageAct = parentPage:newAction()
 	:item("brush")
-	:onLeftClick(function() wheel:descend(texturePage) end)
+	:onLeftClick(function() pageNav.descend(texturePage) end)
 
 a.primaryAct = texturePage:newAction()
 	:onLeftClick(function() primaryType:update(setTexture(primaryType.curr, #primaryTypes, 1)) end)

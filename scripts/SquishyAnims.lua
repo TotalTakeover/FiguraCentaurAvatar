@@ -166,7 +166,7 @@ end
 if not host:isHost() then return end
 
 -- Required scripts
-local s, wheel, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Anims") -- Tries to find script, not required
 
@@ -184,7 +184,7 @@ local a = {}
 if not pageExists then
 	a.pageAct = parentPage:newAction()
 		:item("jukebox")
-		:onLeftClick(function() wheel:descend(animsPage) end)
+		:onLeftClick(function() pageNav.descend(animsPage) end)
 end
 
 a.earsAct = animsPage:newAction()
