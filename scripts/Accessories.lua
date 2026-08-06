@@ -49,7 +49,7 @@ end)
 if not host:isHost() then return end
 
 -- Required scripts
-local s, pageNav, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, acts, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 
 -- Check for if page already exists
@@ -59,17 +59,14 @@ local pageExists = action_wheel:getPage("Centaur")
 local parentPage  = action_wheel:getPage("Main")
 local centaurPage = pageExists or action_wheel:newPage("Centaur")
 
--- Actions table setup
-local a = {}
-
 -- Actions
 if not pageExists then
-	a.pageAct = parentPage:newAction()
+	acts.centaurPage = parentPage:newAction()
 		:item("saddle")
 		:onLeftClick(function() pageNav.descend(centaurPage) end)
 end
 
-a.saddleAct = centaurPage:newAction()
+acts.centaurSaddleToggle = centaurPage:newAction()
 	:item("leather")
 	:toggleItem("saddle")
 	:onToggle(function(bool)
@@ -77,7 +74,7 @@ a.saddleAct = centaurPage:newAction()
 	end)
 	:toggled(saddle.curr)
 
-a.bagsAct = centaurPage:newAction()
+acts.centaurBagsToggle = centaurPage:newAction()
 	:texture(textures:fromVanilla("BundleFilled", "textures/item/bundle_filled.png"))
 	:toggleTexture(textures:fromVanilla("Bundle", "textures/item/bundle.png"))
 	:onToggle(function(bool)
@@ -89,14 +86,15 @@ a.bagsAct = centaurPage:newAction()
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
-		if a.pageAct then
-			a.pageAct
+		if acts.centaurPage then
+			acts.centaurPage
 				:title(toJson(
 					{text = "Centaur Settings", bold = true, color = c.primary}
 				))
+				:hoverColor(c.hover)
 		end
 		
-		a.saddleAct
+		acts.centaurSaddleToggle
 			:title(toJson(
 				{
 					"",
@@ -104,8 +102,10 @@ function events.RENDER(delta, context)
 					{text = "Toggles visibility of the saddle.", color = c.secondary}
 				}
 			))
+			:hoverColor(c.hover)
+			:toggleColor(c.active)
 		
-		a.bagsAct
+		acts.centaurBagsToggle
 			:title(toJson(
 				{
 					"",
@@ -113,10 +113,8 @@ function events.RENDER(delta, context)
 					{text = "Toggles visibility of the bags.", color = c.secondary}
 				}
 			))
-		
-		for _, act in pairs(a) do
-			act:hoverColor(c.hover):toggleColor(c.active)
-		end
+			:hoverColor(c.hover)
+			:toggleColor(c.active)
 		
 	end
 	

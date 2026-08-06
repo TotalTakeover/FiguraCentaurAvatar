@@ -247,7 +247,7 @@ local kickKeybind = keybound.new(
 local t = {}
 
 -- Required scripts
-local s, pageNav, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, acts, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Accessories") -- Tries to find script, not required
 
@@ -258,32 +258,29 @@ local pageExists = action_wheel:getPage("Anims")
 local parentPage = action_wheel:getPage("Main")
 local animsPage  = pageExists or action_wheel:newPage("Anims")
 
--- Actions table setup
-local a = {}
-
 -- Actions
 if not pageExists then
-	a.pageAct = parentPage:newAction()
+	acts.animsPage = parentPage:newAction()
 		:item("jukebox")
 		:onLeftClick(function() pageNav.descend(animsPage) end)
 end
 
-a.sitAct = animsPage:newAction()
+acts.animsSitToggle = animsPage:newAction()
 	:item("scaffolding")
 	:toggleItem("saddle")
 	:onToggle(function(bool)
 		sitting:update(bool)
 	end)
 
-a.rearUpAct = animsPage:newAction()
+acts.animsRearUp = animsPage:newAction()
 	:item("golden_axe")
 	:onLeftClick(pings.animPlayRearUp)
 
-a.kickAct = animsPage:newAction()
+acts.animsKick = animsPage:newAction()
 	:item("carrot")
 	:onLeftClick(pings.animPlayKick)
 
-a.armsAct = animsPage:newAction()
+acts.animsArmsToggle = animsPage:newAction()
 	:item("red_dye")
 	:toggleItem("rabbit_foot")
 	:onToggle(function(bool)
@@ -295,30 +292,37 @@ a.armsAct = animsPage:newAction()
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
-		if a.pageAct then
-			a.pageAct
+		if acts.animsPage then
+			acts.animsPage
 				:title(toJson(
 					{text = "Animation Settings", bold = true, color = c.primary}
 				))
+				:hoverColor(c.hover)
 		end
 		
-		a.sitAct
+		acts.animsSitToggle
 			:title(toJson(
 				{text = "Play Sit animation", bold = true, color = c.primary}
 			))
 			:toggled(anims.sit:isPlaying())
+			:hoverColor(c.hover)
+			:toggleColor(c.active)
 		
-		a.rearUpAct
+		acts.animsRearUp
 			:title(toJson(
 				{text = "Play Rear Up animation", bold = true, color = c.primary}
 			))
+			:hoverColor(c.hover)
+			:toggleColor(c.active)
 		
-		a.kickAct
+		acts.animsKick
 			:title(toJson(
 				{text = "Play Kick animation", bold = true, color = c.primary}
 			))
+			:hoverColor(c.hover)
+			:toggleColor(c.active)
 		
-		a.armsAct
+		acts.animsArmsToggle
 			:title(toJson(
 				{
 					"",
@@ -326,10 +330,8 @@ function events.RENDER(delta, context)
 					{text = "Toggles the movement swing movement of the arms.\nActions are not effected.", color = c.secondary}
 				}
 			))
-		
-		for _, act in pairs(a) do
-			act:hoverColor(c.hover):toggleColor(c.active)
-		end
+			:hoverColor(c.hover)
+			:toggleColor(c.active)
 		
 	end
 	

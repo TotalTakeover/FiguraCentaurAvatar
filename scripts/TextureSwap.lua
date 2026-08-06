@@ -199,7 +199,7 @@ end
 if not host:isHost() then return end
 
 -- Required scripts
-local s, pageNav, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, acts, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Accessories") -- Tries to find script, not required
 
@@ -239,30 +239,27 @@ end
 local parentPage  = action_wheel:getPage("Centaur") or action_wheel:getPage("Main")
 local texturePage = action_wheel:newPage("Texture")
 
--- Actions table setup
-local a = {}
-
 -- Set texture
 local function setTexture(tex, limit, i)
 	return ((tex + i - 1) % limit) + 1
 end
 
 -- Actions
-a.pageAct = parentPage:newAction()
+acts.texturePage = parentPage:newAction()
 	:item("brush")
 	:onLeftClick(function() pageNav.descend(texturePage) end)
 
-a.primaryAct = texturePage:newAction()
+acts.texturePrimaryStyle = texturePage:newAction()
 	:onLeftClick(function() primaryType:update(setTexture(primaryType.curr, #primaryTypes, 1)) end)
 	:onRightClick(function() primaryType:update(setTexture(primaryType.curr, #primaryTypes, 1)) end)
 	:onScroll(function(x) primaryType:update(setTexture(primaryType.curr, #primaryTypes, x), 20) end)
 
-a.secondaryAct = texturePage:newAction()
+acts.textureSecondaryStyle = texturePage:newAction()
 	:onLeftClick(function() secondaryType:update(setTexture(secondaryType.curr, #secondaryTypes, 1)) end)
 	:onRightClick(function() secondaryType:update(setTexture(secondaryType.curr, #secondaryTypes, 1)) end)
 	:onScroll(function(x) secondaryType:update(setTexture(secondaryType.curr, #secondaryTypes, x), 20) end)
 
-a.originAct = texturePage:newAction()
+acts.textureOriginToggle = texturePage:newAction()
 	:item("ender_pearl")
 	:toggleItem("origins:orb_of_origin", "snowball")
 	:onToggle(function(bool)
@@ -372,12 +369,13 @@ local secondaryInfo = {
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
-		a.pageAct
+		acts.texturePage
 			:title(toJson(
 				{text = "Texture Settings", bold = true, color = c.primary}
 			))
+			:hoverColor(c.hover)
 		
-		a.primaryAct
+		acts.texturePrimaryStyle
 			:title(toJson(
 				{
 					"",
@@ -386,8 +384,9 @@ function events.RENDER(delta, context)
 				}
 			))
 			:item(primaryInfo[primaryType.curr].item)
+			:hoverColor(c.hover)
 		
-		a.secondaryAct
+		acts.textureSecondaryStyle
 			:title(toJson(
 				{
 					"",
@@ -396,8 +395,9 @@ function events.RENDER(delta, context)
 				}
 			))
 			:item(secondaryInfo[secondaryType.curr].item)
+			:hoverColor(c.hover)
 		
-		a.originAct
+		acts.textureOriginToggle
 			:title(toJson(
 				{
 					"",
@@ -405,10 +405,8 @@ function events.RENDER(delta, context)
 					{text = "Allow your origin to override your chosen texture.", color = c.secondary}
 				}
 			))
-		
-		for _, act in pairs(a) do
-			act:hoverColor(c.hover):toggleColor(c.active)
-		end
+			:hoverColor(c.hover)
+			:toggleColor(c.active)
 		
 	end
 	

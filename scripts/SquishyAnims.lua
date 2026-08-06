@@ -166,7 +166,7 @@ end
 if not host:isHost() then return end
 
 -- Required scripts
-local s, pageNav, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, acts, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Anims") -- Tries to find script, not required
 
@@ -177,17 +177,14 @@ local pageExists = action_wheel:getPage("Anims")
 local parentPage = action_wheel:getPage("Main")
 local animsPage  = pageExists or action_wheel:newPage("Anims")
 
--- Actions table setup
-local a = {}
-
 -- Actions
 if not pageExists then
-	a.pageAct = parentPage:newAction()
+	acts.animsPage = parentPage:newAction()
 		:item("jukebox")
 		:onLeftClick(function() pageNav.descend(animsPage) end)
 end
 
-a.earsAct = animsPage:newAction()
+acts.animsEarToggle = animsPage:newAction()
 	:item("bone")
 	:toggleItem("feather")
 	:onToggle(function(bool)
@@ -199,14 +196,15 @@ a.earsAct = animsPage:newAction()
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
-		if a.pageAct then
-			a.pageAct
+		if acts.animsPage then
+			acts.animsPage
 				:title(toJson(
 					{text = "Animation Settings", bold = true, color = c.primary}
 				))
+				:hoverColor(c.hover)
 		end
 		
-		a.earsAct
+		acts.animsEarToggle
 			:title(toJson(
 				{
 					"",
@@ -214,10 +212,8 @@ function events.RENDER(delta, context)
 					{text = "Toggles the ability for the ears to flick.", color = c.secondary}
 				}
 			))
-		
-		for _, act in pairs(a) do
-			act:hoverColor(c.hover):toggleColor(c.active)
-		end
+			:hoverColor(c.hover)
+			:toggleColor(c.active)
 		
 	end
 	
