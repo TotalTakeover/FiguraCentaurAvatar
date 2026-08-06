@@ -49,7 +49,7 @@ end)
 if not host:isHost() then return end
 
 -- Required scripts
-local s, pageNav, acts, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, acts, colors = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 
 -- Check for if page already exists
@@ -89,32 +89,32 @@ function events.RENDER(delta, context)
 		if acts.centaurPage then
 			acts.centaurPage
 				:title(toJson(
-					{text = "Centaur Settings", bold = true, color = c.primary}
+					{text = "Centaur Settings", bold = true, color = colors.primary}
 				))
-				:hoverColor(c.hover)
+				:hoverColor(colors.hover)
 		end
 		
 		acts.centaurSaddleToggle
 			:title(toJson(
 				{
 					"",
-					{text = "Toggle Saddle\n\n", bold = true, color = c.primary},
-					{text = "Toggles visibility of the saddle.", color = c.secondary}
+					{text = "Toggle Saddle\n\n", bold = true, color = colors.primary},
+					{text = "Toggles visibility of the saddle.", color = colors.secondary}
 				}
 			))
-			:hoverColor(c.hover)
-			:toggleColor(c.active)
+			:hoverColor(colors.hover)
+			:toggleColor(colors.active)
 		
 		acts.centaurBagsToggle
 			:title(toJson(
 				{
 					"",
-					{text = "Toggle Bags\n\n", bold = true, color = c.primary},
-					{text = "Toggles visibility of the bags.", color = c.secondary}
+					{text = "Toggle Bags\n\n", bold = true, color = colors.primary},
+					{text = "Toggles visibility of the bags.", color = colors.secondary}
 				}
 			))
-			:hoverColor(c.hover)
-			:toggleColor(c.active)
+			:hoverColor(colors.hover)
+			:toggleColor(colors.active)
 		
 	end
 	

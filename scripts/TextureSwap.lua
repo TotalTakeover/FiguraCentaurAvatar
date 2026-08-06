@@ -199,16 +199,16 @@ end
 if not host:isHost() then return end
 
 -- Required scripts
-local s, pageNav, acts, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, acts, colors = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Accessories") -- Tries to find script, not required
 
 -- Dont preform if color properties is empty
-if next(c) ~= nil then
+if next(colors) ~= nil then
 	
 	-- Store init colors
 	local initColors = {}
-	for k, v in pairs(c) do
+	for k, v in pairs(colors) do
 		initColors[k] = v
 	end
 	
@@ -227,8 +227,8 @@ if next(c) ~= nil then
 		}
 		
 		-- Update action wheel colors
-		for k in pairs(c) do
-			c[k] = appliedColors[k]
+		for k in pairs(colors) do
+			colors[k] = appliedColors[k]
 		end
 		
 	end
@@ -371,42 +371,42 @@ function events.RENDER(delta, context)
 	if action_wheel:isEnabled() then
 		acts.texturePage
 			:title(toJson(
-				{text = "Texture Settings", bold = true, color = c.primary}
+				{text = "Texture Settings", bold = true, color = colors.primary}
 			))
-			:hoverColor(c.hover)
+			:hoverColor(colors.hover)
 		
 		acts.texturePrimaryStyle
 			:title(toJson(
 				{
 					"",
-					{text = ("Primary: %s\n\n"):format(primaryInfo[primaryType.curr].title), bold = true, color = c.primary},
-					{text = ("Sets the lower body to use %s primary texture."):format(primaryInfo[primaryType.curr].text), color = c.secondary}
+					{text = ("Primary: %s\n\n"):format(primaryInfo[primaryType.curr].title), bold = true, color = colors.primary},
+					{text = ("Sets the lower body to use %s primary texture."):format(primaryInfo[primaryType.curr].text), color = colors.secondary}
 				}
 			))
 			:item(primaryInfo[primaryType.curr].item)
-			:hoverColor(c.hover)
+			:hoverColor(colors.hover)
 		
 		acts.textureSecondaryStyle
 			:title(toJson(
 				{
 					"",
-					{text = ("Secondary: %s\n\n"):format(secondaryInfo[secondaryType.curr].title), bold = true, color = c.primary},
-					{text = ("Sets the lower body to %s secondary texture."):format(secondaryInfo[secondaryType.curr].text), color = c.secondary}
+					{text = ("Secondary: %s\n\n"):format(secondaryInfo[secondaryType.curr].title), bold = true, color = colors.primary},
+					{text = ("Sets the lower body to %s secondary texture."):format(secondaryInfo[secondaryType.curr].text), color = colors.secondary}
 				}
 			))
 			:item(secondaryInfo[secondaryType.curr].item)
-			:hoverColor(c.hover)
+			:hoverColor(colors.hover)
 		
 		acts.textureOriginToggle
 			:title(toJson(
 				{
 					"",
-					{text = "Toggle Origin Override\n\n", bold = true, color = c.primary},
-					{text = "Allow your origin to override your chosen texture.", color = c.secondary}
+					{text = "Toggle Origin Override\n\n", bold = true, color = colors.primary},
+					{text = "Allow your origin to override your chosen texture.", color = colors.secondary}
 				}
 			))
-			:hoverColor(c.hover)
-			:toggleColor(c.active)
+			:hoverColor(colors.hover)
+			:toggleColor(colors.active)
 		
 	end
 	

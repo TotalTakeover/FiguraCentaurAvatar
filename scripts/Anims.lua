@@ -247,7 +247,7 @@ local kickKeybind = keybound.new(
 local t = {}
 
 -- Required scripts
-local s, pageNav, acts, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, acts, colors = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Accessories") -- Tries to find script, not required
 
@@ -295,43 +295,43 @@ function events.RENDER(delta, context)
 		if acts.animsPage then
 			acts.animsPage
 				:title(toJson(
-					{text = "Animation Settings", bold = true, color = c.primary}
+					{text = "Animation Settings", bold = true, color = colors.primary}
 				))
-				:hoverColor(c.hover)
+				:hoverColor(colors.hover)
 		end
 		
 		acts.animsSitToggle
 			:title(toJson(
-				{text = "Play Sit animation", bold = true, color = c.primary}
+				{text = "Play Sit animation", bold = true, color = colors.primary}
 			))
 			:toggled(anims.sit:isPlaying())
-			:hoverColor(c.hover)
-			:toggleColor(c.active)
+			:hoverColor(colors.hover)
+			:toggleColor(colors.active)
 		
 		acts.animsRearUp
 			:title(toJson(
-				{text = "Play Rear Up animation", bold = true, color = c.primary}
+				{text = "Play Rear Up animation", bold = true, color = colors.primary}
 			))
-			:hoverColor(c.hover)
-			:toggleColor(c.active)
+			:hoverColor(colors.hover)
+			:toggleColor(colors.active)
 		
 		acts.animsKick
 			:title(toJson(
-				{text = "Play Kick animation", bold = true, color = c.primary}
+				{text = "Play Kick animation", bold = true, color = colors.primary}
 			))
-			:hoverColor(c.hover)
-			:toggleColor(c.active)
+			:hoverColor(colors.hover)
+			:toggleColor(colors.active)
 		
 		acts.animsArmsToggle
 			:title(toJson(
 				{
 					"",
-					{text = "Arm Movement Toggle\n\n", bold = true, color = c.primary},
-					{text = "Toggles the movement swing movement of the arms.\nActions are not effected.", color = c.secondary}
+					{text = "Arm Movement Toggle\n\n", bold = true, color = colors.primary},
+					{text = "Toggles the movement swing movement of the arms.\nActions are not effected.", color = colors.secondary}
 				}
 			))
-			:hoverColor(c.hover)
-			:toggleColor(c.active)
+			:hoverColor(colors.hover)
+			:toggleColor(colors.active)
 		
 	end
 	
