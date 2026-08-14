@@ -251,12 +251,12 @@ acts.texturePage = parentPage:newAction()
 
 acts.texturePrimaryStyle = texturePage:newAction()
 	:onLeftClick(function() primaryType:update(setTexture(primaryType.curr, #primaryTypes, 1)) end)
-	:onRightClick(function() primaryType:update(setTexture(primaryType.curr, #primaryTypes, 1)) end)
+	:onRightClick(function() primaryType:update(setTexture(primaryType.curr, #primaryTypes, -1)) end)
 	:onScroll(function(x) primaryType:update(setTexture(primaryType.curr, #primaryTypes, x), 20) end)
 
 acts.textureSecondaryStyle = texturePage:newAction()
 	:onLeftClick(function() secondaryType:update(setTexture(secondaryType.curr, #secondaryTypes, 1)) end)
-	:onRightClick(function() secondaryType:update(setTexture(secondaryType.curr, #secondaryTypes, 1)) end)
+	:onRightClick(function() secondaryType:update(setTexture(secondaryType.curr, #secondaryTypes, -1)) end)
 	:onScroll(function(x) secondaryType:update(setTexture(secondaryType.curr, #secondaryTypes, x), 20) end)
 
 acts.textureOriginToggle = texturePage:newAction()
