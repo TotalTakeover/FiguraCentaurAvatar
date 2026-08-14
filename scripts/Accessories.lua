@@ -34,12 +34,12 @@ function events.RENDER(delta, context)
 end
 
 -- Apply sound functions
-saddle:applyFunc(function()
+saddle:addFunc(function()
 	if player:isLoaded() then
 		sounds:playSound("entity.horse.saddle", player:getPos(), 0.5)
 	end
 end)
-bags:applyFunc(function()
+bags:addFunc(function()
 	if player:isLoaded() then
 		sounds:playSound("item.armor.equip_generic", player:getPos(), 0.5)
 	end

@@ -213,7 +213,7 @@ function pings.animPlayKick()
 end
 
 -- Apply anims to sync updates
-sitting:applyFunc(function()
+sitting:addFunc(function()
 	anims.sit:playing(sitting.curr and canSit)
 end)
 
